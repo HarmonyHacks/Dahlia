@@ -1,0 +1,4 @@
+install_to 'lib'
+
+chew 'nunit'
+chew 'giles'
