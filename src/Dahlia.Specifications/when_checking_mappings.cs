@@ -35,7 +35,6 @@ namespace Dahlia.Specifications
                     .CheckProperty(c => c.FirstName, "Mikers")
                     .CheckProperty(c => c.LastName, "Penis")
                     .CheckProperty(c => c.Notes, "Big Penis")
-                    .CheckProperty(c => c.RoomCode, "C27 #3")
                     .VerifyTheMappings();
         };
     }

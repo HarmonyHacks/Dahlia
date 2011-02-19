@@ -8,14 +8,14 @@ namespace Dahlia.Specifications
     [Subject("Configuration")]
     public class When_structure_map_is_bootstrapped
     {
-        Because of = () =>
-            AppStart_Structuremap.Start();
+        //Because of = () =>
+        //    AppStart_Structuremap.Start();
 
-        It should_create_a_valid_container_configuration = () =>
-            ObjectFactory.AssertConfigurationIsValid();
+        //It should_create_a_valid_container_configuration = () =>
+        //    ObjectFactory.AssertConfigurationIsValid();
 
-        It should_create_a_valid_logger_instance = () =>
-            ObjectFactory.GetInstance<ILog>().ShouldNotBeNull();
+        //It should_create_a_valid_logger_instance = () =>
+        //    ObjectFactory.GetInstance<ILog>().ShouldNotBeNull();
     }
 
     public class When_resolving_a_class_with_a_logger_property
