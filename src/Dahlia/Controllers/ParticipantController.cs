@@ -8,9 +8,9 @@ namespace Dahlia.Controllers
         //
         // GET: /Participant/
 
-        public ActionResult Index()
+        public ViewResult AddToRetreat(DateTime retreatDate)
         {
-            throw new NotImplementedException();
+            return null;
         }
 
     }
