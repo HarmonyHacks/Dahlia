@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Mvc;
 using Dahlia.Models;
 using Dahlia.Repositories;
+using Dahlia.Services;
 using Dahlia.ViewModels;
 
 namespace Dahlia.Controllers
@@ -11,10 +12,12 @@ namespace Dahlia.Controllers
     public class RetreatController : Controller
     {
         readonly IRetreatRepository _retreatRepository;
+        readonly IUrlMapper _urlMapper;
 
-        public RetreatController(IRetreatRepository retreatRepository)
+        public RetreatController(IRetreatRepository retreatRepository, IUrlMapper urlMapper)
         {
             _retreatRepository = retreatRepository;
+            _urlMapper = urlMapper;
         }
 
         public ActionResult Index()
@@ -32,23 +35,32 @@ namespace Dahlia.Controllers
                                       BedCode = y.BedCode,
                                       DateReceived = y.Participant.DateReceived,
                                       Notes = y.Participant.Notes,
-                                      DeleteLink = new Uri("/Participant/DeleteFromRetreat?retreatDate=" + x.StartDate + "&firstName=" + y.Participant.FirstName + "&lastName=" + y.Participant.LastName, UriKind.Relative)
+                                      DeleteLink = BuildDeleteLink(x, y)
                                   })
                      });
             var model = new RetreatListViewModel
             {
                 CreateLink = new Uri("/Retreat/Create", UriKind.Relative),
 
-                Retreats =
-                    retreats
+                Retreats = retreats
             };
 
             return View(model);
         }
 
-        Uri AddParticipantLinkForRetreat(Retreat x)
+        Uri BuildDeleteLink(Retreat retreat, RegisteredParticipant participant)
         {
-            return new Uri("../Participant/AddToRetreat?retreatDate=" + x.StartDate.ToString("d"), UriKind.Relative);
+            return _urlMapper.MapAction<ParticipantController>(
+                x => x.DeleteFromRetreat(
+                    retreat.StartDate, 
+                    participant.Participant.FirstName,
+                    participant.Participant.LastName));
+        }
+
+        Uri AddParticipantLinkForRetreat(Retreat retreat)
+        {
+            return _urlMapper.MapAction<ParticipantController>(
+                x => x.AddToRetreat(retreat.StartDate));
         }
 
         public ActionResult Create()
