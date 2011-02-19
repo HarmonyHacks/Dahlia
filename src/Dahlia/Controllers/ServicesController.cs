@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Dahlia.Models;
 using Dahlia.Repositories;
 using Dahlia.ViewModels;
 
@@ -16,7 +17,8 @@ namespace Dahlia.Controllers
             _retreatRepository = retreatRepository;
         }
 
-        public JsonResult Retreats()
+        [AcceptVerbs(HttpVerbs.Get)]
+        public JsonResult Retreat()
         {
             var model = new RetreatListViewModel
             {
@@ -32,7 +34,40 @@ namespace Dahlia.Controllers
             return Json(model, "text/text", JsonRequestBehavior.AllowGet);
         }
 
+        [AcceptVerbs(HttpVerbs.Post)]
+        public JsonResult Retreat(DateTime date)
+        {
+            return null; // validation to ensure you don't have more than 1 retreat w/ the same date
+        }
 
-        
+        [AcceptVerbs(HttpVerbs.Put)]
+        public JsonResult Retreat(Guid id, DateTime date)
+        {
+            return null;
+        }
+
+        [AcceptVerbs(HttpVerbs.Delete)]
+        public JsonResult Retreat(Guid id)
+        {
+            return null; //
+        }
+
+
+
+        //public JsonResult Retreat(string dateTimeOfRetreat)
+        //{
+        //    var parsedDate = DateTime.Parse(dateTimeOfRetreat);
+        //    _retreatRepository.Get(parsedDate);
+        //    return Json(new RetreatListViewModel());
+        //}
+
+        //[AcceptVerbs(HttpVerbs.Put)]
+        //public JsonResult Retreat(RetreatListViewModel model )
+        //{
+        //    Models.Retreat
+
+        //    _retreatRepository.Add();
+        //}
+
     }
 }

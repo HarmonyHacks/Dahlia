@@ -64,5 +64,10 @@ namespace Dahlia.Controllers
             _retreatRepository.Add(retreatModel);
             return RedirectToAction("Index");
         }
+
+        public ViewResult App()
+        {
+            return View();
+        }
     }
 }
