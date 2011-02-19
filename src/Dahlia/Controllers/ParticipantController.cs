@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Web.Mvc;
+using Dahlia.ViewModels;
 
 namespace Dahlia.Controllers
 {
     public class ParticipantController : Controller
     {
-        //
-        // GET: /Participant/
-
         public ViewResult AddToRetreat(DateTime retreatDate)
         {
-            return null;
+            var viewModel = new AddParticipantToRetreatViewModel
+                                {
+                                    RetreatDate = retreatDate
+                                };
+            return View("AddToRetreat", viewModel);
         }
 
     }
