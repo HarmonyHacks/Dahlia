@@ -15,7 +15,8 @@
         <ul>
             @foreach (var participant in retreat.RegisteredParticipants)
             {
-                <li>@participant.FirstName @participant.LastName <a href="@participant.DeleteLink">Delete</a> </li>
+                <li><div style="width:100%"> @participant.FirstName @participant.LastName @participant.BedCode @participant.DateReceived <a href="@participant.DeleteLink">Delete</a> </div>
+                    <div style="width:100%"> @participant.Notes </div></li>
             }
         </ul>
 }

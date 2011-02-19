@@ -29,6 +29,9 @@ namespace Dahlia.Controllers
                                   {
                                       FirstName = y.Participant.FirstName,
                                       LastName = y.Participant.LastName,
+                                      BedCode = y.BedCode,
+                                      DateReceived = y.Participant.DateReceived,
+                                      Notes = y.Participant.Notes,
                                       DeleteLink = new Uri("/Participant/DeleteFromRetreat?retreatDate=" + x.StartDate + "&firstName=" + y.Participant.FirstName + "&lastName=" + y.Participant.LastName, UriKind.Relative)
                                   })
                      });

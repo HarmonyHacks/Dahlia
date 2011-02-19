@@ -20,6 +20,9 @@ namespace Dahlia.ViewModels
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string BedCode { get; set; }
+        public DateTime DateReceived { get; set; }
+        public string Notes { get; set; }
         public Uri DeleteLink { get; set; }
     }
 }
