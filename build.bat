@@ -1,5 +1,7 @@
+@echo off
+
 pushd "%~dp0"
 
-%FrameworkDir%\%FrameworkVersion%\msbuild build.csproj
+powershell -NoProfile -ExecutionPolicy unrestricted -Command "& { Import-Module .\lib\psake\psake.psm1; Invoke-psake .\build.ps1 }"
 
 popd
