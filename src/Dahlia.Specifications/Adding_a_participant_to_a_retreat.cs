@@ -55,7 +55,7 @@ namespace Dahlia.Specifications
             _retreatDate = new DateTime(2007, 12, 15);
             
             _retreatParticipantAdder = MockRepository.GenerateStub<IRetreatParticipantAdder>();
-            _controller = new ParticipantController(_retreatParticipantAdder);
+            _controller = new ParticipantController(_retreatParticipantAdder, null);
         };
 
         Because of = () => _controller.DoAddToRetreat(_viewModel);

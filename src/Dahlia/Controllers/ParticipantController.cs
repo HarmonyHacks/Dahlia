@@ -43,7 +43,7 @@ namespace Dahlia.Controllers
             return new EmptyResult();
         }
 
-        public ActionResult List()
+        public ViewResult List()
         {
             return View(_repository.GetAll());
         }
