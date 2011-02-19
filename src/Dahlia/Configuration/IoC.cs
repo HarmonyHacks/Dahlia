@@ -1,7 +1,6 @@
-﻿using log4net;
+﻿using System.Web.Routing;
+using log4net;
 using StructureMap;
-using StructureMap.Configuration.DSL;
-using StructureMap.TypeRules;
 
 namespace Dahlia.Configuration {
     public static class IoC {
@@ -15,6 +14,7 @@ namespace Dahlia.Configuration {
                                     });
                             
                             x.For<ILog>().Use(LogManager.GetLogger("Dahlia"));
+                            x.For<RouteCollection>().Use(RouteTable.Routes);
                             x.FillAllPropertiesOfType<ILog>().Use(LogManager.GetLogger("Dahlia"));
 
                         });
