@@ -2,6 +2,8 @@
 #OS junk files
 [Tt]humbs.db
 *.DS_Store
+#build directory
+CI
 
 #Visual Studio files
 *.[Oo]bj
@@ -38,9 +40,6 @@ Ankh.NoLoad
 _ReSharper*/
 *.resharper
 [Tt]est[Rr]esult*
-
-#Project files
-[Bb]uild/
 
 #Subversion files
 .svn
