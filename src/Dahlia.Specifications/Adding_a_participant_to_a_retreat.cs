@@ -5,6 +5,7 @@ using System.Text;
 using System.Web.Mvc;
 using Dahlia.Controllers;
 using Dahlia.Models;
+using Dahlia.Services;
 using Dahlia.ViewModels;
 using Machine.Specifications;
 using Rhino.Mocks;

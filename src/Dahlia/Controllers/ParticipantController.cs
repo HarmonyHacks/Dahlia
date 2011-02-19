@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Web.Mvc;
-using Dahlia.Models;
+using Dahlia.Services;
 using Dahlia.ViewModels;
 
 namespace Dahlia.Controllers
 {
-    public interface IRetreatParticipantAdder
-    {
-        void AddParticipantToRetreat(DateTime retreatDate, Participant participant);
-    }
-
     public class ParticipantController : Controller
     {
         readonly IRetreatParticipantAdder _retreatParticipantAdder;
