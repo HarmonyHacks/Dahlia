@@ -6,6 +6,8 @@
 
 <h2>Retreats</h2>
 
+<a href='@Model.CreateLink'>Add a new retreat</a>
+
 <ul>
 @foreach (var retreat in Model.Retreats) {
     <li>@retreat.Date.ToString("d")

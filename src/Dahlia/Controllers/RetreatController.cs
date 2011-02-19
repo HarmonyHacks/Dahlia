@@ -24,8 +24,9 @@ namespace Dahlia.Controllers
                 Retreats = _RetreatRepository.GetList().Select(x => new RetreatListRetreatViewModel
                 {
                     Date    = x.StartDate,
-                    AddParticipantLink = new Uri("../Participant/AddToRetreat?retreatDate=" + x.StartDate.ToString("d"), UriKind.Relative)
-                })
+                    AddParticipantLink = new Uri("/Participant/AddToRetreat?retreatDate=" + x.StartDate.ToString("d"), UriKind.Relative),
+                }),
+                CreateLink = new Uri("/Retreat/Create", UriKind.Relative)
              };
 
              return View(model);
