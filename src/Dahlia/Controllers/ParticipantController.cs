@@ -48,7 +48,7 @@ namespace Dahlia.Controllers
 
             _retreatRepository.Save(retreat);
 
-            return new EmptyResult();
+            return RedirectToAction("Index", "Retreat");
         }
     }
 }
