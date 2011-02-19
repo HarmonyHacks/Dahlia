@@ -12,18 +12,18 @@ namespace Dahlia.Specifications.Adding_a_participant_to_a_retreat
     {
         Establish context = () =>
                             {
-                                _RetreatDate = new DateTime(2007, 12, 15);
-                                _Controller = new ParticipantController();
+                                _retreatDate = new DateTime(2007, 12, 15);
+                                _controller = new ParticipantController();
                             };
         
-        Because of = () => _ViewResult = _Controller.AddToRetreat(_RetreatDate);
+        Because of = () => _viewResult = _controller.AddToRetreat(_retreatDate);
 
-        It should_return_a_view_result_for_the_add_participant_view = () => _ViewResult.ViewName.ShouldEqual("AddToRetreat");
+        It should_return_a_view_result_for_the_add_participant_view = () => _viewResult.ViewName.ShouldEqual("AddToRetreat");
 
-        static DateTime _RetreatDate;
-        static ViewResult _ViewResult;
-        static AddParticipantToRetreatViewModel _ViewModel;
-        static ParticipantController _Controller;
+        static DateTime _retreatDate;
+        static ViewResult _viewResult;
+        static AddParticipantToRetreatViewModel _viewModel;
+        static ParticipantController _controller;
     }
 
     public class AddParticipantToRetreatViewModel
