@@ -5,6 +5,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dahlia", "Dahlia\Dahlia.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dahlia.Tests", "Dahlia.Tests\Dahlia.Tests.csproj", "{8192E5FD-1823-41DA-9F16-94D588D6A09B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dahlia.Specifications", "Dahlia.Specifications\Dahlia.Specifications.csproj", "{19A0ED27-A9A7-47B8-B226-85E0CDA5D303}"
+EndProject
+Project("{C8D11400-126E-41CD-887F-60BD40844F9E}") = "Dahlia.Database", "Dahlia.Database\Dahlia.Database.dbproj", "{67CBC824-A49E-4E9B-A947-360F3DFE65C3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +23,16 @@ Global
 		{8192E5FD-1823-41DA-9F16-94D588D6A09B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8192E5FD-1823-41DA-9F16-94D588D6A09B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8192E5FD-1823-41DA-9F16-94D588D6A09B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19A0ED27-A9A7-47B8-B226-85E0CDA5D303}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19A0ED27-A9A7-47B8-B226-85E0CDA5D303}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19A0ED27-A9A7-47B8-B226-85E0CDA5D303}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19A0ED27-A9A7-47B8-B226-85E0CDA5D303}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
