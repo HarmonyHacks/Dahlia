@@ -72,7 +72,6 @@
     <Compile Include="Configuration\AppStart_Structuremap.cs" />
     <Compile Include="Configuration\IoC.cs" />
     <Compile Include="Configuration\SmDependencyResolver.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ParticipantController.cs" />
     <Compile Include="Controllers\RetreatController.cs" />
     <Compile Include="Global.asax.cs">
@@ -136,9 +135,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Home\index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Participant\AddToRetreat.cshtml" />
