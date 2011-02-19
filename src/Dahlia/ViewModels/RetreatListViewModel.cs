@@ -5,6 +5,12 @@ namespace Dahlia.ViewModels
 {
     public class RetreatListViewModel
     {
-        public IEnumerable<DateTime> Dates { get; set; }
+        public IEnumerable<RetreatListRetreatViewModel> Retreats { get; set; }
+    }
+
+    public class RetreatListRetreatViewModel
+    {
+        public DateTime Date { get; set; }
+        public Uri AddParticipantLink { get; set; }
     }
 }

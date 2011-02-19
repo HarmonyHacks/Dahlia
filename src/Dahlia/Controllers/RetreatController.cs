@@ -19,8 +19,14 @@ namespace Dahlia.Controllers
 
         public ActionResult Index()
         {
-
-            var model = new RetreatListViewModel { Dates = _RetreatRepository.GetList().Select(x => x.StartDate) };
+            var model = new RetreatListViewModel
+            {
+                Retreats = _RetreatRepository.GetList().Select(x => new RetreatListRetreatViewModel
+                {
+                    Date = x.StartDate,
+                    AddParticipantLink = new Uri("../Participant/AddToRetreat?retreatDate=" + x.StartDate.ToString("d"), UriKind.Relative)
+                })
+            };
 
             return View(model);
         }

@@ -7,7 +7,8 @@
 <h2>Retreats</h2>
 
 <ul>
-@foreach (var retreat in Model.Dates) {
-    <li>@retreat.ToString("d")</li>
+@foreach (var retreat in Model.Retreats) {
+    <li>@retreat.Date.ToString("d")
+        <a href='@retreat.AddParticipantLink'>Add Participant</a></li>
 }
 </ul>
