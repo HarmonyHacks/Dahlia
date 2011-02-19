@@ -7,7 +7,7 @@ using StructureMap;
 namespace Dahlia.Configuration {
     public static class AppStart_Structuremap {
         public static void Start() {
-            var container = (IContainer) IoC.Initialize();
+            var container = IoC.Initialize();
             DependencyResolver.SetResolver(new SmDependencyResolver(container));
         }
     }

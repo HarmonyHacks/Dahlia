@@ -1,0 +1,23 @@
+﻿@model Dahlia.ViewModels.RetreatListViewModel
+
+@{
+    ViewBag.Title = "Retreats";
+}
+
+<h2>Retreats</h2>
+
+<a href='@Model.CreateLink'>Add a new retreat</a>
+
+<ul>
+@foreach (var retreat in Model.Retreats) {
+    <li>@retreat.Date.ToString("d")
+        <a href='@retreat.AddParticipantLink'>Add Participant</a></li>
+        <ul>
+            @foreach (var participant in retreat.RegisteredParticipants)
+            {
+                <li><div style="width:100%"> @participant.FirstName @participant.LastName @participant.BedCode @participant.DateReceived <a href="@participant.DeleteLink">Delete</a> </div>
+                    <div style="width:100%"> @participant.Notes </div></li>
+            }
+        </ul>
+}
+</ul>

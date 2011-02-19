@@ -1,22 +1,19 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using Dahlia.Models;
+using Dahlia.Repositories;
 using Dahlia.ViewModels;
 
 namespace Dahlia.Controllers
 {
-    public interface IRetreatParticipantAdder
-    {
-        void AddParticipantToRetreat(DateTime retreatDate, Participant participant);
-    }
-
     public class ParticipantController : Controller
     {
-        readonly IRetreatParticipantAdder _retreatParticipantAdder;
+        readonly IRetreatRepository _retreatRepository;
 
-        public ParticipantController(IRetreatParticipantAdder retreatParticipantAdder)
+        public ParticipantController(IRetreatRepository retreatRepository)
         {
-            _retreatParticipantAdder = retreatParticipantAdder;
+            _retreatRepository = retreatRepository;
         }
 
         public ViewResult AddToRetreat(DateTime retreatDate)
@@ -29,10 +26,51 @@ namespace Dahlia.Controllers
             return View("AddToRetreat", viewModel);
         }
 
+        public ViewResult DeleteFromRetreat(DateTime retreatDate, string firstName, string lastName)
+        {
+            var viewModel = new DeleteParticipantFromRetreatViewModel()
+                            {
+                                RetreatDate = retreatDate,
+                                FirstName = firstName,
+                                LastName = lastName,
+                            };
+            return View("DeleteFromRetreat", viewModel);
+        }
+
+        public ActionResult DoDeleteFromRetreat(DeleteParticipantFromRetreatViewModel viewModel)
+        {
+            var retreat = _retreatRepository.Get(viewModel.RetreatDate);
+            var participantToRemove =
+                retreat.RegisteredParticipants.First(
+                    x => x.Participant.FirstName == viewModel.FirstName && x.Participant.LastName == viewModel.LastName);
+            retreat.RegisteredParticipants.Remove(participantToRemove);
+            return RedirectToAction("Index", "Retreat");
+        }
+
         public ActionResult DoAddToRetreat(AddParticipantToRetreatViewModel postBack)
         {
-            _retreatParticipantAdder.AddParticipantToRetreat(postBack.RetreatDate, null);
-            return new EmptyResult();
+            var retreat = _retreatRepository.Get(postBack.RetreatDate);
+
+            var newParticipant = new Participant
+            {
+                FirstName = postBack.FirstName,
+                LastName = postBack.LastName,
+                DateReceived = postBack.DateReceived,
+                Notes = postBack.Notes
+            };
+
+            var newRegisteredParticipant = new RegisteredParticipant
+            {
+                Participant = newParticipant,
+                Retreat = retreat,
+                BedCode = postBack.BedCode
+            };
+
+            retreat.RegisteredParticipants.Add(newRegisteredParticipant);
+
+            _retreatRepository.Save(retreat);
+
+            return RedirectToAction("Index", "Retreat");
         }
     }
 }

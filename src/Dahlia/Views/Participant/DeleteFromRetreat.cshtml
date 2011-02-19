@@ -1,0 +1,14 @@
+﻿@model Dahlia.ViewModels.DeleteParticipantFromRetreatViewModel
+
+@{
+    ViewBag.Title = "DeleteFromRetreat";
+}
+
+@using(Html.BeginForm("DoDeleteFromRetreat", "Participant", FormMethod.Post)) {
+    @Html.HiddenFor(m => m.FirstName)
+    @Html.HiddenFor(m => m.LastName)
+    @Html.HiddenFor(m => m.RetreatDate)
+    <h2>Are you sure?</h2>
+    <div>Do you really want to remove @Model.FirstName @Model.LastName from the @Model.RetreatDate retreat?</div>
+    <input type="submit" value="Yes" /><br />
+}
