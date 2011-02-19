@@ -10,11 +10,11 @@ namespace Dahlia.Controllers
 {
     public class RetreatController : Controller
     {
-        IRetreatRepository _RetreatRepository;
+        readonly IRetreatRepository _retreatRepository;
 
-        public RetreatController()
+        public RetreatController(IRetreatRepository retreatRepository)
         {
-            _RetreatRepository = new RetreatRepository();
+            _retreatRepository = retreatRepository;
         }
 
         public ActionResult Index()
@@ -23,7 +23,7 @@ namespace Dahlia.Controllers
             {
                 CreateLink = new Uri("/Retreat/Create", UriKind.Relative),
 
-                Retreats = _RetreatRepository.GetList().Select(x => new RetreatListRetreatViewModel
+                Retreats = _retreatRepository.GetList().Select(x => new RetreatListRetreatViewModel
                 {
                     Date = x.StartDate,
                     AddParticipantLink = new Uri("../Participant/AddToRetreat?retreatDate=" + x.StartDate.ToString("d"), UriKind.Relative)
@@ -43,7 +43,7 @@ namespace Dahlia.Controllers
         {
             if (!ModelState.IsValid)
                 return View();
-            _RetreatRepository.Add(retreatModel);
+            _retreatRepository.Add(retreatModel);
             return RedirectToAction("Index");
         }
     }
