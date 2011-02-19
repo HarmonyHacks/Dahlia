@@ -44,7 +44,6 @@ namespace Dahlia.Repositories
 
         public void Save(Retreat retreat)
         {
-            
         }
     }
 }

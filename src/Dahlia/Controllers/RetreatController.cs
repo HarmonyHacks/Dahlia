@@ -27,7 +27,11 @@ namespace Dahlia.Controllers
                 {
                     Date = x.StartDate,
                     AddParticipantLink = new Uri("../Participant/AddToRetreat?retreatDate=" + x.StartDate.ToString("d"), UriKind.Relative),
-                    RegisteredParticipants = x.RegisteredParticipants.Count
+                    RegisteredParticipants = x.RegisteredParticipants.Select(y => new RetreatListParticipantViewModel
+                                                                                  {
+                                                                                      FirstName = y.Participant.FirstName,
+                                                                                      LastName = y.Participant.LastName,
+                                                                                  })
                 })
             };
 

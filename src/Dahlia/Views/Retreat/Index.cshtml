@@ -13,5 +13,11 @@
     <li>@retreat.Date.ToString("d")
         @retreat.RegisteredParticipants Participant(s)
         <a href='@retreat.AddParticipantLink'>Add Participant</a></li>
+        <ul>
+            @foreach (var participant in retreat.RegisteredParticipants)
+            {
+                <li>@participant.FirstName @participant.LastName</li>
+            }
+        </ul>
 }
 </ul>
