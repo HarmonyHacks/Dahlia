@@ -65,8 +65,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CareGiver.cs" />
     <Compile Include="Models\Participant.cs" />
     <Compile Include="Models\Retreat.cs" />
+    <Compile Include="Models\Room.cs" />
+    <Compile Include="Models\WaitListing.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ParticipantRepository.cs" />
     <Compile Include="Services\RetreatListService.cs" />
