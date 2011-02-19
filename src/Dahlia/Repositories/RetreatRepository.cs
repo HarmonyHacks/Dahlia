@@ -16,7 +16,12 @@ namespace Dahlia.Repositories
 
         static RetreatRepository()
         {
-            _Retreats = new List<Retreat>();
+            _Retreats = new List<Retreat>
+            {
+                new Retreat { StartDate = new DateTime(2011, 4, 1)},
+                new Retreat { StartDate = new DateTime(2011, 6, 1)},
+                new Retreat { StartDate = new DateTime(2011, 7, 15)},
+            };
         }
 
         IEnumerable<Retreat> IRetreatRepository.GetList()
