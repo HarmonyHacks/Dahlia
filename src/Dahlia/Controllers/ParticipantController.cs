@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Web.Mvc;
-using Dahlia.Services;
+using Dahlia.Models;
+using Dahlia.Repositories;
 using Dahlia.ViewModels;
 
 namespace Dahlia.Controllers
 {
     public class ParticipantController : Controller
     {
-        readonly IRetreatParticipantAdder _retreatParticipantAdder;
+        readonly IRetreatRepository _retreatRepository;
 
-        public ParticipantController(IRetreatParticipantAdder retreatParticipantAdder)
+        public ParticipantController(IRetreatRepository retreatRepository)
         {
-            _retreatParticipantAdder = retreatParticipantAdder;
+            _retreatRepository = retreatRepository;
         }
 
         public ViewResult AddToRetreat(DateTime retreatDate)
@@ -26,8 +27,28 @@ namespace Dahlia.Controllers
 
         public ActionResult DoAddToRetreat(AddParticipantToRetreatViewModel postBack)
         {
-            _retreatParticipantAdder.AddParticipantToRetreat(postBack.RetreatDate, null);
-            return new EmptyResult();
+            var retreat = _retreatRepository.Get(postBack.RetreatDate);
+
+            var newParticipant = new Participant
+            {
+                FirstName = postBack.FirstName,
+                LastName = postBack.LastName,
+                DateReceived = postBack.DateReceived,
+                Notes = postBack.Notes
+            };
+
+            var newRegisteredParticipant = new RegisteredParticipant
+            {
+                Participant = newParticipant,
+                Retreat = retreat,
+                BedCode = postBack.BedCode
+            };
+
+            retreat.RegisteredParticipants.Add(newRegisteredParticipant);
+
+            _retreatRepository.Save(retreat);
+
+            return RedirectToAction("Index", "Retreat");
         }
     }
 }

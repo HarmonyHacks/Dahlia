@@ -23,10 +23,15 @@ namespace Dahlia.Controllers
             {
                 CreateLink = new Uri("/Retreat/Create", UriKind.Relative),
 
-                Retreats = _retreatRepository.GetList().Select(x => new RetreatListRetreatViewModel
+                Retreats = _retreatRepository.GetList().OrderBy(x => x.StartDate).Select(x => new RetreatListRetreatViewModel
                 {
                     Date = x.StartDate,
-                    AddParticipantLink = new Uri("../Participant/AddToRetreat?retreatDate=" + x.StartDate.ToString("d"), UriKind.Relative)
+                    AddParticipantLink = new Uri("../Participant/AddToRetreat?retreatDate=" + x.StartDate.ToString("d"), UriKind.Relative),
+                    RegisteredParticipants = x.RegisteredParticipants.Select(y => new RetreatListParticipantViewModel
+                                                                                  {
+                                                                                      FirstName = y.Participant.FirstName,
+                                                                                      LastName = y.Participant.LastName,
+                                                                                  })
                 })
             };
 

@@ -9,14 +9,15 @@
 
 <h2>Add Participant to Retreat</h2>
 
-@using (Html.BeginForm("DoAddToRetreat")) {
+@using (Html.BeginForm("DoAddToRetreat", "Participant")) {
     @Html.HiddenFor(x => x.RetreatDate)
+    @Html.HiddenFor(x => x.DateReceived)
     <fieldset>
         <legend>Add Participant</legend>
         <label>First Name: </label>@Html.TextBoxFor(x => x.FirstName)<br />
         <label>Last Name: </label>@Html.TextBoxFor(x => x.LastName)<br />
         <label>Bed Code: </label>@Html.TextBoxFor(x => x.BedCode)<br />
-        <label>Date Received: </label>@Html.TextBoxFor(x => x.DateReceived)<br />
+        <label>Date Received: </label>@Model.DateReceived<br />
         <label>Notes:</label>@Html.TextAreaFor(x => x.Notes)<br />
     </fieldset>
     

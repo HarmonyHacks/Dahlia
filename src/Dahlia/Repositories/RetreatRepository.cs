@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Dahlia.Models;
 
 namespace Dahlia.Repositories
@@ -8,6 +9,8 @@ namespace Dahlia.Repositories
     {
         IEnumerable<Retreat> GetList();
         void Add(Retreat retreat);
+        Retreat Get(DateTime retreatDate);
+        void Save(Retreat retreat);
     }
 
     public class RetreatRepository : IRetreatRepository
@@ -32,6 +35,15 @@ namespace Dahlia.Repositories
         void IRetreatRepository.Add(Retreat retreat)
         {
             _Retreats.Add(retreat);
+        }
+
+        public Retreat Get(DateTime retreatDate)
+        {
+            return _Retreats.First(r => r.StartDate == retreatDate);
+        }
+
+        public void Save(Retreat retreat)
+        {
         }
     }
 }

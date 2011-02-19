@@ -5,7 +5,7 @@ using System.Text;
 using System.Web.Mvc;
 using Dahlia.Controllers;
 using Dahlia.Models;
-using Dahlia.Services;
+using Dahlia.Repositories;
 using Dahlia.ViewModels;
 using Machine.Specifications;
 using Rhino.Mocks;
@@ -44,28 +44,41 @@ namespace Dahlia.Specifications
     {
         Establish context = () =>
         {
+            var retreatDate = new DateTime(2007, 12, 15);
             _viewModel = new AddParticipantToRetreatViewModel
                          {
-                             RetreatDate = new DateTime(2007, 12, 15),
+                             RetreatDate = retreatDate,
                              BedCode = "bedcode",
                              FirstName = "firstbob",
                              LastName = "lastmartin",
                              DateReceived = DateTime.Today,
                              Notes = "yada yada yada...",
                          };
-            _retreatDate = new DateTime(2007, 12, 15);
+            _retreatDate = retreatDate;
             
-            _retreatParticipantAdder = MockRepository.GenerateStub<IRetreatParticipantAdder>();
-            _controller = new ParticipantController(_retreatParticipantAdder);
+            _retreatRepository = MockRepository.GenerateStub<IRetreatRepository>();
+            _controller = new ParticipantController(_retreatRepository);
+
+            _retreat = new Retreat{};
+            _retreatRepository.Stub(x => x.Get(retreatDate)).Return(_retreat);
         };
 
         Because of = () => _controller.DoAddToRetreat(_viewModel);
 
-        It should_add_the_participant = () => _retreatParticipantAdder.AssertWasCalled(x => x.AddParticipantToRetreat(Arg<DateTime>.Is.Equal(_retreatDate), Arg<Participant>.Is.Anything));
+        It should_save_the_retreat = () => _retreatRepository.AssertWasCalled(x => x.Save(_retreat));
+        It should_add_the_participant_to_the_retreat = () => _retreat.RegisteredParticipants.Count.ShouldEqual(1);
+        It should_give_the_participant_the_right_first_name = () => _retreat.RegisteredParticipants[0].Participant.FirstName.ShouldEqual(_viewModel.FirstName);
+        It should_give_the_participant_the_right_last_name = () => _retreat.RegisteredParticipants[0].Participant.LastName.ShouldEqual(_viewModel.LastName);
+        It should_give_the_participant_the_right_date_recieved = () => _retreat.RegisteredParticipants[0].Participant.DateReceived.ShouldEqual(_viewModel.DateReceived);
+        It should_give_the_participant_the_right_notes = () => _retreat.RegisteredParticipants[0].Participant.Notes.ShouldEqual(_viewModel.Notes);
+
+        It should_assign_the_right_bed_code = () => _retreat.RegisteredParticipants[0].BedCode.ShouldEqual(_viewModel.BedCode);
+        It should_assign_the_retreat = () => _retreat.RegisteredParticipants[0].Retreat.ShouldEqual(_retreat);
 
         static DateTime _retreatDate;
         static AddParticipantToRetreatViewModel _viewModel;
         static ParticipantController _controller;
-        static IRetreatParticipantAdder _retreatParticipantAdder;
+        static IRetreatRepository _retreatRepository;
+        static Retreat _retreat;
     }
 }
