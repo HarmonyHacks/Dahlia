@@ -68,6 +68,7 @@
     <Compile Include="Models\Participant.cs" />
     <Compile Include="Models\Retreat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\ParticipantRepository.cs" />
     <Compile Include="Services\RetreatListService.cs" />
     <Compile Include="ViewModels\AddParticipantToRetreatViewModel.cs" />
   </ItemGroup>
@@ -126,7 +127,9 @@
   <ItemGroup>
     <Content Include="Views\Participant\AddToRetreat.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Views\Participant\List.cshtml" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Retreat\Create.cshtml" />
   </ItemGroup>

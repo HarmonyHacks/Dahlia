@@ -17,7 +17,7 @@ namespace Dahlia.Specifications
         Establish context = () =>
                             {
                                 _retreatDate = new DateTime(2007, 12, 15);
-                                _controller = new ParticipantController(null);
+                                _controller = new ParticipantController(null, null);
                             };
 
         Because of = () =>
