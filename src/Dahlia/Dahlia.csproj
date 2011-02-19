@@ -123,7 +123,7 @@
     <Content Include="Views\Home\index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Participants\Create.cshtml" />
+    <Content Include="Views\Participant\AddToRetreat.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
