@@ -5,4 +5,4 @@ $version = if($env:BUILD_NUMBER) {$env:BUILD_NUMBER} else { "1.0.0.0" }
 
 include .\Build\master_build.ps1
 include .\Build\test_build.ps1
-task default -depends compile #, test
+task default -depends compile, test
