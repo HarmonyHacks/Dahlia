@@ -20,5 +20,6 @@ namespace Dahlia.ViewModels
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public Uri DeleteLink { get; set; }
     }
 }

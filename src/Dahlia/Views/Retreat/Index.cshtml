@@ -11,12 +11,11 @@
 <ul>
 @foreach (var retreat in Model.Retreats) {
     <li>@retreat.Date.ToString("d")
-        @retreat.RegisteredParticipants Participant(s)
         <a href='@retreat.AddParticipantLink'>Add Participant</a></li>
         <ul>
             @foreach (var participant in retreat.RegisteredParticipants)
             {
-                <li>@participant.FirstName @participant.LastName</li>
+                <li>@participant.FirstName @participant.LastName <a href="@participant.DeleteLink">Delete</a> </li>
             }
         </ul>
 }

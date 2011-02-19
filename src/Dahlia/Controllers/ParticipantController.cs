@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using Dahlia.Models;
 using Dahlia.Repositories;
@@ -23,6 +24,27 @@ namespace Dahlia.Controllers
                                     DateReceived = DateTime.Today,
                                 };
             return View("AddToRetreat", viewModel);
+        }
+
+        public ViewResult DeleteFromRetreat(DateTime retreatDate, string firstName, string lastName)
+        {
+            var viewModel = new DeleteParticipantFromRetreatViewModel()
+                            {
+                                RetreatDate = retreatDate,
+                                FirstName = firstName,
+                                LastName = lastName,
+                            };
+            return View("DeleteFromRetreat", viewModel);
+        }
+
+        public ActionResult DoDeleteFromRetreat(DeleteParticipantFromRetreatViewModel viewModel)
+        {
+            var retreat = _retreatRepository.Get(viewModel.RetreatDate);
+            var participantToRemove =
+                retreat.RegisteredParticipants.First(
+                    x => x.Participant.FirstName == viewModel.FirstName && x.Participant.LastName == viewModel.LastName);
+            retreat.RegisteredParticipants.Remove(participantToRemove);
+            return RedirectToAction("Index", "Retreat");
         }
 
         public ActionResult DoAddToRetreat(AddParticipantToRetreatViewModel postBack)
