@@ -21,6 +21,8 @@ namespace Dahlia.Controllers
         {
             var model = new RetreatListViewModel
             {
+                CreateLink = new Uri("/Retreat/Create", UriKind.Relative),
+
                 Retreats = _RetreatRepository.GetList().Select(x => new RetreatListRetreatViewModel
                 {
                     Date = x.StartDate,
