@@ -8,6 +8,8 @@ namespace Dahlia.Repositories
     {
         IEnumerable<Retreat> GetList();
         void Add(Retreat retreat);
+        Retreat Get(DateTime retreatDate);
+        void Save(Retreat retreat);
     }
 
     public class RetreatRepository : IRetreatRepository
@@ -32,6 +34,16 @@ namespace Dahlia.Repositories
         void IRetreatRepository.Add(Retreat retreat)
         {
             _Retreats.Add(retreat);
+        }
+
+        public Retreat Get(DateTime retreatDate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Save(Retreat retreat)
+        {
+            throw new NotImplementedException();
         }
     }
 }

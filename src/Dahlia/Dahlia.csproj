@@ -84,7 +84,6 @@
     <Compile Include="Models\WaitListing.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\RetreatRepository.cs" />
-    <Compile Include="Services\RetreatParticipantAdder.cs" />
     <Compile Include="ViewModels\AddParticipantToRetreatViewModel.cs" />
     <Compile Include="ViewModels\RetreatListViewModel.cs" />
   </ItemGroup>
