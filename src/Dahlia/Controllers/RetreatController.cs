@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Dahlia.Models;
 using Dahlia.Repositories;
 using Dahlia.ViewModels;
 
@@ -19,14 +20,23 @@ namespace Dahlia.Controllers
         public ActionResult Index()
         {
 
-             var model = new RetreatListViewModel {Dates = _RetreatRepository.GetList().Select(x => x.StartDate)};
+            var model = new RetreatListViewModel { Dates = _RetreatRepository.GetList().Select(x => x.StartDate) };
 
-             return View(model);
-         }
+            return View(model);
+        }
 
         public ActionResult Create()
         {
             return View();
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult Create(Retreat retreatModel)
+        {
+            if (!ModelState.IsValid)
+                return View();
+            _RetreatRepository.Add(retreatModel);
+            return RedirectToAction("List");
         }
     }
 }
