@@ -17,7 +17,7 @@ namespace Dahlia.Specifications
         Establish context = () =>
                             {
                                 _retreatDate = new DateTime(2007, 12, 15);
-                                _controller = new ParticipantController(null, null);
+                                _controller = new ParticipantController(null);
                             };
 
         Because of = () =>
@@ -55,7 +55,7 @@ namespace Dahlia.Specifications
             _retreatDate = new DateTime(2007, 12, 15);
             
             _retreatParticipantAdder = MockRepository.GenerateStub<IRetreatParticipantAdder>();
-            _controller = new ParticipantController(_retreatParticipantAdder, null);
+            _controller = new ParticipantController(_retreatParticipantAdder);
         };
 
         Because of = () => _controller.DoAddToRetreat(_viewModel);

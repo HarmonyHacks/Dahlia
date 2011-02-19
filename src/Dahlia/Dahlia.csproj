@@ -142,9 +142,6 @@
     <Content Include="Views\Participant\AddToRetreat.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Participant\List.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Retreat\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
