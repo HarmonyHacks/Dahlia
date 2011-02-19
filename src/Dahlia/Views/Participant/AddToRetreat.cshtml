@@ -9,7 +9,7 @@
 
 <h2>Add Participant to Retreat</h2>
 
-@using (Html.BeginForm("DoAddToRetreat")) {
+@using (Html.BeginForm("DoAddToRetreat", "Participant")) {
     @Html.HiddenFor(x => x.RetreatDate)
     @Html.HiddenFor(x => x.DateReceived)
     <fieldset>
