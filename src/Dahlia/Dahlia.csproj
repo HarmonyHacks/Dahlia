@@ -33,6 +33,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Antlr3.Runtime">
+      <HintPath>..\..\lib\fluentnhibernate-1.1\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentNHibernate">
+      <HintPath>..\..\lib\fluentnhibernate-1.1\FluentNHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\..\lib\fluentnhibernate-1.1\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\..\lib\fluentnhibernate-1.1\NHibernate.dll</HintPath>
+    </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\..\lib\structuremap.2.6.2\lib\StructureMap.dll</HintPath>
     </Reference>
@@ -75,6 +87,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Mappings\ParticipantMap.cs" />
+    <Compile Include="Mappings\RetreatMap.cs" />
     <Compile Include="Models\CareGiver.cs" />
     <Compile Include="Models\Participant.cs" />
     <Compile Include="Models\Retreat.cs" />
@@ -147,6 +161,7 @@
   <ItemGroup>
     <Content Include="Views\Retreat\Index.cshtml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
