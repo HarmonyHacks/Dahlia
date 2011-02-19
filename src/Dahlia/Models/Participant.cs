@@ -8,9 +8,12 @@ namespace Dahlia.Models
     public class Participant
     {
         public virtual int Id { get; set; } 
-        public virtual Room RoomAssignment { get; set; }
+        //public virtual Room RoomAssignment { get; set; }
+
         public virtual string FirstName { get; set; }
         public virtual string LastName { get; set; }
-
+        public virtual string RoomCode { get; set; }
+        public virtual string DateReceived { get; set; }
+        public virtual string Notes { get; set; }
     }
 }

@@ -73,7 +73,11 @@
     <Compile Include="Models\WaitListing.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ParticipantRepository.cs" />
+<<<<<<< HEAD
     <Compile Include="Services\RetreatListService.cs" />
+=======
+    <Compile Include="Repositories\RetreatRepository.cs" />
+>>>>>>> 81aff8a219ba4b77c389ce4469f8c79612eeb343
     <Compile Include="ViewModels\AddParticipantToRetreatViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
