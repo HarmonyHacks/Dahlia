@@ -53,3 +53,6 @@ db/*.sqlite3
 log/*
 tmp/*
 public/system/*
+
+# vim .swp files
+# *swp
