@@ -44,7 +44,7 @@ namespace Dahlia.Controllers
             if (!ModelState.IsValid)
                 return View();
             _RetreatRepository.Add(retreatModel);
-            return RedirectToAction("List");
+            return RedirectToAction("Index");
         }
     }
 }
