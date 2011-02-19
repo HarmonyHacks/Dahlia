@@ -13,5 +13,6 @@ namespace Dahlia.ViewModels
     {
         public DateTime Date { get; set; }
         public Uri AddParticipantLink { get; set; }
+        public int RegisteredParticipants { get; set; }
     }
 }
