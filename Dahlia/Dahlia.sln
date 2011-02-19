@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dahlia", "Dahlia\Dahlia.csproj", "{BBFB9D0D-FDC8-4532-B8C5-35035D5713FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dahlia.Tests", "Dahlia.Tests\Dahlia.Tests.csproj", "{8192E5FD-1823-41DA-9F16-94D588D6A09B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BBFB9D0D-FDC8-4532-B8C5-35035D5713FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBFB9D0D-FDC8-4532-B8C5-35035D5713FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBFB9D0D-FDC8-4532-B8C5-35035D5713FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBFB9D0D-FDC8-4532-B8C5-35035D5713FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8192E5FD-1823-41DA-9F16-94D588D6A09B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8192E5FD-1823-41DA-9F16-94D588D6A09B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8192E5FD-1823-41DA-9F16-94D588D6A09B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8192E5FD-1823-41DA-9F16-94D588D6A09B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
