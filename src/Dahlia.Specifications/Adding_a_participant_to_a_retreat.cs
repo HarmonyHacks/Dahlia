@@ -27,6 +27,8 @@ namespace Dahlia.Specifications.Adding_a_participant_to_a_retreat
 
         It should_return_a_view_model_that_contains_the_retreat_date = () => _viewModel.RetreatDate.ShouldEqual(_retreatDate);
 
+        It should_have_a_default_date_equal_to_today_for_the_received_date = () => _ViewModel.DateReceived.ShouldEqual(DateTime.Today);
+
         static DateTime _retreatDate;
         static ViewResult _viewResult;
         static AddParticipantToRetreatViewModel _viewModel;

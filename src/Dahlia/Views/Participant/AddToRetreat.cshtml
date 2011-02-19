@@ -11,4 +11,11 @@
 
 @using (Html.BeginForm()) {
     @Html.HiddenFor(x => x.RetreatDate)
+    <fieldset>
+        <label>First Name: </label>@Html.TextBoxFor(x => x.FirstName)<br />
+        <label>Last Name: </label>@Html.TextBoxFor(x => x.LastName)<br />
+        <label>Bed Code: </label>@Html.TextBoxFor(x => x.BedCode)<br />
+        <label>Date Received: </label>@Html.TextBoxFor(x => x.DateReceived)<br />
+        <label>Notes:</label>@Html.TextAreaFor(x => x.Notes)<br />
+    </fieldset>
 }

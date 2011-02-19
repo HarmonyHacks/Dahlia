@@ -10,7 +10,8 @@ namespace Dahlia.Controllers
         {
             var viewModel = new AddParticipantToRetreatViewModel
                                 {
-                                    RetreatDate = retreatDate
+                                    RetreatDate = retreatDate,
+                                    DateReceived = DateTime.Today,
                                 };
             return View("AddToRetreat", viewModel);
         }
