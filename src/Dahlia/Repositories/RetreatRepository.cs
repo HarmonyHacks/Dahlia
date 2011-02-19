@@ -19,12 +19,12 @@ namespace Dahlia.Repositories
             _Retreats = new List<Retreat>();
         }
 
-        public IEnumerable<Retreat> GetList()
+        IEnumerable<Retreat> IRetreatRepository.GetList()
         {
             return _Retreats;
         }
 
-        public void Add(Retreat retreat)
+        void IRetreatRepository.Add(Retreat retreat)
         {
             _Retreats.Add(retreat);
         }

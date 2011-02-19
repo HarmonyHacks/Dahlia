@@ -1,29 +1,13 @@
-﻿@model IEnumerable<Dahlia.Models.Retreat>
+﻿@model Dahlia.ViewModels.RetreatListViewModel
 
 @{
-    ViewBag.Title = "index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Retreats";
 }
 
-<h2>index</h2>
+<h2>Retreats</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table>
-    <tr>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
+<ul>
+@foreach (var retreat in Model.Dates) {
+    <li>@retreat.ToString("d")</li>
 }
-
-</table>
-
+</ul>
