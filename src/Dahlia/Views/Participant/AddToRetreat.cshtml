@@ -1,4 +1,8 @@
-﻿@{
+﻿@using Dahlia.ViewModels;
+
+@model Dahlia.ViewModels.AddParticipantToRetreatViewModel
+
+@{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -6,5 +10,5 @@
 <h2>Add Participant to Retreat</h2>
 
 @using (Html.BeginForm()) {
-    
+    @Html.HiddenFor(x => x.RetreatDate)
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
+using Dahlia.ViewModels;
 
 namespace Dahlia.Controllers
 {
@@ -7,7 +8,11 @@ namespace Dahlia.Controllers
     {
         public ViewResult AddToRetreat(DateTime retreatDate)
         {
-            return View("AddToRetreat");
+            var viewModel = new AddParticipantToRetreatViewModel
+                                {
+                                    RetreatDate = retreatDate
+                                };
+            return View("AddToRetreat", viewModel);
         }
 
     }
