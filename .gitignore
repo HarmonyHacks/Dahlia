@@ -9,8 +9,6 @@ CI
 *.[Oo]bj
 *.dat
 *.crc
-*.exe
-*.pdb
 *.user
 *.aps
 *.pch

@@ -111,6 +111,7 @@
         <ElementKinds>
           <Kind Name="Machine.Specifications_Context" />
         </ElementKinds>
+        <ExtraRule Prefix="" Suffix="" Style="aa_bb" />
       </UserRule>
     </Naming2>
   </CodeStyleSettings>
