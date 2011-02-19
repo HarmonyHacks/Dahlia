@@ -9,7 +9,7 @@
 
 <h2>Add Participant to Retreat</h2>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm("DoAddToRetreat")) {
     @Html.HiddenFor(x => x.RetreatDate)
     <fieldset>
         <label>First Name: </label>@Html.TextBoxFor(x => x.FirstName)<br />
@@ -18,4 +18,6 @@
         <label>Date Received: </label>@Html.TextBoxFor(x => x.DateReceived)<br />
         <label>Notes:</label>@Html.TextAreaFor(x => x.Notes)<br />
     </fieldset>
+    
+    <input type="submit" value="Add Participant" />
 }
