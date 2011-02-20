@@ -46,7 +46,7 @@ namespace Dahlia.Specifications
         static Retreat _retreat;
     }
 
-    public class When_showing_the_add_participan_screen_for_a_full_retreat
+    public class When_showing_the_add_participant_screen_for_a_full_retreat
     {
         Establish context = () =>
         {
@@ -54,12 +54,12 @@ namespace Dahlia.Specifications
             _retreatDate = new DateTime(2007, 12, 15);
             _controller = new ParticipantController(_retreatRepo);
 
-            var participants = Builder<Participant>.CreateListOfSize(29)
+            var registrations = Builder<Registration>.CreateListOfSize(29)
                 .WhereAll().Have(x => x.BedCode = "foo").Build();
 
             var retreat = Builder<Retreat>.CreateNew()
                 .With(x => x.StartDate = _retreatDate)
-                .And(x => x.Registrations = participants)
+                .And(x => x.Registrations = registrations)
                 .Build();
 
             _retreatRepo.Stub(x => x.Get(_retreatDate)).Return(retreat);
@@ -97,6 +97,7 @@ namespace Dahlia.Specifications
                              DateReceived = DateTime.Today,
                              PhysicalStatus = PhysicalStatus.Limited,
                              Notes = "yada yada yada...",
+                             Save = "Save participant",
                          };
             _retreatDate = retreatDate;
             
@@ -116,16 +117,16 @@ namespace Dahlia.Specifications
             _retreat.Registrations.Count.ShouldEqual(1);
         
         It should_give_the_participant_the_right_first_name = () => 
-            _retreat.Registrations[0].FirstName.ShouldEqual(_viewModel.FirstName);
+            _retreat.Registrations[0].Participant.FirstName.ShouldEqual(_viewModel.FirstName);
         
         It should_give_the_participant_the_right_last_name = () => 
-            _retreat.Registrations[0].LastName.ShouldEqual(_viewModel.LastName);
+            _retreat.Registrations[0].Participant.LastName.ShouldEqual(_viewModel.LastName);
         
         It should_give_the_participant_the_right_date_recieved = () => 
-            _retreat.Registrations[0].DateReceived.ShouldEqual(_viewModel.DateReceived);
+            _retreat.Registrations[0].Participant.DateReceived.ShouldEqual(_viewModel.DateReceived);
         
         It should_give_the_participant_the_right_notes = () => 
-            _retreat.Registrations[0].Notes.ShouldEqual(_viewModel.Notes);
+            _retreat.Registrations[0].Participant.Notes.ShouldEqual(_viewModel.Notes);
 
         It should_assign_the_right_bed_code = () => 
             _retreat.Registrations[0].BedCode.ShouldEqual(_viewModel.BedCode);
@@ -134,13 +135,52 @@ namespace Dahlia.Specifications
             _retreat.Registrations[0].Retreat.StartDate.ShouldEqual(_retreat.StartDate);
 
         It should_assign_the_physical_status = () =>
-            _retreat.Registrations[0].PhysicalStatus.ShouldEqual(_viewModel.PhysicalStatus);
+            _retreat.Registrations[0].Participant.PhysicalStatus.ShouldEqual(_viewModel.PhysicalStatus);
 
         static DateTime _retreatDate;
         static AddParticipantToRetreatViewModel _viewModel;
         static ParticipantController _controller;
         static IRetreatRepository _retreatRepository;
         static Retreat _retreat;
+    }
+
+    [Subject("Adding a participant to a retreat")]
+    public class When_posting_back_a_search_from_the_add_participant_screen_for_a_retreat
+    {
+        Establish context = () =>
+        {
+            var retreatDate = new DateTime(2007, 12, 15);
+            _viewModel = new AddParticipantToRetreatViewModel
+            {
+                RetreatDate = retreatDate,
+                FirstName = "firstbob",
+                LastName = "lastmartin",
+                DateReceived = DateTime.Today,
+                Search = "Search",
+            };
+            _retreatDate = retreatDate;
+
+            _retreatRepository = MockRepository.GenerateStub<IRetreatRepository>();
+            _controller = new ParticipantController(_retreatRepository);
+
+            _retreat = new Retreat { StartDate = retreatDate };
+            _retreatRepository.Stub(x => x.Get(retreatDate)).Return(_retreat);
+        };
+
+        Because of = () => _result = _controller.DoAddToRetreat(_viewModel);
+
+        It should_redirect_back_to_the_add_to_retreat_view =
+            () => ((RedirectToRouteResult) _result).RouteValues["action"].ShouldEqual("AddToRetreat");
+
+        It should_supply_a_search_results_object_in_the_temp_data =
+            () => _controller.TempData["searchResults"].ShouldBe(typeof (AddParticipantToRetreatSearchResultsViewModel));
+
+        static DateTime _retreatDate;
+        static AddParticipantToRetreatViewModel _viewModel;
+        static ParticipantController _controller;
+        static IRetreatRepository _retreatRepository;
+        static Retreat _retreat;
+        static ActionResult _result;
     }
 
     [Subject("Adding a participant to a retreat")]

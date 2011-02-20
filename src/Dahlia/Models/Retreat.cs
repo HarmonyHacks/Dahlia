@@ -9,11 +9,11 @@ namespace Dahlia.Models
     {
         public Retreat()
         {
-            Registrations = new List<Participant>();
+            Registrations = new List<Registration>();
         }
 
         public virtual int Id { get; set; }
-        public virtual IList<Participant> Registrations { get; set; }
+        public virtual IList<Registration> Registrations { get; set; }
         public virtual String Description { get; set; }
         public virtual DateTime StartDate { get; set; }
 
@@ -25,9 +25,10 @@ namespace Dahlia.Models
             }
         }
 
-        public virtual void AddParticipant(Participant newRegistration )
+        public virtual void AddParticipant(Participant newRegistration, string bedCode )
         {
-            Registrations.Add(newRegistration);
+            var registration = new Registration {Participant = newRegistration, Retreat = this, BedCode = bedCode};
+            Registrations.Add(registration);
         }
     }
 }

@@ -17,6 +17,7 @@ namespace Dahlia.ViewModels
         public bool RetreatIsFull { get; set; }
         public string Cancel { get; set; }
         public string Save { get; set; }
+        public string Search { get; set; }
 
         public string RetreatUiId
         {
