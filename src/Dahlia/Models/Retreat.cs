@@ -18,7 +18,7 @@ namespace Dahlia.Models
         public virtual DateTime StartDate { get; set; }
         public virtual String StartDateStr { get { return StartDate.ToShortDateString(); } }
 
-        public bool IsFull
+        public virtual bool IsFull
         {
             get
             {
