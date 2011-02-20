@@ -5,7 +5,8 @@
 
 @{
     ViewBag.Title = "Create";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Popup.cshtml";
+    var searchResultsViewModel = (AddParticipantToRetreatSearchResultsViewModel)TempData["searchResults"];
 }
 
 <h2>Add Participant to Retreat</h2>
@@ -16,6 +17,7 @@
         <legend>Add Participant</legend>
         <label>First Name: </label>@Html.TextBoxFor(x => x.FirstName)<br />
         <label>Last Name: </label>@Html.TextBoxFor(x => x.LastName)<br />
+        <label>Date Received: </label>@Html.TextBoxFor(x => x.DateReceived)<br />
         <label>Bed Code: </label>
         @if (!Model.RetreatIsFull) 
         {
@@ -26,7 +28,6 @@
             <span class='ui-warning'>All beds full</span>
         }
         <br />
-        <label>Date Received: </label>@Html.TextBoxFor(x => x.DateReceived)<br />
         <label>Notes:</label>@Html.TextAreaFor(x => x.Notes)<br />
         <label>Physical Status:</label>@Html.DropDownListFor(x => x.PhysicalStatus)<br />
     </fieldset>
@@ -34,3 +35,13 @@
     <input name="Save" type="submit" value="Add Participant" />
     <input name="Cancel" type="submit" value="Cancel" />
 }
+
+<ul>
+@if (searchResultsViewModel != null)
+{
+    foreach (var searchResult in searchResultsViewModel.SearchResults)
+    {
+        <li>@searchResult.Name @searchResult.DateReceived</li>
+    }
+}
+</ul>

@@ -51,13 +51,13 @@ namespace Dahlia.Controllers
                          RegisteredParticipants = x.Registrations.Select(
                              y => new RetreatListParticipantViewModel
                                   {
-                                      FirstName = y.FirstName,
-                                      LastName = y.LastName,
+                                      FirstName = y.Participant.FirstName,
+                                      LastName = y.Participant.LastName,
                                       BedCode = y.BedCode,
-                                      DateReceived = y.DateReceived,
-                                      PhysicalStatus = y.PhysicalStatus,
-                                      Notes = y.Notes,
-                                      DeleteLink = BuildDeleteLink(x, y)
+                                      DateReceived = y.Participant.DateReceived,
+                                      PhysicalStatus = y.Participant.PhysicalStatus,
+                                      Notes = y.Participant.Notes,
+                                      DeleteLink = BuildDeleteLink(x, y.Participant)
                                   })
                      });
         }

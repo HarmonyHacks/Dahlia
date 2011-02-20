@@ -5,8 +5,6 @@ using System.Text;
 using Dahlia.Models;
 using FluentNHibernate.Automapping;
 using NHibernate;
-using NHibernate.Cfg;
-using FluentNHibernate;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using NHibernate.Tool.hbm2ddl;

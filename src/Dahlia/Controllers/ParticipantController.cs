@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Mvc;
 using Dahlia.Models;
 using Dahlia.Repositories;
+using Dahlia.Services;
 using Dahlia.ViewModels;
 
 namespace Dahlia.Controllers
@@ -12,11 +13,13 @@ namespace Dahlia.Controllers
     {
         readonly IRetreatRepository _retreatRepository;
         readonly ParticipantRepository _participantRepository;
+        readonly IParticipantSearchService _participantSearchService;
 
-        public ParticipantController(IRetreatRepository retreatRepository, ParticipantRepository participantRepository)
+        public ParticipantController(IRetreatRepository retreatRepository, ParticipantRepository participantRepository, IParticipantSearchService participantSearchService)
         {
             _retreatRepository = retreatRepository;
             _participantRepository = participantRepository;
+            _participantSearchService = participantSearchService;
         }
 
         public ViewResult AddToRetreat(DateTime retreatDate)
@@ -49,8 +52,11 @@ namespace Dahlia.Controllers
             var retreat = _retreatRepository.Get(viewModel.RetreatDate);
             var participantToRemove =
             retreat.Registrations.First(
-                    x => x.FirstName == viewModel.FirstName && x.LastName == viewModel.LastName);
+                    x => x.Participant.FirstName == viewModel.FirstName 
+                                && x.Participant.LastName == viewModel.LastName);
             retreat.Registrations.Remove(participantToRemove);
+            _retreatRepository.Save(retreat);
+
             return RedirectToAction("Index", "Retreat");
         }
 
@@ -59,20 +65,33 @@ namespace Dahlia.Controllers
             if (postBack.Cancel != null)
                 return RedirectToAction("Index", "Retreat", new {id = postBack.RetreatUiId});
 
+            if(postBack.Search != null)
+            {
+                var queryResults = _participantSearchService.SearchParticipants(postBack.FirstName, postBack.LastName);
+                var searchResults = queryResults.Select(x => new ParticipantSearchResultViewModel
+                {
+                    Name = string.Format("{0} {1}", x.FirstName, x.LastName),
+                    DateReceived = x.DateReceived,
+                });
+                TempData["searchResults"] = new AddParticipantToRetreatSearchResultsViewModel
+                {
+                    SearchResults = searchResults.ToList(),
+                };
+                return RedirectToAction("AddToRetreat", "Participant", new{ retreatDate = postBack.RetreatDate });
+            }
+
             var retreat = _retreatRepository.Get(postBack.RetreatDate);
 
             var newParticipant = new Participant
-                                 {
-                                     FirstName = postBack.FirstName,
-                                     LastName = postBack.LastName,
-                                     DateReceived = postBack.DateReceived,
-                                     Notes = postBack.Notes,
-                                     BedCode = postBack.BedCode,
-                                     PhysicalStatus = postBack.PhysicalStatus,
-                                     Retreat = retreat,
-                                 };
+            {
+                FirstName = postBack.FirstName,
+                LastName = postBack.LastName,
+                DateReceived = postBack.DateReceived,
+                Notes = postBack.Notes,
+                PhysicalStatus = postBack.PhysicalStatus
+            };
 
-            retreat.AddParticipant(newParticipant);
+            retreat.AddParticipant(newParticipant, postBack.BedCode);
 
             _retreatRepository.Save(retreat);
 
@@ -94,9 +113,9 @@ namespace Dahlia.Controllers
             {
                 Results = new[]
                {
-                   new ReassignParticipantSearchResultViewModel { DateReceived = DateTime.Now, Name = "Bob Dobbs", SelectLink = new Uri("/Participant/DoReassign?participantId=42", UriKind.Relative)},
-                   new ReassignParticipantSearchResultViewModel { DateReceived = DateTime.Now, Name = "Bob Smith", SelectLink = new Uri("/Participant/DoReassign?participantId=432", UriKind.Relative)},
-                   new ReassignParticipantSearchResultViewModel { DateReceived = DateTime.Now, Name = "Bob Jones", SelectLink = new Uri("/Participant/DoReassign?participantId=424", UriKind.Relative)},
+                   new ParticipantSearchResultViewModel { DateReceived = DateTime.Now, Name = "Bob Dobbs", SelectLink = new Uri("/Participant/DoReassign?participantId=42", UriKind.Relative)},
+                   new ParticipantSearchResultViewModel { DateReceived = DateTime.Now, Name = "Bob Smith", SelectLink = new Uri("/Participant/DoReassign?participantId=432", UriKind.Relative)},
+                   new ParticipantSearchResultViewModel { DateReceived = DateTime.Now, Name = "Bob Jones", SelectLink = new Uri("/Participant/DoReassign?participantId=424", UriKind.Relative)},
                }
             };
 
