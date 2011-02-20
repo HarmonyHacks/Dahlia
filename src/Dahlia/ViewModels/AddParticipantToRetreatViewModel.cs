@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Dahlia.Models;
+using Dahlia.Services;
 
 namespace Dahlia.ViewModels
 {
@@ -14,5 +15,10 @@ namespace Dahlia.ViewModels
         public string Notes { get; set; }
         public PhysicalStatus PhysicalStatus { get; set; }
         public bool RetreatIsFull { get; set; }
+
+        public string RetreatUiId
+        {
+            get { return RetreatUiHelpers.RetreatUiId(RetreatDate); }
+        }
     }
 }

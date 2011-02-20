@@ -48,7 +48,7 @@ namespace Dahlia.Controllers
                 retreat.RegisteredParticipants.First(
                     x => x.Participant.FirstName == viewModel.FirstName && x.Participant.LastName == viewModel.LastName);
             retreat.RegisteredParticipants.Remove(participantToRemove);
-            return RedirectToAction("Index", "Retreat");
+            return RedirectToAction("Index", "Retreat", new { id = viewModel.RetreatUiId });
         }
 
         public ActionResult DoAddToRetreat(AddParticipantToRetreatViewModel postBack)
@@ -67,7 +67,7 @@ namespace Dahlia.Controllers
 
             _retreatRepository.Save(retreat);
 
-            return RedirectToAction("Index", "Retreat");
+            return RedirectToAction("Index", "Retreat", new { id = postBack.RetreatUiId });
         }
     }
 }
