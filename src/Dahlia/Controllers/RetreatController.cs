@@ -94,7 +94,7 @@ namespace Dahlia.Controllers
         public ActionResult Delete(int id)
         {
             var retreat = _retreatRepository.GetById(id);
-            return View(new DeleteRetreatViewModel {Id = retreat.Id, Description = retreat.Description});
+            return View(new DeleteRetreatViewModel {Id = retreat.Id, Description = retreat.Description, StartDate = retreat.StartDate});
         }
 
         [HttpPost]

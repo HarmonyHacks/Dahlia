@@ -1,0 +1,11 @@
+﻿@model Dahlia.ViewModels.DeleteRetreatViewModel
+
+    <h3>Are you sure you want to delete the retreat for @Model.StartDate?</h3>
+    <br />description: @Model.Description<br />
+
+    @using (Html.BeginForm()) {
+        <p>
+            <input type="submit" value="Delete" /> |
+            @Html.ActionLink("Cancel", "Index")
+        </p>
+    }
