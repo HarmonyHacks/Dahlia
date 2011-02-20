@@ -13,5 +13,6 @@ namespace Dahlia.ViewModels
         public DateTime DateReceived { get; set; }
         public string Notes { get; set; }
         public PhysicalStatus PhysicalStatus { get; set; }
+        public bool RetreatIsFull { get; set; }
     }
 }
