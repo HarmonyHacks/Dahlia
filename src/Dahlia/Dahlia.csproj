@@ -50,6 +50,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\fluentnhibernate-1.1\NHibernate.dll</HintPath>
     </Reference>
+    <Reference Include="NHibernate.ByteCode.Castle">
+      <HintPath>..\..\lib\fluentnhibernate-1.1\NHibernate.ByteCode.Castle.dll</HintPath>
+    </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\..\lib\structuremap.2.6.2\lib\StructureMap.dll</HintPath>
     </Reference>
@@ -161,19 +164,12 @@
     <Content Include="Views\Retreat\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Retreat\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Participant\DeleteFromRetreat.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Retreat\App.cshtml" />
+    <Content Include="Views\Retreat\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
-
-  <ItemGroup>
-    <Content Include="Views\Retreat\Get.cshtml" />
-  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
