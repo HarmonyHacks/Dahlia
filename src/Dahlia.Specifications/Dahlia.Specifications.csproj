@@ -89,6 +89,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="when_checking_mappings.cs" />
+    <Compile Include="When_creating_new_entities.cs" />
     <Compile Include="When_structure_map_is_bootstrapped.cs" />
   </ItemGroup>
   <ItemGroup>

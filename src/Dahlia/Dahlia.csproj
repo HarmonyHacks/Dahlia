@@ -95,15 +95,16 @@
     <Compile Include="Controllers\ParticipantController.cs" />
     <Compile Include="Controllers\RetreatController.cs" />
     <Compile Include="Conventions\HasManyConvention.cs" />
+    <Compile Include="Conventions\Overrides\RegistrationOverride.cs" />
     <Compile Include="Conventions\Overrides\RetreatOverride.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="MarkupHelpers.cs" />
-    <Compile Include="Models\CareGiver.cs" />
     <Compile Include="Models\IAmPersistable.cs" />
     <Compile Include="Models\Participant.cs" />
     <Compile Include="Models\PhysicalStatus.cs" />
+    <Compile Include="Models\Registration.cs" />
     <Compile Include="Models\Retreat.cs" />
     <Compile Include="Persistence\SQLiteSessionFactory.cs" />
     <Compile Include="Persistence\SQLSessionFactory.cs" />
