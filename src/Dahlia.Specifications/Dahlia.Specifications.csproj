@@ -40,6 +40,10 @@
     <Reference Include="FluentNHibernate">
       <HintPath>..\..\lib\fluentnhibernate-1.1\FluentNHibernate.dll</HintPath>
     </Reference>
+    <Reference Include="HibernatingRhinos.Profiler.Appender.v4.0, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0774796e73ebf640, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\NHprof\HibernatingRhinos.Profiler.Appender.v4.0.dll</HintPath>
+    </Reference>
     <Reference Include="Iesi.Collections">
       <HintPath>..\..\lib\fluentnhibernate-1.1\Iesi.Collections.dll</HintPath>
     </Reference>
