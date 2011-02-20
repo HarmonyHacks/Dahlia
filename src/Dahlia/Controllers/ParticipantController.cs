@@ -12,11 +12,13 @@ namespace Dahlia.Controllers
     {
         readonly IRetreatRepository _retreatRepository;
         readonly IParticipantSearchService _participantSearchService;
+        readonly IBedRepository _bedRepository;
 
-        public ParticipantController(IRetreatRepository retreatRepository, IParticipantSearchService participantSearchService)
+        public ParticipantController(IRetreatRepository retreatRepository, IParticipantSearchService participantSearchService, IBedRepository bedRepository)
         {
             _retreatRepository = retreatRepository;
             _participantSearchService = participantSearchService;
+            _bedRepository = bedRepository;
         }
 
         public ViewResult AddToRetreat(DateTime retreatDate)
@@ -88,7 +90,9 @@ namespace Dahlia.Controllers
                 PhysicalStatus = postBack.PhysicalStatus
             };
 
-            retreat.AddParticipant(newParticipant, postBack.BedCode);
+            var bed = _bedRepository.GetBy(postBack.BedCode);
+
+            retreat.AddParticipant(newParticipant, bed);
 
             _retreatRepository.Save(retreat);
 

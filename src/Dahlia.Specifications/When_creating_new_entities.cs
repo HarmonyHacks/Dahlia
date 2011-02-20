@@ -15,7 +15,9 @@ namespace Dahlia.Specifications
             _retreat = new Retreat { StartDate = DateTime.Today };
             var participant = new Participant { FirstName = "Dirk", LastName = "Diggler" };
 
-            _retreat.AddParticipant(participant, "bedCode");
+            var bed = new Bed { Code = "bedCode" };
+
+            _retreat.AddParticipant(participant, bed);
         };
 
         Because of = () =>
@@ -27,7 +29,7 @@ namespace Dahlia.Specifications
         };
 
         It should_save_the_retreat = () => _persistedRetreat.StartDate.ShouldEqual(DateTime.Today);
-        It should_save_the_registration = () => _persistedRetreat.Registrations[0].BedCode.ShouldEqual("bedCode");
+        It should_save_the_registration = () => _persistedRetreat.Registrations[0].Bed.Code.ShouldEqual("bedCode");
         It should_save_the_participant = () => _persistedRetreat.Registrations[0].Participant.FirstName.ShouldEqual("Dirk");
 
         static ISession _session;
@@ -60,8 +62,9 @@ namespace Dahlia.Specifications
         {
             var retreat = _session.Load<Retreat>(_retreatId);
             var participant = _session.Load<Participant>(_participantId);
+            var bed = new Bed { Code = "FOO" };
 
-            retreat.AddParticipant(participant, "FOO");
+            retreat.AddParticipant(participant, bed);
 
             _session.SaveOrUpdate(retreat);
             _session.Flush();
@@ -80,7 +83,7 @@ namespace Dahlia.Specifications
             _persistedRetreat.Registrations[0].Participant.Id.ShouldEqual(_participantId);
 
         It should_have_the_correct_bed_code = () =>
-            _persistedRetreat.Registrations[0].BedCode.ShouldEqual("FOO");
+            _persistedRetreat.Registrations[0].Bed.Code.ShouldEqual("FOO");
 			
 
         static object _participantId;

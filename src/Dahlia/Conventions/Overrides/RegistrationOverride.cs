@@ -9,6 +9,7 @@ namespace Dahlia.Conventions.Overrides
         public void Override(AutoMapping<Registration> mapping)
         {
             mapping.HasOne(x => x.Participant).Cascade.All();
+            mapping.HasOne(x => x.Bed).Cascade.All();
         }
     }
 }

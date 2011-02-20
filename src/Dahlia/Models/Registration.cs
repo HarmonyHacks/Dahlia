@@ -5,6 +5,6 @@ namespace Dahlia.Models
         public virtual int Id { get; set; }
         public virtual Retreat Retreat { get; set; }
         public virtual Participant Participant { get; set; }
-        public virtual string BedCode { get; set; }
+        public virtual Bed Bed { get; set; }
     }
 }
