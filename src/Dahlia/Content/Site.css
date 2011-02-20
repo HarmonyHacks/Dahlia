@@ -81,7 +81,7 @@ ul#main_navigation
 {
     display:inline;
     padding:1em;
-    background-color:ffffff;
+    background-color:#ffffff;
     width:100%;
 }
 
@@ -106,5 +106,5 @@ ul#main_navigation li form
 
 #main_header h1
 {
-    margin-left:2em;
+    margin-left:4.5em;
 }
