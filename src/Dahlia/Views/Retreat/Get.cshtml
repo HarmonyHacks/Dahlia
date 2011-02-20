@@ -4,7 +4,7 @@
     ViewBag.Title = "Get";
 }
 
-<h2>@Model.Date Retreat</h2>
+<h2>@Model.Date.ToString("d") Retreat</h2>
 
 <a href='@Model.AddParticipantLink'>Add Participant</a><br />
 <ul><b>Has Bed Code</b>
@@ -17,7 +17,7 @@
 <ul><b>Does Not Have Bed Code</b>
     @foreach (var participant in Model.RegisteredParticipants.Where(p => String.IsNullOrWhiteSpace(p.BedCode)).OrderBy(p => p.DateReceived))
     {
-        <li><div style="width:100%"> @participant.FirstName @participant.LastName @participant.BedCode @participant.DateReceived <a href="@participant.DeleteLink">Delete</a> </div>
+        <li><div style="width:100%"> @participant.FirstName @participant.LastName @participant.BedCode @participant.DateReceived.ToString("d") <a href="@participant.DeleteLink">Delete</a> </div>
             <div style="width:100%"> @participant.Notes </div></li>
     }
 </ul>
