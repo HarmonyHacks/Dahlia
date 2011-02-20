@@ -18,10 +18,6 @@ namespace Dahlia.ViewModels
         public string Cancel { get; set; }
         public string Save { get; set; }
         public string Search { get; set; }
-
-        public string RetreatUiId
-        {
-            get { return RetreatUiHelpers.RetreatUiId(RetreatDate); }
-        }
+        public int RetreatId { get; set; }
     }
 }

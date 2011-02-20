@@ -70,7 +70,7 @@ namespace Dahlia.Controllers
         public ActionResult DoAddToRetreat(AddParticipantToRetreatViewModel postBack)
         {
             if (postBack.Cancel != null)
-                return RedirectToAction("Index", "Retreat", new {id = postBack.RetreatUiId});
+                return RedirectToAction("Index", "Retreat", new {id = postBack.RetreatId});
 
             if(postBack.Search != null)
             {
@@ -104,17 +104,18 @@ namespace Dahlia.Controllers
 
             _retreatRepository.Save(retreat);
 
-            return RedirectToAction("Index", "Retreat", new { id = postBack.RetreatUiId });
+            return RedirectToAction("Index", "Retreat", new { id = postBack.RetreatId });
         }
 
-        public ActionResult DoAssignToRetreat(DateTime retreatDate, int participantId)
+        public ActionResult DoAssignToRetreat(int retreatId, int participantId, string bedCode)
         {
-            // use the imaginary participant repository to read the participant.
-            // use the retreat repository to get the retreat.
-            var retreat = _retreatRepository.Get(retreatDate);
+            var retreat = _retreatRepository.GetById(retreatId);
             var participant = _participantRepository.GetById(participantId);
-            throw new NotImplementedException();
-            //retreat.AddParticipant(participant, );
+            Bed bed = null;
+            if (!string.IsNullOrEmpty(bedCode))
+                bed = _bedRepository.GetBy(bedCode);
+            retreat.AddParticipant(participant, bed);
+            return RedirectToAction("Index", "Retreat", new {id = retreat.Id });
         }
 
         public ActionResult ReAssignSearchResults(string lastnameISearchedFor)

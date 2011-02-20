@@ -46,6 +46,7 @@ namespace Dahlia.Controllers
             return _retreatRepository.GetList().OrderBy(x => x.StartDate).Select(
                 x => new RetreatListRetreatViewModel
                      {
+                         Id = x.Id,
                          Date = x.StartDate,
                          AddParticipantLink = AddParticipantLinkForRetreat(x),
                          RegisteredParticipants = x.Registrations.Select(
@@ -88,7 +89,22 @@ namespace Dahlia.Controllers
             if (!ModelState.IsValid)
                 return View();
             _retreatRepository.Add(retreatModel);
-            return RedirectToAction("Index", new { id = RetreatUiHelpers.RetreatUiId(retreatModel.StartDate) });
+            return RedirectToAction("Index", new { id = retreatModel.Id });
+        }
+
+        public ActionResult Delete(int id)
+        {
+            var retreat = _retreatRepository.GetById(id);
+            return View(new DeleteRetreatViewModel {Id = retreat.Id, Description = retreat.Description, StartDate = retreat.StartDate});
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int id, FormCollection collection)
+        {
+            _retreatRepository.DeleteById(id);
+            // TODO: this is more explicit than it needs to be because we can't get MvcContrib.TestHelper to
+            // assert the right thing without a controller name for some reason.  Please fix!
+            return RedirectToAction("Index", "Retreat");
         }
     }
 }

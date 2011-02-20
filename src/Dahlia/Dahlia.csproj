@@ -118,14 +118,15 @@
     <Compile Include="Services\ExpressionExtensions.cs" />
     <Compile Include="Services\ParticipantSearchService.cs" />
     <Compile Include="Services\RequestContextProvider.cs" />
-    <Compile Include="Services\RetreatUiHelpers.cs" />
     <Compile Include="Services\UrlMapper.cs" />
+    <Compile Include="ViewModels\AddParticipantToRetreatChooseBedCodeViewModel.cs" />
     <Compile Include="ViewModels\AddParticipantToRetreatSearchResultsViewModel.cs" />
     <Compile Include="ViewModels\AddParticipantToRetreatViewModel.cs" />
     <Compile Include="ViewModels\DeleteParticipantFromRetreatViewModel.cs" />
     <Compile Include="ViewModels\ParticipantSearchResultViewModel.cs" />
     <Compile Include="ViewModels\ReassignParticipantViewModel.cs" />
     <Compile Include="ViewModels\ReAssignParticipantSearchResultsViewModel.cs" />
+    <Compile Include="ViewModels\DeleteRetreatViewModel.cs" />
     <Compile Include="ViewModels\RetreatListViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -190,9 +191,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_Popup.cshtml" />
+    <Content Include="Views\Retreat\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Participant\ReassignParticipant.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Participant\AddToRetreatChooseBedCode.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
