@@ -27,7 +27,6 @@ namespace Dahlia.Repositories
         IEnumerable<Retreat> IRetreatRepository.GetList()
         {
             return _session.CreateCriteria(typeof(Retreat))
-                .SetFetchMode("Registrations", FetchMode.Lazy)
                 .List<Retreat>();
         }
 
