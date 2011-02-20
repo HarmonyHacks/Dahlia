@@ -26,7 +26,7 @@
     @foreach (var retreat in Model.Retreats)
     {
         <div id="@retreat.Id">
-            <a href='@retreat.AddParticipantLink'>Add Participant</a><br />
+            <a href='@retreat.AddParticipantLink'>Add Participant</a> &nbsp; @Html.ActionLink("Delete Retreat", "Delete", new { id = retreat.Id})<br />
             <ul><b>Has Bed Code</b>
                 @foreach (var participant in retreat.RegisteredParticipants.Where(p => !String.IsNullOrWhiteSpace(p.BedCode)))
                 {
@@ -43,11 +43,6 @@
                         <div style="width:100%"> @participant.Notes </div></li>
                 }
             </ul>
-            @Html.ActionLink("Delete Retreat", "Delete", new { id = retreat.Id})
         </div>
     }
 </div>
-
-
-
-<div style="width:500px;border-top:1px solid black;">&emsp;</div>
