@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Dahlia.Models;
 
 namespace Dahlia.ViewModels
 {
@@ -10,5 +12,6 @@ namespace Dahlia.ViewModels
         public string BedCode { get; set; }
         public DateTime DateReceived { get; set; }
         public string Notes { get; set; }
+        public PhysicalStatus PhysicalStatus { get; set; }
     }
 }
