@@ -65,6 +65,7 @@ namespace Dahlia.Controllers
 
         Uri BuildDeleteLink(Retreat retreat, Participant participant)
         {
+            // TODO: should have a delete view model here instead?
             return _urlMapper.MapAction<ParticipantController>(
                 x => x.DeleteFromRetreat(
                     retreat.StartDate, 

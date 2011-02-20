@@ -54,7 +54,8 @@ namespace Dahlia.Controllers
             return View("ReassignParticipant", viewModel);
         }
 
-        public ActionResult DoDeleteFromRetreat(DeleteParticipantFromRetreatViewModel viewModel)
+        [HttpPost]
+        public ActionResult DeleteFromRetreat(DeleteParticipantFromRetreatViewModel viewModel)
         {
             var retreat = _retreatRepository.Get(viewModel.RetreatDate);
             var participantToRemove =
