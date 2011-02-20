@@ -91,7 +91,6 @@
     <Compile Include="SQLiteSessionFactory.cs" />
     <Compile Include="when_checking_mappings.cs" />
     <Compile Include="When_structure_map_is_bootstrapped.cs" />
-    <Compile Include="when_using_retreat_repo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Dahlia\Dahlia.csproj">

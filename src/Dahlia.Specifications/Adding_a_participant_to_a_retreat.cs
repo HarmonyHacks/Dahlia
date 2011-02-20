@@ -103,7 +103,7 @@ namespace Dahlia.Specifications
             _retreatRepository = MockRepository.GenerateStub<IRetreatRepository>();
             _controller = new ParticipantController(_retreatRepository);
 
-            _retreat = new Retreat{};
+            _retreat = new Retreat{ StartDate = retreatDate};
             _retreatRepository.Stub(x => x.Get(retreatDate)).Return(_retreat);
         };
 
@@ -131,7 +131,7 @@ namespace Dahlia.Specifications
             _retreat.Registrations[0].BedCode.ShouldEqual(_viewModel.BedCode);
         
         It should_assign_the_retreat = () => 
-            _retreat.Registrations[0].Retreat.ShouldEqual(_retreat);
+            _retreat.Registrations[0].Retreat.StartDate.ShouldEqual(_retreat.StartDate);
 
         It should_assign_the_physical_status = () =>
             _retreat.Registrations[0].PhysicalStatus.ShouldEqual(_viewModel.PhysicalStatus);

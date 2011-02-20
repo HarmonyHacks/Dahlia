@@ -45,16 +45,12 @@ namespace Dahlia
         protected void Application_BeginRequest(
                   object sender, EventArgs e)
         {
-            //CurrentSessionContext.Bind(ObjectFactory.GetInstance<ISessionFactory>().OpenSession());
         }
 
 
 
         protected void Application_EndRequest()
         {
-            //var CurrentSession = CurrentSessionContext.Unbind(ObjectFactory.GetInstance<ISessionFactory>());
-            //CurrentSession.Flush();
-            //CurrentSession.Close();
             ObjectFactory.ReleaseAndDisposeAllHttpScopedObjects();
         } 
 
