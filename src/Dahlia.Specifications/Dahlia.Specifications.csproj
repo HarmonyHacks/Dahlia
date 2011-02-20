@@ -87,6 +87,7 @@
     <Compile Include="..\ProjectInfo.cs">
       <Link>Properties\ProjectInfo.cs</Link>
     </Compile>
+    <Compile Include="ParticipantSearchServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SQLiteSessionFactory.cs" />
     <Compile Include="when_checking_mappings.cs" />

@@ -76,7 +76,23 @@ namespace Dahlia.Controllers
             return RedirectToAction("Index", "Retreat", new { id = postBack.RetreatUiId });
         }
 
-        public ActionResult ReAssign()
+        public ActionResult ReAssignSearchResults()
+        {
+
+            var viewModel = new ReassignParticipantSearchResultsViewModel
+            {
+               Results = new[]
+               {
+                   new ReassignParticipantSearchResultViewModel { DateReceived = DateTime.Now, Name = "Bob Dobbs", SelectLink = new Uri("/Participant/DoReassign?participantId=42", UriKind.Relative)},
+                   new ReassignParticipantSearchResultViewModel { DateReceived = DateTime.Now, Name = "Bob Smith", SelectLink = new Uri("/Participant/DoReassign?participantId=432", UriKind.Relative)},
+                   new ReassignParticipantSearchResultViewModel { DateReceived = DateTime.Now, Name = "Bob Jones", SelectLink = new Uri("/Participant/DoReassign?participantId=424", UriKind.Relative)},
+               }
+            };
+
+            return View(viewModel);
+        }
+
+        public ActionResult DoReAssign(int participantId)
         {
             return View();
         }
