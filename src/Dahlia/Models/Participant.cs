@@ -12,5 +12,9 @@ namespace Dahlia.Models
         public virtual string LastName { get; set; }
         public virtual DateTime DateReceived { get; set; }
         public virtual string Notes { get; set; }
+        public virtual string BedCode { get; set; }
+        public virtual Retreat Retreat { get; set; }
+        public virtual PhysicalStatus PhysicalStatus { get; set; }
+
     }
 }

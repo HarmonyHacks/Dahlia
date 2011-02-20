@@ -29,14 +29,14 @@ namespace Dahlia.Controllers
                              {
                                  Date = x.StartDate,
                                  AddParticipantLink = AddParticipantLinkForRetreat(x),
-                                 RegisteredParticipants = x.RegisteredParticipants.Select(y => new RetreatListParticipantViewModel
+                                 RegisteredParticipants = x.Registrations.Select(y => new RetreatListParticipantViewModel
                                                                 {
-                                                                    FirstName = y.Participant.FirstName,
-                                                                    LastName = y.Participant.LastName,
-                                                                    DateReceived = y.Participant.DateReceived,
-                                                                    Notes = y.Participant.Notes,
+                                                                    FirstName = y.FirstName,
+                                                                    LastName = y.LastName,
+                                                                    DateReceived = y.DateReceived,
+                                                                    Notes = y.Notes,
                                                                     BedCode = y.BedCode,
-                                                                    DeleteLink = DeleteParticipantLinkForRetreat(y.Retreat, y.Participant)
+                                                                    DeleteLink = DeleteParticipantLinkForRetreat(y.Retreat, y)
                                                                 })
                              });
 
@@ -82,15 +82,15 @@ namespace Dahlia.Controllers
         public JsonResult Participant()
         {
             var participants = _retreatRepository.GetList()
-                .SelectMany(x => x.RegisteredParticipants)
+                .SelectMany(x => x.Registrations)
                 .Select(x => new RetreatListParticipantViewModel
                              {
-                                 FirstName = x.Participant.FirstName,
-                                 LastName = x.Participant.LastName,
-                                 DateReceived = x.Participant.DateReceived,
-                                 Notes = x.Participant.Notes,
+                                 FirstName = x.FirstName,
+                                 LastName = x.LastName,
+                                 DateReceived = x.DateReceived,
+                                 Notes = x.Notes,
                                  BedCode = x.BedCode,
-                                 DeleteLink = DeleteParticipantLinkForRetreat(x.Retreat, x.Participant)
+                                 DeleteLink = DeleteParticipantLinkForRetreat(x.Retreat, x)
                              });
 
             return Json(participants);

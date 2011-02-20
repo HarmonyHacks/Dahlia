@@ -4,6 +4,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Dahlia.Persistence;
+using NHibernate;
+using NHibernate.Context;
+using StructureMap;
 
 namespace Dahlia
 {
@@ -36,5 +40,23 @@ namespace Dahlia
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
         }
+
+
+        protected void Application_BeginRequest(
+                  object sender, EventArgs e)
+        {
+            //CurrentSessionContext.Bind(ObjectFactory.GetInstance<ISessionFactory>().OpenSession());
+        }
+
+
+
+        protected void Application_EndRequest()
+        {
+            //var CurrentSession = CurrentSessionContext.Unbind(ObjectFactory.GetInstance<ISessionFactory>());
+            //CurrentSession.Flush();
+            //CurrentSession.Close();
+            ObjectFactory.ReleaseAndDisposeAllHttpScopedObjects();
+        } 
+
     }
 }

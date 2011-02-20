@@ -54,12 +54,12 @@ namespace Dahlia.Specifications
             _retreatDate = new DateTime(2007, 12, 15);
             _controller = new ParticipantController(_retreatRepo);
 
-            var participants = Builder<RegisteredParticipant>.CreateListOfSize(29)
+            var participants = Builder<Participant>.CreateListOfSize(29)
                 .WhereAll().Have(x => x.BedCode = "foo").Build();
 
             var retreat = Builder<Retreat>.CreateNew()
                 .With(x => x.StartDate = _retreatDate)
-                .And(x => x.RegisteredParticipants = participants)
+                .And(x => x.Registrations = participants)
                 .Build();
 
             _retreatRepo.Stub(x => x.Get(_retreatDate)).Return(retreat);
@@ -113,28 +113,28 @@ namespace Dahlia.Specifications
             _retreatRepository.AssertWasCalled(x => x.Save(_retreat));
         
         It should_add_the_participant_to_the_retreat = () => 
-            _retreat.RegisteredParticipants.Count.ShouldEqual(1);
+            _retreat.Registrations.Count.ShouldEqual(1);
         
         It should_give_the_participant_the_right_first_name = () => 
-            _retreat.RegisteredParticipants[0].Participant.FirstName.ShouldEqual(_viewModel.FirstName);
+            _retreat.Registrations[0].FirstName.ShouldEqual(_viewModel.FirstName);
         
         It should_give_the_participant_the_right_last_name = () => 
-            _retreat.RegisteredParticipants[0].Participant.LastName.ShouldEqual(_viewModel.LastName);
+            _retreat.Registrations[0].LastName.ShouldEqual(_viewModel.LastName);
         
         It should_give_the_participant_the_right_date_recieved = () => 
-            _retreat.RegisteredParticipants[0].Participant.DateReceived.ShouldEqual(_viewModel.DateReceived);
+            _retreat.Registrations[0].DateReceived.ShouldEqual(_viewModel.DateReceived);
         
         It should_give_the_participant_the_right_notes = () => 
-            _retreat.RegisteredParticipants[0].Participant.Notes.ShouldEqual(_viewModel.Notes);
+            _retreat.Registrations[0].Notes.ShouldEqual(_viewModel.Notes);
 
         It should_assign_the_right_bed_code = () => 
-            _retreat.RegisteredParticipants[0].BedCode.ShouldEqual(_viewModel.BedCode);
+            _retreat.Registrations[0].BedCode.ShouldEqual(_viewModel.BedCode);
         
         It should_assign_the_retreat = () => 
-            _retreat.RegisteredParticipants[0].Retreat.ShouldEqual(_retreat);
+            _retreat.Registrations[0].Retreat.ShouldEqual(_retreat);
 
         It should_assign_the_physical_status = () =>
-            _retreat.RegisteredParticipants[0].PhysicalStatus.ShouldEqual(_viewModel.PhysicalStatus);
+            _retreat.Registrations[0].PhysicalStatus.ShouldEqual(_viewModel.PhysicalStatus);
 
         static DateTime _retreatDate;
         static AddParticipantToRetreatViewModel _viewModel;

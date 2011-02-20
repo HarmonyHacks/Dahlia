@@ -30,7 +30,10 @@ namespace Dahlia.Controllers
         RetreatListViewModel GetModel()
         {
             var retreats = GetRetreats().ToArray();
-            retreats.First().Active = true;
+            
+            if (retreats.Count() != 0)
+                retreats.First().Active = true;
+
             return new RetreatListViewModel
                    {
                        CreateLink = _urlMapper.MapAction<RetreatController>(c => c.Create()),
@@ -45,26 +48,26 @@ namespace Dahlia.Controllers
                      {
                          Date = x.StartDate,
                          AddParticipantLink = AddParticipantLinkForRetreat(x),
-                         RegisteredParticipants = x.RegisteredParticipants.Select(
+                         RegisteredParticipants = x.Registrations.Select(
                              y => new RetreatListParticipantViewModel
                                   {
-                                      FirstName = y.Participant.FirstName,
-                                      LastName = y.Participant.LastName,
+                                      FirstName = y.FirstName,
+                                      LastName = y.LastName,
                                       BedCode = y.BedCode,
-                                      DateReceived = y.Participant.DateReceived,
-                                      Notes = y.Participant.Notes,
+                                      DateReceived = y.DateReceived,
+                                      Notes = y.Notes,
                                       DeleteLink = BuildDeleteLink(x, y)
                                   })
                      });
         }
 
-        Uri BuildDeleteLink(Retreat retreat, RegisteredParticipant participant)
+        Uri BuildDeleteLink(Retreat retreat, Participant participant)
         {
             return _urlMapper.MapAction<ParticipantController>(
                 x => x.DeleteFromRetreat(
                     retreat.StartDate, 
-                    participant.Participant.FirstName,
-                    participant.Participant.LastName));
+                    participant.FirstName,
+                    participant.LastName));
         }
 
         Uri AddParticipantLinkForRetreat(Retreat retreat)

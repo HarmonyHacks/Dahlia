@@ -7,7 +7,7 @@ dahlia.db
 #build directory
 CI
 
-Dahlia.5.1.ReSharper
+src/Dahlia.5.1.ReSharper
 
 #Visual Studio files
 *.[Oo]bj

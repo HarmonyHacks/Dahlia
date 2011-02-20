@@ -24,7 +24,7 @@ namespace Dahlia.Specifications
             {
                 Description = "Mike",
                 StartDate = DateTime.Now,
-                RegisteredParticipants = new List<RegisteredParticipant>(),
+                Registrations = new List<Participant>(),
             };
         };
 

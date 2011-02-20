@@ -16,6 +16,8 @@ namespace Dahlia.Mappings
             Map(x => x.LastName);
             Map(x => x.Notes);
             Map(x => x.DateReceived);
+            Map(x => x.BedCode);
+            Map(x => x.PhysicalStatus);
 
         }
     }

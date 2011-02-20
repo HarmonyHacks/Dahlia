@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Dahlia.Models;
 using NHibernate;
 using NHibernate.Cfg;
 using FluentNHibernate;
@@ -21,8 +22,9 @@ namespace Dahlia.Persistence
                 MsSqlConfiguration.MsSql2005.ConnectionString(
                   c => c.FromConnectionStringWithKey("dahliaSQL")))
                   .Mappings(x => x.FluentMappings
-                                 .AddFromAssembly(Assembly.GetAssembly(typeof (Dahlia.Models.Retreat))))
+                                 .AddFromAssemblyOf<Retreat>())
                                  //.ExposeConfiguration(BuildSchema)
+                                 //.ExposeConfiguration(x => x.SetProperty("current_session_context_class", "web"))
                                  .BuildSessionFactory();
         }
 
