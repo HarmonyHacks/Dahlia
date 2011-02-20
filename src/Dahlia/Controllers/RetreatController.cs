@@ -90,5 +90,20 @@ namespace Dahlia.Controllers
             _retreatRepository.Add(retreatModel);
             return RedirectToAction("Index", new { id = RetreatUiHelpers.RetreatUiId(retreatModel.StartDate) });
         }
+
+        public ActionResult Delete(int id)
+        {
+            var retreat = _retreatRepository.GetById(id);
+            return View(new DeleteRetreatViewModel {Id = retreat.Id, Description = retreat.Description});
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int id, FormCollection collection)
+        {
+            _retreatRepository.DeleteById(id);
+            // TODO: this is more explicit than it needs to be because we can't get MvcContrib.TestHelper to
+            // assert the right thing without a controller name for some reason.  Please fix!
+            return RedirectToAction("Index", "Retreat");
+        }
     }
 }

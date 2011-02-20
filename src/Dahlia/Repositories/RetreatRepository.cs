@@ -14,6 +14,8 @@ namespace Dahlia.Repositories
         Retreat Get(DateTime retreatDate);
         Retreat GetById(int id);
         void Save(Retreat retreat);
+        void DeleteById(int retreatId);
+        Retreat GetById(int id);
     }
 
     public class RetreatRepository : IRetreatRepository
@@ -53,6 +55,16 @@ namespace Dahlia.Repositories
         {
             _session.SaveOrUpdate(retreat);
             _session.Flush();
+        }
+
+        public void DeleteById(int retreatId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Retreat GetById(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -54,6 +54,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Mspec\Machine.Specifications.dll</HintPath>
     </Reference>
+    <Reference Include="MvcContrib.TestHelper">
+      <HintPath>..\..\lib\MvcContrib.Mvc3.TestHelper-ci.3.0.57.0\lib\MvcContrib.TestHelper.dll</HintPath>
+    </Reference>
     <Reference Include="NHibernate">
       <HintPath>..\..\lib\fluentnhibernate-1.1\NHibernate.dll</HintPath>
     </Reference>
@@ -93,6 +96,7 @@
       <Link>Properties\ProjectInfo.cs</Link>
     </Compile>
     <Compile Include="ParticipantSearchServiceTests.cs" />
+    <Compile Include="Deleting_a_retreat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="when_checking_mappings.cs" />
     <Compile Include="When_creating_new_entities.cs" />
