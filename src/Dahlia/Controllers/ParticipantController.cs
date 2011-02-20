@@ -107,8 +107,9 @@ namespace Dahlia.Controllers
             // use the imaginary participant repository to read the participant.
             // use the retreat repository to get the retreat.
             var retreat = _retreatRepository.Get(retreatDate);
-            var participant = _participantRepository.
-
+            var participant = _participantRepository.GetById(participantId);
+            throw new NotImplementedException();
+            //retreat.AddParticipant(participant, );
         }
 
         public ActionResult ReAssignSearchResults(string lastnameISearchedFor)
