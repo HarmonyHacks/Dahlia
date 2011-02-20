@@ -16,13 +16,12 @@ namespace Dahlia.Configuration {
                                         scan.WithDefaultConventions();
                                     });
 
-                            x.For<ISession>().Use(Dahlia.Persistence.SQLSessionFactory.CreateSessionFactory().OpenSession());
+                            x.For<ISession>().Use(Persistence.SQLSessionFactory.CreateSessionFactory().OpenSession());
 
                             x.For<ILog>().Use(LogManager.GetLogger("Dahlia"));
                             x.For<RouteCollection>().Use(RouteTable.Routes);
-                            x.Register(new JavaScriptSerializer());
                             x.FillAllPropertiesOfType<ILog>().Use(LogManager.GetLogger("Dahlia"));
-
+                            
                         });
             return ObjectFactory.Container;
         }

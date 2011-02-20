@@ -17,7 +17,7 @@ namespace Dahlia.Repositories
 
     public class RetreatRepository : IRetreatRepository
     {
-        static ISession _session;
+        readonly ISession _session;
 
         public RetreatRepository(ISession session)
         {
@@ -34,6 +34,7 @@ namespace Dahlia.Repositories
         void IRetreatRepository.Add(Retreat retreat)
         {
             _session.Save(retreat);
+            _session.Flush();
         }
 
         public Retreat Get(DateTime retreatDate)
@@ -46,6 +47,7 @@ namespace Dahlia.Repositories
         public void Save(Retreat retreat)
         {
             _session.SaveOrUpdate(retreat);
+            _session.Flush();
         }
     }
 }
