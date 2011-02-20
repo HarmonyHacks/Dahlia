@@ -18,6 +18,20 @@ namespace Dahlia.Models
         public virtual DateTime StartDate { get; set; }
         public virtual String StartDateStr { get { return StartDate.ToShortDateString(); } }
         
+        //public virtual DateTime EndDate { get; set; }
+
+        public virtual void AddParticipant(Participant newParticipant, string bedCode, PhysicalStatus physicalStatus)
+        {
+            var newRegisteredParticipant = new RegisteredParticipant
+            {
+                Participant = newParticipant,
+                Retreat = this,
+                BedCode = bedCode,
+                PhysicalStatus = physicalStatus,
+            };
+
+            RegisteredParticipants.Add(newRegisteredParticipant);
+        }
     }
 
     public class RegisteredParticipant
