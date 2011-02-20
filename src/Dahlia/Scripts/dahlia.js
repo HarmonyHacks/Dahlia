@@ -23,6 +23,7 @@ var global = this;
             var m = this.model.toJSON();
             $(this.el).html(this.retreatsTempl(m));
             $(this.el).css('display', 'inline');
+            $(this.el).attr('id', this.model.get('id'));
             return this;
         }
     });
@@ -35,7 +36,7 @@ var global = this;
             var retreats = this.options.rawRetreats;
 
             _.each(retreats, function (r) {
-                r.id = r.StartDateStr;
+                r.id = "retreat_"+r.StartDateStr.replace(/\//g,'');
                 retreatsStore.add(r);
             });
         },
@@ -45,8 +46,9 @@ var global = this;
         },
 
         addRetreat: function (retreat) {
+            $('#retreats_tabs ul').append('<li><a href="#'+retreat.get('id')+'">'+retreat.get('StartDateStr')+'</a></li>');
             var view = new RetreatView({model: retreat});
-            $('#retreats_list').append(view.render().el);
+            $('#retreats_tabs').append(view.render().el);
         }
 
     });

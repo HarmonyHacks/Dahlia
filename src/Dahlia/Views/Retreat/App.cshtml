@@ -8,9 +8,9 @@
 <h2>App</h2>
 <div id="retreats_ui" style="width:600px;">
     <div>
-        <div id="retreats_list" style="display:inline;"></div>
-        <br />
-        <div></div>
+        <div id="retreats_tabs">
+            <ul></ul>
+        </div>
     </div>
 </div>
 
@@ -19,10 +19,11 @@
     $(function() {
         var retreatsUI = new RetreatsUI({ rawRetreats: retreats, el: $('#retreats_ui')});
         retreatsUI.render();
-        var foo = 'bar';
+        
+        $('#retreats_tabs').tabs();
     });
 </script>
 
 <script type="text/template" id="retreat_templ">
-    <div class="unselected_retreat" style="display:inline"><%= id %></div>
+    <div class="unselected_retreat" style="display:inline"><%= id %> .. goes here</div>
 </script>
