@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -111,12 +112,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\RetreatRepository.cs" />
     <Compile Include="Services\ExpressionExtensions.cs" />
+    <Compile Include="Services\ParticipantSearchService.cs" />
     <Compile Include="Services\RequestContextProvider.cs" />
     <Compile Include="Services\RetreatUiHelpers.cs" />
     <Compile Include="Services\UrlMapper.cs" />
     <Compile Include="ViewModels\AddParticipantToRetreatSearchResultsViewModel.cs" />
     <Compile Include="ViewModels\AddParticipantToRetreatViewModel.cs" />
     <Compile Include="ViewModels\DeleteParticipantFromRetreatViewModel.cs" />
+    <Compile Include="ViewModels\ParticipantSearchResultViewModel.cs" />
     <Compile Include="ViewModels\ReAssignParticipantSearchResultsViewModel.cs" />
     <Compile Include="ViewModels\RetreatListViewModel.cs" />
   </ItemGroup>
@@ -141,9 +144,6 @@
     <Content Include="Scripts\backbone.js" />
     <Content Include="Scripts\dahlia.js" />
     <Content Include="Scripts\underscore.js" />
-    <Content Include="sqlite3.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
