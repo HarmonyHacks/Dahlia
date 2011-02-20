@@ -29,7 +29,7 @@ namespace Dahlia.Controllers
                 x => new RetreatListRetreatViewModel
                      {
                          Date = x.StartDate,
-                         AddParticipantLink = AddParticipantLinkForRetreat(x),
+                         ViewLink = LinkForRetreat(x),
                          RegisteredParticipants = x.RegisteredParticipants.Select(
                              y => new RetreatListParticipantViewModel
                                   {
@@ -87,6 +87,12 @@ namespace Dahlia.Controllers
         {
             return _urlMapper.MapAction<ParticipantController>(
                 x => x.AddToRetreat(retreat.StartDate));
+        }
+
+        Uri LinkForRetreat(Retreat retreat)
+        {
+            return _urlMapper.MapAction<RetreatController>(
+                x => x.Get(retreat.StartDate));
         }
 
         public ActionResult Create()

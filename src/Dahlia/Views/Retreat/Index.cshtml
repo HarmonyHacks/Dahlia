@@ -10,21 +10,6 @@
 
 <ul>
 @foreach (var retreat in Model.Retreats) {
-    <li>@retreat.Date.ToString("d")
-        <a href='@retreat.AddParticipantLink'>Add Participant</a></li>
-        <ul><b>Has Bed Code</b>
-            @foreach (var participant in retreat.RegisteredParticipants.Where(p => !String.IsNullOrWhiteSpace(p.BedCode)))
-            {
-                <li><div style="width:100%"> @participant.FirstName @participant.LastName @participant.BedCode @participant.DateReceived <a href="@participant.DeleteLink">Delete</a> </div>
-                    <div style="width:100%"> @participant.Notes </div></li>
-            }
-        </ul>
-        <ul><b>Does Not Have Bed Code</b>
-            @foreach (var participant in retreat.RegisteredParticipants.Where(p => String.IsNullOrWhiteSpace(p.BedCode)).OrderBy(p => p.DateReceived))
-            {
-                <li><div style="width:100%"> @participant.FirstName @participant.LastName @participant.BedCode @participant.DateReceived <a href="@participant.DeleteLink">Delete</a> </div>
-                    <div style="width:100%"> @participant.Notes </div></li>
-            }
-        </ul>
+    <li><a href="@retreat.ViewLink">@retreat.Date.ToString("d")</a> @retreat.RegisteredParticipants.Count() Participant(s)</li>
 }
 </ul>
