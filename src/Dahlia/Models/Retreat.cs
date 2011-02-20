@@ -25,12 +25,9 @@ namespace Dahlia.Models
             }
         }
 
-
-
-        public virtual void AddParticipant(Participant NewRegistration )
+        public virtual void AddParticipant(Participant newRegistration )
         {
-            Registrations.Add(NewRegistration);
+            Registrations.Add(newRegistration);
         }
     }
-
 }

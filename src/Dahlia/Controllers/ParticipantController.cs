@@ -32,7 +32,7 @@ namespace Dahlia.Controllers
 
         public ViewResult DeleteFromRetreat(DateTime retreatDate, string firstName, string lastName)
         {
-            var viewModel = new DeleteParticipantFromRetreatViewModel()
+            var viewModel = new DeleteParticipantFromRetreatViewModel
                             {
                                 RetreatDate = retreatDate,
                                 FirstName = firstName,

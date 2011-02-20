@@ -4,9 +4,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using Dahlia.Persistence;
-using NHibernate;
-using NHibernate.Context;
 using StructureMap;
 
 namespace Dahlia
@@ -30,7 +27,6 @@ namespace Dahlia
                 "{controller}/{action}/{id}", // URL with parameters
                 new { controller = "Retreat", action = "Index", id = UrlParameter.Optional } // Parameter defaults
             );
-
         }
 
         protected void Application_Start()
@@ -41,18 +37,9 @@ namespace Dahlia
             RegisterRoutes(RouteTable.Routes);
         }
 
-
-        protected void Application_BeginRequest(
-                  object sender, EventArgs e)
-        {
-        }
-
-
-
         protected void Application_EndRequest()
         {
             ObjectFactory.ReleaseAndDisposeAllHttpScopedObjects();
         } 
-
     }
 }

@@ -86,7 +86,7 @@
     <Compile Include="..\ProjectInfo.cs">
       <Link>Properties\ProjectInfo.cs</Link>
     </Compile>
-    <Compile Include="Configuration\AppStart_Structuremap.cs" />
+    <Compile Include="Configuration\AppStart_StructureMap.cs" />
     <Compile Include="Configuration\IoC.cs" />
     <Compile Include="Configuration\SmDependencyResolver.cs" />
     <Compile Include="Controllers\ParticipantController.cs" />

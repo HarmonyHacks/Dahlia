@@ -15,6 +15,5 @@ namespace Dahlia.Models
         public virtual string BedCode { get; set; }
         public virtual Retreat Retreat { get; set; }
         public virtual PhysicalStatus PhysicalStatus { get; set; }
-
     }
 }

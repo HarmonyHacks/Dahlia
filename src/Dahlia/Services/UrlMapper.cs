@@ -7,7 +7,7 @@ namespace Dahlia.Services
 {
     public interface IUrlMapper
     {
-        Uri MapAction<C>(Expression<Func<C, ActionResult>> controllerAction) where C : Controller;
+        Uri MapAction<TController>(Expression<Func<TController, ActionResult>> controllerAction) where TController : Controller;
     }
 
     public class UrlMapper : IUrlMapper

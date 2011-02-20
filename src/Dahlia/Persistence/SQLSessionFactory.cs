@@ -4,11 +4,8 @@ using System.Linq;
 using System.Text;
 using Dahlia.Models;
 using NHibernate;
-using NHibernate.Cfg;
-using FluentNHibernate;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
-using System.Reflection;
 using NHibernate.Tool.hbm2ddl;
 
 namespace Dahlia.Persistence
