@@ -56,6 +56,12 @@ namespace Dahlia.Controllers
             if (postBack.Cancel != null)
                 return RedirectToAction("Index", "Retreat", new {id = postBack.RetreatUiId});
 
+            if(postBack.Search != null)
+            {
+                TempData["searchResults"] = new AddParticipantToRetreatSearchResultsViewModel();
+                return RedirectToAction("AddToRetreat", "Participant");
+            }
+
             var retreat = _retreatRepository.Get(postBack.RetreatDate);
 
             var newParticipant = new Participant

@@ -97,6 +97,7 @@ namespace Dahlia.Specifications
                              DateReceived = DateTime.Today,
                              PhysicalStatus = PhysicalStatus.Limited,
                              Notes = "yada yada yada...",
+                             Save = "Save participant",
                          };
             _retreatDate = retreatDate;
             
@@ -141,6 +142,45 @@ namespace Dahlia.Specifications
         static ParticipantController _controller;
         static IRetreatRepository _retreatRepository;
         static Retreat _retreat;
+    }
+
+    [Subject("Adding a participant to a retreat")]
+    public class When_posting_back_a_search_from_the_add_participant_screen_for_a_retreat
+    {
+        Establish context = () =>
+        {
+            var retreatDate = new DateTime(2007, 12, 15);
+            _viewModel = new AddParticipantToRetreatViewModel
+            {
+                RetreatDate = retreatDate,
+                FirstName = "firstbob",
+                LastName = "lastmartin",
+                DateReceived = DateTime.Today,
+                Search = "Search",
+            };
+            _retreatDate = retreatDate;
+
+            _retreatRepository = MockRepository.GenerateStub<IRetreatRepository>();
+            _controller = new ParticipantController(_retreatRepository);
+
+            _retreat = new Retreat { StartDate = retreatDate };
+            _retreatRepository.Stub(x => x.Get(retreatDate)).Return(_retreat);
+        };
+
+        Because of = () => _result = _controller.DoAddToRetreat(_viewModel);
+
+        It should_redirect_back_to_the_add_to_retreat_view =
+            () => ((RedirectToRouteResult) _result).RouteValues["action"].ShouldEqual("AddToRetreat");
+
+        It should_supply_a_search_results_object_in_the_temp_data =
+            () => _controller.TempData["searchResults"].ShouldBe(typeof (AddParticipantToRetreatSearchResultsViewModel));
+
+        static DateTime _retreatDate;
+        static AddParticipantToRetreatViewModel _viewModel;
+        static ParticipantController _controller;
+        static IRetreatRepository _retreatRepository;
+        static Retreat _retreat;
+        static ActionResult _result;
     }
 
     [Subject("Adding a participant to a retreat")]
