@@ -107,9 +107,9 @@ namespace Dahlia.Controllers
             return RedirectToAction("Index", "Retreat", new { id = postBack.RetreatId });
         }
 
-        public ActionResult DoAssignToRetreat(DateTime retreatDate, int participantId, string bedCode)
+        public ActionResult DoAssignToRetreat(int retreatId, int participantId, string bedCode)
         {
-            var retreat = _retreatRepository.Get(retreatDate);
+            var retreat = _retreatRepository.GetById(retreatId);
             var participant = _participantRepository.GetById(participantId);
             Bed bed = null;
             if (!string.IsNullOrEmpty(bedCode))
