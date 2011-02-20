@@ -23,45 +23,30 @@ namespace Dahlia.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public JsonResult Retreat()
         {
-            var retreats = _retreatRepository.GetList().OrderBy(x => x.StartDate).Select(
-               x => new RetreatListRetreatViewModel
-               {
-                   Date = x.StartDate,
-                   AddParticipantLink = AddParticipantLinkForRetreat(x),
-                   RegisteredParticipants = x.RegisteredParticipants.Select(
-                       y => new RetreatListParticipantViewModel
-                       {
-                           FirstName = y.Participant.FirstName,
-                           LastName = y.Participant.LastName,
-                           BedCode = y.BedCode,
-                           DateReceived = y.Participant.DateReceived,
-                           Notes = y.Participant.Notes,
-                           DeleteLink = BuildDeleteLink(x, y)
-                       })
-               });
-            var model = new RetreatListViewModel
-            {
-                CreateLink = new Uri("/Retreat/Create", UriKind.Relative),
+            var retreats = _retreatRepository.GetList()
+                .OrderBy(x => x.StartDate)
+                .Select(x => new RetreatListRetreatViewModel
+                             {
+                                 Date = x.StartDate,
+                                 AddParticipantLink = AddParticipantLinkForRetreat(x)
+                             });
 
-                Retreats = retreats
-            };
-
-            return Json(model);  //"text/text", JsonRequestBehavior.AllowGet);
-        }
-
-        Uri BuildDeleteLink(Retreat retreat, RegisteredParticipant participant)
-        {
-            return _urlMapper.MapAction<ParticipantController>(
-                x => x.DeleteFromRetreat(
-                    retreat.StartDate,
-                    participant.Participant.FirstName,
-                    participant.Participant.LastName));
+            return Json(retreats);
         }
 
         Uri AddParticipantLinkForRetreat(Retreat retreat)
         {
             return _urlMapper.MapAction<ParticipantController>(
                 x => x.AddToRetreat(retreat.StartDate));
+        }
+
+        Uri DeleteParticipantLinkForRetreat(Retreat retreat, Participant participant)
+        {
+            return _urlMapper.MapAction<ParticipantController>(
+                x => x.DeleteFromRetreat(
+                    retreat.StartDate,
+                    participant.FirstName,
+                    participant.LastName));
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
@@ -81,27 +66,25 @@ namespace Dahlia.Controllers
         {
             DateTime parsedDate = DateTime.Parse(dateOfRetreat);
 
-            
-
             return null; //
         }
 
+        [AcceptVerbs(HttpVerbs.Get)]
+        public JsonResult Participant()
+        {
+            var participants = _retreatRepository.GetList()
+                .SelectMany(x => x.RegisteredParticipants)
+                .Select(x => new RetreatListParticipantViewModel
+                             {
+                                 FirstName = x.Participant.FirstName,
+                                 LastName = x.Participant.LastName,
+                                 DateReceived = x.Participant.DateReceived,
+                                 Notes = x.Participant.Notes,
+                                 BedCode = x.BedCode,
+                                 DeleteLink = DeleteParticipantLinkForRetreat(x.Retreat, x.Participant)
+                             });
 
-
-        //public JsonResult Retreat(string dateTimeOfRetreat)
-        //{
-        //    var parsedDate = DateTime.Parse(dateTimeOfRetreat);
-        //    _retreatRepository.Get(parsedDate);
-        //    return Json(new RetreatListViewModel());
-        //}
-
-        //[AcceptVerbs(HttpVerbs.Put)]
-        //public JsonResult Retreat(RetreatListViewModel model )
-        //{
-        //    Models.Retreat
-
-        //    _retreatRepository.Add();
-        //}
-
+            return Json(participants);
+        }
     }
 }

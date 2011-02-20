@@ -13,7 +13,6 @@ namespace Dahlia.ViewModels
     {
         public DateTime Date { get; set; }
         public Uri AddParticipantLink { get; set; }
-        public IEnumerable<RetreatListParticipantViewModel> RegisteredParticipants { get; set; }
     }
 
     public class RetreatListParticipantViewModel
