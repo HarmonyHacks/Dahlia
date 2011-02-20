@@ -5,7 +5,7 @@ using StructureMap;
 
 namespace Dahlia.Specifications
 {
-    [Subject("Configuration")]
+    [Subject("IoC Container")]
     public class When_structure_map_is_bootstrapped
     {
         Because of = () =>
@@ -18,16 +18,15 @@ namespace Dahlia.Specifications
             ObjectFactory.GetInstance<ILog>().ShouldNotBeNull();
     }
 
+    [Subject("IoC Container")]
     public class When_resolving_a_class_with_a_logger_property
     {
-        Establish context = AppStart_Structuremap.Start;
-        
-        Because of = () => { };
+        Because of = () =>
+            AppStart_Structuremap.Start();
 
         It should_populate_the_logger = () =>
                 ObjectFactory.GetInstance<SomeClass>().Logger.ShouldNotBeNull();
     }
-
 
     internal class SomeClass
     {
