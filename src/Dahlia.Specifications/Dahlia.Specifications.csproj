@@ -88,7 +88,6 @@
       <Link>Properties\ProjectInfo.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SQLiteSessionFactory.cs" />
     <Compile Include="when_checking_mappings.cs" />
     <Compile Include="When_structure_map_is_bootstrapped.cs" />
   </ItemGroup>
@@ -99,9 +98,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="dahlia.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="sqlite3.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
