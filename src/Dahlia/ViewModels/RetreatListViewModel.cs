@@ -8,6 +8,7 @@ namespace Dahlia.ViewModels
     {
         public IEnumerable<RetreatListRetreatViewModel> Retreats { get; set; }
         public Uri CreateLink { get; set; }
+        public string CurrentRetreatId { get; set; }
     }
 
     public class RetreatListRetreatViewModel

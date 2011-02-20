@@ -20,9 +20,10 @@ namespace Dahlia.Controllers
             _urlMapper = urlMapper;
         }
 
-        public ActionResult Index()
+        public ActionResult Index(string id)
         {
             var model = GetModel();
+            model.CurrentRetreatId = id ?? string.Empty;
             return View(model);
         }
 

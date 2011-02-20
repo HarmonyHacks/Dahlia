@@ -6,23 +6,28 @@
 }
 
 <script type="text/javascript">
+    var currentId = '@Model.CurrentRetreatId';
     $(function() {
         $('#static_tabs').tabs();
+        if (currentId !== "")
+        {
+            $('#static_tabs').tabs('select', '#'+ '@Model.CurrentRetreatId');
+        }
     });
 </script>
 
 <a href='@Model.CreateLink'>Add a new retreat</a>
 
-<div id="static_tabs" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
-    <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+<div id="static_tabs">
+    <ul >
         @foreach (var retreat in Model.Retreats)
         {
-            <li class="ui-state-default ui-corner-top"><a href="#@retreat.Id">@retreat.Date.ToShortDateString()</a></li>
+            <li><a href="#@retreat.Id">@retreat.Date.ToShortDateString()</a></li>
         }
     </ul>
     @foreach (var retreat in Model.Retreats)
     {
-        <div id="@retreat.Id" class="ui-tabs-panel ui-widget-content ui-corner-bottom @(!retreat.Active ? "ui-tabs-hide" : "")" style="display:inline">
+        <div id="@retreat.Id">
             <a href='@retreat.AddParticipantLink'>Add Participant</a><br />
             <ul><b>Has Bed Code</b>
                 @foreach (var participant in retreat.RegisteredParticipants.Where(p => !String.IsNullOrWhiteSpace(p.BedCode)))
