@@ -1,7 +1,7 @@
 ﻿@using Dahlia;
 @using Dahlia.ViewModels;
 
-@model Dahlia.ViewModels.ReassignParticipantSearchResultsViewModel
+@model IEnumerable<Dahlia.ViewModels.ReassignParticipantSearchResultViewModel>
 
 @{
     ViewBag.Title = "Re-assign Participant";
@@ -19,7 +19,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var result in Model.Results)
+            @foreach (var result in Model)
             {
                 <tr>
                     <td><a href='@result.SelectLink'>@result.Name</a></td>

@@ -100,26 +100,16 @@ namespace Dahlia.Controllers
 
         public ActionResult ReAssignSearchResults(string lastnameISearchedFor)
         {
-            //var ParticipantResults = _participantRepository.WithLastName(lastnameISearchedFor);
-            //var viewModel = new List<ReassignParticipantSearchResultsViewModel>(); 
+            var ParticipantResults = _participantRepository.WithLastName(lastnameISearchedFor);
+            var ViewModel = ParticipantResults.Select(P => new ParticipantSearchResultViewModel()
+                            {
+                                DateReceived = P.DateReceived, 
+                                Name = P.FirstName + " " + P.LastName, 
+                                SelectLink = new Uri("anystring", UriKind.Relative)
+                            }).ToList();
 
-            //foreach (var P in ParticipantResults)
-            //{
-            //    viewModel.Add(new ReassignParticipantSearchResultViewModel { DateReceived = P.DateReceived, Name  = P.FirstName + " " + P.LastName, new Uri()});        
-            //}
 
-
-            var viewModel = new ReassignParticipantSearchResultsViewModel
-            {
-                Results = new[]
-               {
-                   new ParticipantSearchResultViewModel { DateReceived = DateTime.Now, Name = "Bob Dobbs", SelectLink = new Uri("/Participant/DoReassign?participantId=42", UriKind.Relative)},
-                   new ParticipantSearchResultViewModel { DateReceived = DateTime.Now, Name = "Bob Smith", SelectLink = new Uri("/Participant/DoReassign?participantId=432", UriKind.Relative)},
-                   new ParticipantSearchResultViewModel { DateReceived = DateTime.Now, Name = "Bob Jones", SelectLink = new Uri("/Participant/DoReassign?participantId=424", UriKind.Relative)},
-               }
-            };
-
-            return View(viewModel);
+            return View(ViewModel);
         }
 
         public ActionResult DoReAssign(int participantId)
