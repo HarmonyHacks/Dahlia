@@ -103,7 +103,7 @@ namespace Dahlia.Specifications
             _retreatRepository = MockRepository.GenerateStub<IRetreatRepository>();
             _controller = new ParticipantController(_retreatRepository);
 
-            _retreat = new Retreat{ StartDate = retreatDate};
+            _retreat = new Retreat{ StartDate = retreatDate };
             _retreatRepository.Stub(x => x.Get(retreatDate)).Return(_retreat);
         };
 

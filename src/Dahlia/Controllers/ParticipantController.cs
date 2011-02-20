@@ -59,14 +59,15 @@ namespace Dahlia.Controllers
             var retreat = _retreatRepository.Get(postBack.RetreatDate);
 
             var newParticipant = new Participant
-            {
-                FirstName = postBack.FirstName,
-                LastName = postBack.LastName,
-                DateReceived = postBack.DateReceived,
-                Notes = postBack.Notes,
-                BedCode = postBack.BedCode,
-                PhysicalStatus = postBack.PhysicalStatus
-            };
+                                 {
+                                     FirstName = postBack.FirstName,
+                                     LastName = postBack.LastName,
+                                     DateReceived = postBack.DateReceived,
+                                     Notes = postBack.Notes,
+                                     BedCode = postBack.BedCode,
+                                     PhysicalStatus = postBack.PhysicalStatus,
+                                     Retreat = retreat,
+                                 };
 
             retreat.AddParticipant(newParticipant);
 
