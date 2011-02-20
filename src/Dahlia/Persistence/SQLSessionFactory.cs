@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Dahlia.Models;
+using FluentNHibernate.Automapping;
 using NHibernate;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
@@ -18,8 +19,15 @@ namespace Dahlia.Persistence
                 .Database(
                 MsSqlConfiguration.MsSql2005.ConnectionString(
                   c => c.FromConnectionStringWithKey("dahliaSQL")))
-                  .Mappings(x => x.FluentMappings
-                                 .AddFromAssemblyOf<Retreat>())
+                  .Mappings(x => x.AutoMappings.Add(
+                                    AutoMap.AssemblyOf<IAmPersistable>(
+                                        type => type.GetInterfaces()
+                                            .Any(z => z == typeof(IAmPersistable))
+                                            )
+                                           .UseOverridesFromAssemblyOf<IAmPersistable>()
+                                    )
+                                
+                                )
                                  //.ExposeConfiguration(BuildSchema)
                                  //.ExposeConfiguration(x => x.SetProperty("current_session_context_class", "web"))
                                  .BuildSessionFactory();

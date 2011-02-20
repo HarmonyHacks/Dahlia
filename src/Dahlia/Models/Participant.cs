@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Dahlia.Models
 {
-    public class Participant
+    public class Participant : IAmPersistable
     {
         public virtual int Id { get; set; } 
         public virtual string FirstName { get; set; }

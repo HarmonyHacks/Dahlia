@@ -6,14 +6,14 @@ using Dahlia.Models;
 
 namespace Dahlia.Mappings
 {
-    public class RetreatMap : ClassMap<Retreat>
-    {
-        public RetreatMap()
-        {
-            Id(x => x.Id).GeneratedBy.Identity();
-            Map(x => x.StartDate);
-            Map(x => x.Description);
-            HasMany(x => x.Registrations).Cascade.All();
-        }
-    }
+    //public class RetreatMap : ClassMap<Retreat>
+    //{
+    //    public RetreatMap()
+    //    {
+    //        Id(x => x.Id).GeneratedBy.Identity();
+    //        Map(x => x.StartDate);
+    //        Map(x => x.Description);
+    //        HasMany(x => x.Registrations).Cascade.All();
+    //    }
+    //}
 }

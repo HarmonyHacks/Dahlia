@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using HibernatingRhinos.Profiler.Appender.NHibernate;
 using StructureMap;
 
 namespace Dahlia
@@ -31,6 +32,7 @@ namespace Dahlia
 
         protected void Application_Start()
         {
+            NHibernateProfiler.Initialize();
             AreaRegistration.RegisterAllAreas();
 
             RegisterGlobalFilters(GlobalFilters.Filters);

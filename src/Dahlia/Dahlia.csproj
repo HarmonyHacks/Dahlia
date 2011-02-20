@@ -39,6 +39,9 @@
     <Reference Include="FluentNHibernate">
       <HintPath>..\..\lib\fluentnhibernate-1.1\FluentNHibernate.dll</HintPath>
     </Reference>
+    <Reference Include="HibernatingRhinos.Profiler.Appender.v4.0">
+      <HintPath>..\..\lib\NHprof\HibernatingRhinos.Profiler.Appender.v4.0.dll</HintPath>
+    </Reference>
     <Reference Include="Iesi.Collections">
       <HintPath>..\..\lib\fluentnhibernate-1.1\Iesi.Collections.dll</HintPath>
     </Reference>
@@ -96,8 +99,10 @@
     </Compile>
     <Compile Include="Mappings\ParticipantMap.cs" />
     <Compile Include="Mappings\RetreatMap.cs" />
+    <Compile Include="Mappings\RetreatOverride.cs" />
     <Compile Include="MarkupHelpers.cs" />
     <Compile Include="Models\CareGiver.cs" />
+    <Compile Include="Models\IAmPersistable.cs" />
     <Compile Include="Models\Participant.cs" />
     <Compile Include="Models\PhysicalStatus.cs" />
     <Compile Include="Models\Retreat.cs" />

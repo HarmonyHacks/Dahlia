@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Dahlia.Models
 {
-    public class Retreat
+    public class Retreat : IAmPersistable
     {
         public Retreat()
         {
