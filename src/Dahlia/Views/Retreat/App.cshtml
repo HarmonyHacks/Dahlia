@@ -1,7 +1,12 @@
-﻿@{
+﻿@model Dahlia.ViewModels.DahliaAppViewModel
+
+@{
     ViewBag.Title = "App";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>App</h2>
 
+<script type="text/javascript">
+    var retreats = @Html.Raw(Model.RetreatsJson) ;
+</script>

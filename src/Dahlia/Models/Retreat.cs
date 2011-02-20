@@ -20,6 +20,7 @@ namespace Dahlia.Models
         public virtual IList<RegisteredParticipant> RegisteredParticipants { get; set; }
         public virtual String Description { get; set; }
         public virtual DateTime StartDate { get; set; }
+        public virtual String StartDateStr { get { return StartDate.ToShortDateString(); } }
         
         //public virtual DateTime EndDate { get; set; }
     }
