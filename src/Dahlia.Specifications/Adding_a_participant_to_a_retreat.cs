@@ -161,13 +161,14 @@ namespace Dahlia.Specifications
                 Search = "Search",
             };
             _retreatDate = retreatDate;
+            _firstDateReceived = new DateTime(2007, 12, 31);
 
             _retreatRepository = MockRepository.GenerateStub<IRetreatRepository>();
             _participantSearchService = MockRepository.GenerateStub<IParticipantSearchService>();
 
             _queryOutput = new[]
                            {
-                               new Participant {FirstName = "Bobathon", LastName = "fred"},
+                               new Participant {FirstName = "Bobathon", LastName = "fred", DateReceived = _firstDateReceived },
                                new Participant {FirstName = "bob", LastName = "Fredding"},
                            };
             _participantSearchService.Stub(x => x.SearchParticipants("bob", "fred")).Return(_queryOutput);
@@ -190,6 +191,10 @@ namespace Dahlia.Specifications
             () => ((AddParticipantToRetreatSearchResultsViewModel) _controller.TempData["searchResults"]).SearchResults
                 .First().Name.ShouldEqual("Bobathon fred");
 
+        It should_have_the_correct_date_received =
+            () => ((AddParticipantToRetreatSearchResultsViewModel) _controller.TempData["searchResults"]).SearchResults
+                .First().DateReceived.ShouldEqual(_firstDateReceived);
+
         It should_have_the_correct_number_of_results =
             () => ((AddParticipantToRetreatSearchResultsViewModel) _controller.TempData["searchResults"])
                 .SearchResults.Count.ShouldEqual(2);
@@ -202,6 +207,7 @@ namespace Dahlia.Specifications
         static ActionResult _result;
         static IParticipantSearchService _participantSearchService;
         static Participant[] _queryOutput;
+        static DateTime _firstDateReceived;
     }
 
     [Subject("Adding a participant to a retreat")]
