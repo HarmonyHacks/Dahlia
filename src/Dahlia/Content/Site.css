@@ -76,3 +76,35 @@ textarea
 {
     border:2px solid black;
 }
+
+ul#main_navigation
+{
+    display:inline;
+    padding:1em;
+    background-color:ffffff;
+    width:100%;
+}
+
+ul#main_navigation li
+{
+    text-decoration:none;
+    display:inline;
+    margin-right:1em;
+}
+
+ul#main_navigation li form
+{
+    display:inline;
+}
+
+#main_header
+{
+    width:100%;
+    background-color:#cccccc;
+    padding:1em;
+}
+
+#main_header h1
+{
+    margin-left:2em;
+}
