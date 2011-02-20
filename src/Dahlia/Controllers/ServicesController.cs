@@ -28,7 +28,16 @@ namespace Dahlia.Controllers
                 .Select(x => new RetreatListRetreatViewModel
                              {
                                  Date = x.StartDate,
-                                 AddParticipantLink = AddParticipantLinkForRetreat(x)
+                                 AddParticipantLink = AddParticipantLinkForRetreat(x),
+                                 RegisteredParticipants = x.RegisteredParticipants.Select(y => new RetreatListParticipantViewModel
+                                                                {
+                                                                    FirstName = y.Participant.FirstName,
+                                                                    LastName = y.Participant.LastName,
+                                                                    DateReceived = y.Participant.DateReceived,
+                                                                    Notes = y.Participant.Notes,
+                                                                    BedCode = y.BedCode,
+                                                                    DeleteLink = DeleteParticipantLinkForRetreat(y.Retreat, y.Participant)
+                                                                })
                              });
 
             return Json(retreats);

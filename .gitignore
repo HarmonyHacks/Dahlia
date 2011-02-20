@@ -1,9 +1,13 @@
+#test databases
+dahlia.db
 
 #OS junk files
 [Tt]humbs.db
 *.DS_Store
 #build directory
 CI
+
+Dahlia.5.1.ReSharper
 
 #Visual Studio files
 *.[Oo]bj

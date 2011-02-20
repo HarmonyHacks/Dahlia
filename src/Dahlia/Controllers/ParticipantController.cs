@@ -56,14 +56,15 @@ namespace Dahlia.Controllers
                 FirstName = postBack.FirstName,
                 LastName = postBack.LastName,
                 DateReceived = postBack.DateReceived,
-                Notes = postBack.Notes
+                Notes = postBack.Notes,
             };
 
             var newRegisteredParticipant = new RegisteredParticipant
             {
                 Participant = newParticipant,
                 Retreat = retreat,
-                BedCode = postBack.BedCode
+                BedCode = postBack.BedCode,
+                PhysicalStatus = postBack.PhysicalStatus,
             };
 
             retreat.RegisteredParticipants.Add(newRegisteredParticipant);

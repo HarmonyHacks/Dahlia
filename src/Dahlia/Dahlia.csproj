@@ -94,8 +94,10 @@
     </Compile>
     <Compile Include="Mappings\ParticipantMap.cs" />
     <Compile Include="Mappings\RetreatMap.cs" />
+    <Compile Include="MarkupHelpers.cs" />
     <Compile Include="Models\CareGiver.cs" />
     <Compile Include="Models\Participant.cs" />
+    <Compile Include="Models\PhysicalStatus.cs" />
     <Compile Include="Models\Retreat.cs" />
     <Compile Include="Persistence\SQLSessionFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -125,6 +127,7 @@
     <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Scripts\backbone-localstorage.js" />
     <Content Include="Scripts\backbone.js" />
     <Content Include="Scripts\dahlia.js" />
     <Content Include="Scripts\underscore.js" />
@@ -168,6 +171,10 @@
     <Content Include="Views\Retreat\App.cshtml" />
   </ItemGroup>
   <ItemGroup />
+
+  <ItemGroup>
+    <Content Include="Views\Retreat\Get.cshtml" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
