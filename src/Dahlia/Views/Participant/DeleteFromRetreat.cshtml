@@ -9,6 +9,6 @@
     @Html.HiddenFor(m => m.LastName)
     @Html.HiddenFor(m => m.RetreatDate)
     <h2>Are you sure?</h2>
-    <div>Do you really want to remove @Model.FirstName @Model.LastName from the @Model.RetreatDate retreat?</div>
+    <div>Do you really want to remove @Model.FirstName @Model.LastName from the @Model.RetreatDate.ToString("d") retreat?</div>
     <input type="submit" value="Yes" /><br />
 }
