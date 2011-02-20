@@ -22,13 +22,13 @@ namespace Dahlia.Specifications
             var AllParticipants = new List<Participant>()
                               {
                                   new Participant() {FirstName = "John", LastName = "Doe"},
-                                  new Participant() {FirstName = "Jane", LastName = "Doe"},
+                                  new Participant() {FirstName = "Jane", LastName = "Smith-Doe"},
                                   new Participant() {FirstName = "Bob", LastName = "Smith"},
                               };
 
             Participants.Add(AllParticipants);
 
-            ExpectedMatches = AllParticipants.Where(x => x.LastName == "Doe");
+            ExpectedMatches = AllParticipants.Where(x => x.LastName.Contains("Doe"));
         };
 
         Because of = () =>

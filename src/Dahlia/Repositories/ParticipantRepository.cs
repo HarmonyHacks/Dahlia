@@ -16,10 +16,10 @@ namespace Dahlia.Repositories
 
         IEnumerable<Participant> IParticipantRepository.WithLastName(string lastName)
         {
-            const string query = @"from Participant p where p.LastName = :LastName";
+            const string query = @"from Participant p where p.LastName like :LastName )";
 
             var participants = _currentSession.CreateQuery(query);
-            participants.SetParameter("LastName", lastName);
+            participants.SetParameter("%LastName%", lastName);
 
             return participants.List<Participant>();
         }
