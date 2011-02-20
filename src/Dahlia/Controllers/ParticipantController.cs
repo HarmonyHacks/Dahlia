@@ -52,6 +52,8 @@ namespace Dahlia.Controllers
                     x => x.Participant.FirstName == viewModel.FirstName 
                                 && x.Participant.LastName == viewModel.LastName);
             retreat.Registrations.Remove(participantToRemove);
+            _retreatRepository.Save(retreat);
+
             return RedirectToAction("Index", "Retreat");
         }
 
