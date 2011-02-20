@@ -25,6 +25,7 @@ namespace Dahlia.Persistence
                                             .Any(z => z == typeof(IAmPersistable))
                                             )
                                            .UseOverridesFromAssemblyOf<IAmPersistable>()
+                                           .Conventions.AddFromAssemblyOf<IAmPersistable>()
                                     )
                                 
                                 )

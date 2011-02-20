@@ -94,12 +94,11 @@
     <Compile Include="Configuration\SmDependencyResolver.cs" />
     <Compile Include="Controllers\ParticipantController.cs" />
     <Compile Include="Controllers\RetreatController.cs" />
+    <Compile Include="Conventions\HasManyConvention.cs" />
+    <Compile Include="Conventions\Overrides\RetreatOverride.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Mappings\ParticipantMap.cs" />
-    <Compile Include="Mappings\RetreatMap.cs" />
-    <Compile Include="Mappings\RetreatOverride.cs" />
     <Compile Include="MarkupHelpers.cs" />
     <Compile Include="Models\CareGiver.cs" />
     <Compile Include="Models\IAmPersistable.cs" />

@@ -1,9 +1,8 @@
-using System;
-using Dahlia.Models;
+﻿using Dahlia.Models;
 using FluentNHibernate.Automapping;
 using FluentNHibernate.Automapping.Alterations;
 
-namespace Dahlia.Mappings
+namespace Dahlia.Conventions.Overrides
 {
     public class RetreatOverride : IAutoMappingOverride<Retreat>
     {
