@@ -20,7 +20,7 @@ namespace Dahlia.Specifications
         {
             _retreatDate = new DateTime(2007, 12, 15);
             _retreatRepository = MockRepository.GenerateStub<IRetreatRepository>();
-            _controller = new ParticipantController(_retreatRepository);
+            _controller = new ParticipantController(_retreatRepository, null);
 
             _retreat = new Retreat { };
             _retreatRepository.Stub(x => x.Get(_retreatDate)).Return(_retreat);
@@ -52,7 +52,7 @@ namespace Dahlia.Specifications
         {
             _retreatRepo = MockRepository.GenerateStub<IRetreatRepository>();
             _retreatDate = new DateTime(2007, 12, 15);
-            _controller = new ParticipantController(_retreatRepo);
+            _controller = new ParticipantController(_retreatRepo, null);
 
             var participants = Builder<Participant>.CreateListOfSize(29)
                 .WhereAll().Have(x => x.BedCode = "foo").Build();
@@ -101,7 +101,7 @@ namespace Dahlia.Specifications
             _retreatDate = retreatDate;
             
             _retreatRepository = MockRepository.GenerateStub<IRetreatRepository>();
-            _controller = new ParticipantController(_retreatRepository);
+            _controller = new ParticipantController(_retreatRepository, null);
 
             _retreat = new Retreat{ StartDate = retreatDate };
             _retreatRepository.Stub(x => x.Get(retreatDate)).Return(_retreat);

@@ -53,8 +53,15 @@
     <Compile Include="..\ProjectInfo.cs">
       <Link>Properties\ProjectInfo.cs</Link>
     </Compile>
+    <Compile Include="ParticipantTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WithATestAssembly.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Dahlia\Dahlia.csproj">
+      <Project>{BBFB9D0D-FDC8-4532-B8C5-35035D5713FE}</Project>
+      <Name>Dahlia</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

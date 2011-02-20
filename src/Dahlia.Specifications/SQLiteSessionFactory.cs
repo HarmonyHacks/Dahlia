@@ -9,7 +9,6 @@ using NHibernate.Cfg;
 using FluentNHibernate;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
-using System.Reflection;
 using NHibernate.Tool.hbm2ddl;
 
 namespace Dahlia.Specifications
