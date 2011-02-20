@@ -91,7 +91,6 @@
     <Compile Include="Configuration\SmDependencyResolver.cs" />
     <Compile Include="Controllers\ParticipantController.cs" />
     <Compile Include="Controllers\RetreatController.cs" />
-    <Compile Include="Controllers\ServicesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -107,6 +106,7 @@
     <Compile Include="Repositories\RetreatRepository.cs" />
     <Compile Include="Services\ExpressionExtensions.cs" />
     <Compile Include="Services\RequestContextProvider.cs" />
+    <Compile Include="Services\RetreatUiHelpers.cs" />
     <Compile Include="Services\UrlMapper.cs" />
     <Compile Include="ViewModels\AddParticipantToRetreatViewModel.cs" />
     <Compile Include="ViewModels\DeleteParticipantFromRetreatViewModel.cs" />
