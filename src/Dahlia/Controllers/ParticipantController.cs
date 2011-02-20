@@ -64,14 +64,15 @@ namespace Dahlia.Controllers
             {
                 var queryResults = _participantSearchService.SearchParticipants(postBack.FirstName, postBack.LastName);
                 var searchResults = queryResults.Select(x => new ParticipantSearchResultViewModel
-                                                             {
-                                                                 Name = string.Format("{0} {1}", x.FirstName, x.LastName),
-                                                             });
+                {
+                    Name = string.Format("{0} {1}", x.FirstName, x.LastName),
+                    DateReceived = x.DateReceived,
+                });
                 TempData["searchResults"] = new AddParticipantToRetreatSearchResultsViewModel
-                                            {
-                                                SearchResults = searchResults.ToList(),
-                                            };
-                return RedirectToAction("AddToRetreat", "Participant");
+                {
+                    SearchResults = searchResults.ToList(),
+                };
+                return RedirectToAction("AddToRetreat", "Participant", new{ retreatDate = postBack.RetreatDate });
             }
 
             var retreat = _retreatRepository.Get(postBack.RetreatDate);
