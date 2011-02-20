@@ -15,7 +15,6 @@ namespace Dahlia.Repositories
         Retreat GetById(int id);
         void Save(Retreat retreat);
         void DeleteById(int retreatId);
-        Retreat GetById(int id);
     }
 
     public class RetreatRepository : IRetreatRepository
@@ -62,12 +61,6 @@ namespace Dahlia.Repositories
            var retreat = GetById(retreatId);
             _session.Delete(retreat);
             _session.Flush();
-        }
-
-        public Retreat GetById(int id)
-        {
-            return _session.CreateCriteria<Retreat>()
-                .Add(Restrictions.Eq("Id",id)).UniqueResult<Retreat>();
         }
     }
 }
