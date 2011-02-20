@@ -53,7 +53,7 @@ namespace Dahlia.Controllers
                                   {
                                       FirstName = y.Participant.FirstName,
                                       LastName = y.Participant.LastName,
-                                      BedCode = y.Bed.Code,
+                                      BedCode = y.Bed == null ? null :y.Bed.Code,
                                       DateReceived = y.Participant.DateReceived,
                                       PhysicalStatus = y.Participant.PhysicalStatus,
                                       Notes = y.Participant.Notes,
