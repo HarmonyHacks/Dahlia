@@ -18,11 +18,15 @@ namespace Dahlia.Controllers
 
         public ViewResult AddToRetreat(DateTime retreatDate)
         {
+            var retreat = _retreatRepository.Get(retreatDate);
+
             var viewModel = new AddParticipantToRetreatViewModel
-                                {
-                                    RetreatDate = retreatDate,
-                                    DateReceived = DateTime.Today,
-                                };
+            {
+                RetreatDate = retreatDate,
+                DateReceived = DateTime.Today,
+                RetreatIsFull = retreat.IsFull,
+            };
+
             return View("AddToRetreat", viewModel);
         }
 

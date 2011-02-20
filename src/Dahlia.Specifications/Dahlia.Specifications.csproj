@@ -34,6 +34,9 @@
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\..\lib\fluentnhibernate-1.1\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="FizzWare.NBuilder">
+      <HintPath>..\..\lib\NBuilder.2.3.0.0\lib\FizzWare.NBuilder.dll</HintPath>
+    </Reference>
     <Reference Include="FluentNHibernate">
       <HintPath>..\..\lib\fluentnhibernate-1.1\FluentNHibernate.dll</HintPath>
     </Reference>

@@ -17,7 +17,15 @@ namespace Dahlia.Models
         public virtual String Description { get; set; }
         public virtual DateTime StartDate { get; set; }
         public virtual String StartDateStr { get { return StartDate.ToShortDateString(); } }
-        
+
+        public bool IsFull
+        {
+            get
+            {
+                return RegisteredParticipants.Where(x => !string.IsNullOrEmpty(x.BedCode)).Count() >= 29;
+            }
+        }
+
         //public virtual DateTime EndDate { get; set; }
 
         public virtual void AddParticipant(Participant newParticipant, string bedCode, PhysicalStatus physicalStatus)

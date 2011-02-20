@@ -7,6 +7,7 @@ using Dahlia.Controllers;
 using Dahlia.Models;
 using Dahlia.Repositories;
 using Dahlia.ViewModels;
+using FizzWare.NBuilder;
 using Machine.Specifications;
 using Rhino.Mocks;
 
@@ -16,16 +17,20 @@ namespace Dahlia.Specifications
     public class When_showing_the_add_participant_screen_for_a_retreat
     {
         Establish context = () =>
-                            {
-                                _retreatDate = new DateTime(2007, 12, 15);
-                                _controller = new ParticipantController(null);
-                            };
+        {
+            _retreatDate = new DateTime(2007, 12, 15);
+            _retreatRepository = MockRepository.GenerateStub<IRetreatRepository>();
+            _controller = new ParticipantController(_retreatRepository);
+
+            _retreat = new Retreat { };
+            _retreatRepository.Stub(x => x.Get(_retreatDate)).Return(_retreat);
+        };
 
         Because of = () =>
-                                 {
-                                     _viewResult = _controller.AddToRetreat(_retreatDate);
-                                     _viewModel = (AddParticipantToRetreatViewModel) _viewResult.ViewData.Model;
-                                 };
+        {
+            _viewResult = _controller.AddToRetreat(_retreatDate);
+            _viewModel = (AddParticipantToRetreatViewModel) _viewResult.ViewData.Model;
+        };
 
         It should_return_a_view_result_for_the_add_participant_view = () => _viewResult.ViewName.ShouldEqual("AddToRetreat");
 
@@ -37,6 +42,44 @@ namespace Dahlia.Specifications
         static ViewResult _viewResult;
         static AddParticipantToRetreatViewModel _viewModel;
         static ParticipantController _controller;
+        static IRetreatRepository _retreatRepository;
+        static Retreat _retreat;
+    }
+
+    public class When_showing_the_add_participan_screen_for_a_full_retreat
+    {
+        Establish context = () =>
+        {
+            _retreatRepo = MockRepository.GenerateStub<IRetreatRepository>();
+            _retreatDate = new DateTime(2007, 12, 15);
+            _controller = new ParticipantController(_retreatRepo);
+
+            var participants = Builder<RegisteredParticipant>.CreateListOfSize(29)
+                .WhereAll().Have(x => x.BedCode = "foo").Build();
+
+            var retreat = Builder<Retreat>.CreateNew()
+                .With(x => x.StartDate = _retreatDate)
+                .And(x => x.RegisteredParticipants = participants)
+                .Build();
+
+            _retreatRepo.Stub(x => x.Get(_retreatDate)).Return(retreat);
+
+        };
+
+        Because of = () =>
+        {
+            _viewResult = _controller.AddToRetreat(_retreatDate);
+            _viewModel = (AddParticipantToRetreatViewModel)_viewResult.ViewData.Model;
+        };
+
+        It should_disable_assigning_bed_codes = () =>
+            _viewModel.RetreatIsFull.ShouldBeTrue();
+
+        static DateTime _retreatDate;
+        static ViewResult _viewResult;
+        static AddParticipantToRetreatViewModel _viewModel;
+        static ParticipantController _controller;
+        static IRetreatRepository _retreatRepo;
     }
 
     [Subject("Adding a participant to a retreat")]
