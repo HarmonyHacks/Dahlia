@@ -15,7 +15,11 @@ namespace Dahlia.Services
     {
         public IEnumerable<Participant> SearchParticipants(string firstName, string lastName)
         {
-            throw new NotImplementedException();
+            return new[]
+            {
+                new Participant {FirstName = "bob", LastName = "fred", DateReceived = DateTime.Now},
+                new Participant {FirstName = "allen", LastName = "wikipedia", DateReceived = DateTime.Now},
+            };
         }
     }
 }

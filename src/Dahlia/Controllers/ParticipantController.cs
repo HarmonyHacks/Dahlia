@@ -72,7 +72,7 @@ namespace Dahlia.Controllers
                 {
                     SearchResults = searchResults.ToList(),
                 };
-                return RedirectToAction("AddToRetreat", "Participant");
+                return RedirectToAction("AddToRetreat", "Participant", new{ retreatDate = postBack.RetreatDate });
             }
 
             var retreat = _retreatRepository.Get(postBack.RetreatDate);
