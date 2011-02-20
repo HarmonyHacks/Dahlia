@@ -59,15 +59,7 @@ namespace Dahlia.Controllers
                 Notes = postBack.Notes,
             };
 
-            var newRegisteredParticipant = new RegisteredParticipant
-            {
-                Participant = newParticipant,
-                Retreat = retreat,
-                BedCode = postBack.BedCode,
-                PhysicalStatus = postBack.PhysicalStatus,
-            };
-
-            retreat.RegisteredParticipants.Add(newRegisteredParticipant);
+            retreat.AddParticipant(newParticipant, postBack.BedCode, postBack.PhysicalStatus);
 
             _retreatRepository.Save(retreat);
 
