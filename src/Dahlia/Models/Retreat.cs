@@ -13,16 +13,11 @@ namespace Dahlia.Models
         }
 
         public virtual int Id { get; set; }
-        //public virtual IList<Room> Rooms { get; set; }
-        //public virtual IList<WaitListing> WaitList { get; set; }
-        //public virtual IList<CareGiver> CareGivers { get; set; }
-        
         public virtual IList<RegisteredParticipant> RegisteredParticipants { get; set; }
         public virtual String Description { get; set; }
         public virtual DateTime StartDate { get; set; }
         public virtual String StartDateStr { get { return StartDate.ToShortDateString(); } }
         
-        //public virtual DateTime EndDate { get; set; }
     }
 
     public class RegisteredParticipant

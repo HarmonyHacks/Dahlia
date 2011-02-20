@@ -17,7 +17,7 @@ namespace Dahlia.Repositories
     public class RetreatRepository : IRetreatRepository
     {
         static ICollection<Retreat> _Retreats;
-        static ISession _Session;
+        static ISession _session;
 
         static RetreatRepository()
         {
@@ -29,6 +29,10 @@ namespace Dahlia.Repositories
             };
         }
 
+        public RetreatRepository(ISession session)
+        {
+            _session = session;
+        }
 
         IEnumerable<Retreat> IRetreatRepository.GetList()
         {
@@ -47,6 +51,7 @@ namespace Dahlia.Repositories
 
         public void Save(Retreat retreat)
         {
+            _session.SaveOrUpdate(retreat);
         }
     }
 }
