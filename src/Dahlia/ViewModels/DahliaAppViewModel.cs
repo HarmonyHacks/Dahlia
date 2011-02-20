@@ -8,5 +8,6 @@ namespace Dahlia.ViewModels
     public class DahliaAppViewModel
     {
         public string RetreatsJson { get; set; }
+        public RetreatListRetreatViewModel CurrentRetreat { get; set; }
     }
 }

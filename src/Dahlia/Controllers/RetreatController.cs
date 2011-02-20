@@ -25,7 +25,20 @@ namespace Dahlia.Controllers
 
         public ActionResult Index()
         {
-            var retreats = _retreatRepository.GetList().OrderBy(x => x.StartDate).Select(
+            var retreats = GetRetreats();
+            var model = new RetreatListViewModel
+            {
+                CreateLink = new Uri("/Retreat/Create", UriKind.Relative),
+
+                Retreats = retreats
+            };
+
+            return View(model);
+        }
+
+        IEnumerable<RetreatListRetreatViewModel> GetRetreats()
+        {
+            return _retreatRepository.GetList().OrderBy(x => x.StartDate).Select(
                 x => new RetreatListRetreatViewModel
                      {
                          Date = x.StartDate,
@@ -41,14 +54,6 @@ namespace Dahlia.Controllers
                                       DeleteLink = BuildDeleteLink(x, y)
                                   })
                      });
-            var model = new RetreatListViewModel
-            {
-                CreateLink = new Uri("/Retreat/Create", UriKind.Relative),
-
-                Retreats = retreats
-            };
-
-            return View(model);
         }
 
         Uri BuildDeleteLink(Retreat retreat, RegisteredParticipant participant)
@@ -83,9 +88,11 @@ namespace Dahlia.Controllers
         public ViewResult App()
         {
             var retreats = _retreatRepository.GetList();
+            var retreatsVm = GetRetreats();
             var model = new DahliaAppViewModel()
             {
-                RetreatsJson = _serializer.Serialize(retreats)
+                RetreatsJson = _serializer.Serialize(retreats),
+                CurrentRetreat = retreatsVm.First(),
             };
             return View(model);
         }
