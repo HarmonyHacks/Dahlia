@@ -55,6 +55,7 @@ namespace Dahlia.Controllers
                                       LastName = y.LastName,
                                       BedCode = y.BedCode,
                                       DateReceived = y.DateReceived,
+                                      PhysicalStatus = y.PhysicalStatus,
                                       Notes = y.Notes,
                                       DeleteLink = BuildDeleteLink(x, y)
                                   })

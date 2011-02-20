@@ -33,6 +33,7 @@
                 @foreach (var participant in retreat.RegisteredParticipants.Where(p => !String.IsNullOrWhiteSpace(p.BedCode)))
                 {
                     <li><div style="width:100%"> @participant.FirstName @participant.LastName @participant.BedCode @participant.DateReceived.ToShortDateString() <a href="@participant.DeleteLink">Delete</a> </div>
+                        <div style="width:100%"> @participant.PhysicalStatus </div>
                         <div style="width:100%"> @participant.Notes </div></li>
                 }
             </ul>
@@ -40,6 +41,7 @@
                 @foreach (var participant in retreat.RegisteredParticipants.Where(p => String.IsNullOrWhiteSpace(p.BedCode)).OrderBy(p => p.DateReceived))
                 {
                     <li><div style="width:100%"> @participant.FirstName @participant.LastName @participant.BedCode @participant.DateReceived.ToShortDateString() <a href="@participant.DeleteLink">Delete</a> </div>
+                        <div style="width:100%"> @participant.PhysicalStatus </div>
                         <div style="width:100%"> @participant.Notes </div></li>
                 }
             </ul>
