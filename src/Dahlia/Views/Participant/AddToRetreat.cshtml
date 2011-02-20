@@ -34,6 +34,7 @@
     
     <input name="Save" type="submit" value="Add Participant" />
     <input name="Cancel" type="submit" value="Cancel" />
+    <input name="Search" type="submit" value="Search Participants" />
 }
 
 <ul>
@@ -41,7 +42,7 @@
 {
     foreach (var searchResult in searchResultsViewModel.SearchResults)
     {
-        <li>@searchResult.Name @searchResult.DateReceived</li>
+        <li>@searchResult.Name @searchResult.DateReceived <a href="@searchResult.SelectLink">Add to Retreat</a></li>
     }
 }
 </ul>

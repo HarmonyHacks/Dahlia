@@ -15,7 +15,7 @@ namespace Dahlia.Specifications
         Establish context = () =>
         {
             var CurrentSession = SQLiteSessionFactory.CreateSessionFactory().OpenSession();
-            Participants = new ParticipantRepositoryNHibImpl(CurrentSession);
+            Participants = new ParticipantRepository(CurrentSession);
 
             var AllParticipants = new List<Participant>()
                               {
@@ -40,7 +40,7 @@ namespace Dahlia.Specifications
 
         static IEnumerable<Participant> ExpectedMatches;
         static IEnumerable<Participant> matchingParticipants;
-        static ParticipantRepository Participants;
+        static IParticipantRepository Participants;
     }
 
     [Subject("Searching for Participants"), Ignore]
@@ -48,7 +48,7 @@ namespace Dahlia.Specifications
     {
         Establish context = () =>
         {
-            participantRepository = MockRepository.GenerateStub<ParticipantRepository>();
+            participantRepository = MockRepository.GenerateStub<IParticipantRepository>();
             controller = new ParticipantController(null, participantRepository, null, null);
             lastnameISearchedFor = "bob";
         };
@@ -59,7 +59,7 @@ namespace Dahlia.Specifications
         It should_search_for_participants_with_my_search_string_in_their_name = () =>
             participantRepository.AssertWasCalled(x => x.WithLastName(lastnameISearchedFor));
 
-        static ParticipantRepository participantRepository;
+        static IParticipantRepository participantRepository;
         static ParticipantController controller;
         static string lastnameISearchedFor;
     }

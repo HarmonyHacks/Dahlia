@@ -12,6 +12,7 @@ namespace Dahlia.Repositories
         IEnumerable<Retreat> GetList();
         void Add(Retreat retreat);
         Retreat Get(DateTime retreatDate);
+        Retreat GetById(int id);
         void Save(Retreat retreat);
     }
 
@@ -41,6 +42,11 @@ namespace Dahlia.Repositories
             return _session.CreateCriteria(typeof (Retreat))
                 .Add(Restrictions.Eq("StartDate", retreatDate))
                 .UniqueResult<Retreat>();
+        }
+
+        public Retreat GetById(int id)
+        {
+            return _session.Get<Retreat>(id);
         }
 
         public void Save(Retreat retreat)
