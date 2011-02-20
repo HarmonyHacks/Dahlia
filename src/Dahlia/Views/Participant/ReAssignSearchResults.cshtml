@@ -1,0 +1,32 @@
+﻿@using Dahlia;
+@using Dahlia.ViewModels;
+
+@model Dahlia.ViewModels.ReassignParticipantSearchResultsViewModel
+
+@{
+    ViewBag.Title = "Re-assign Participant";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Add Participant to Retreat</h2>
+
+@using (Html.BeginForm("DoReAssign", "Participant")) {
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Date Received</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var result in Model.Results)
+            {
+                <tr>
+                    <td><a href='@result.SelectLink'>@result.Name</a></td>
+                    <td>@result.DateReceived.ToString("d")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <input type="submit" value="Add Participant" />
+}

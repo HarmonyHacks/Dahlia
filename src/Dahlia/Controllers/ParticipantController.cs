@@ -50,12 +50,18 @@ namespace Dahlia.Controllers
                                 && x.Participant.LastName == viewModel.LastName);
             retreat.Registrations.Remove(participantToRemove);
             return RedirectToAction("Index", "Retreat");
-       }
+        }
 
         public ActionResult DoAddToRetreat(AddParticipantToRetreatViewModel postBack)
         {
             if (postBack.Cancel != null)
                 return RedirectToAction("Index", "Retreat", new {id = postBack.RetreatUiId});
+
+            if(postBack.Search != null)
+            {
+                TempData["searchResults"] = new AddParticipantToRetreatSearchResultsViewModel();
+                return RedirectToAction("AddToRetreat", "Participant");
+            }
 
             var retreat = _retreatRepository.Get(postBack.RetreatDate);
 
@@ -73,6 +79,27 @@ namespace Dahlia.Controllers
             _retreatRepository.Save(retreat);
 
             return RedirectToAction("Index", "Retreat", new { id = postBack.RetreatUiId });
+        }
+
+        public ActionResult ReAssignSearchResults()
+        {
+
+            var viewModel = new ReassignParticipantSearchResultsViewModel
+            {
+               Results = new[]
+               {
+                   new ReassignParticipantSearchResultViewModel { DateReceived = DateTime.Now, Name = "Bob Dobbs", SelectLink = new Uri("/Participant/DoReassign?participantId=42", UriKind.Relative)},
+                   new ReassignParticipantSearchResultViewModel { DateReceived = DateTime.Now, Name = "Bob Smith", SelectLink = new Uri("/Participant/DoReassign?participantId=432", UriKind.Relative)},
+                   new ReassignParticipantSearchResultViewModel { DateReceived = DateTime.Now, Name = "Bob Jones", SelectLink = new Uri("/Participant/DoReassign?participantId=424", UriKind.Relative)},
+               }
+            };
+
+            return View(viewModel);
+        }
+
+        public ActionResult DoReAssign(int participantId)
+        {
+            return View();
         }
     }
 }
