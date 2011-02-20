@@ -13,7 +13,7 @@ namespace Dahlia.Mappings
             Id(x => x.Id).GeneratedBy.Identity();
             Map(x => x.StartDate);
             Map(x => x.Description);
-            HasMany(x => x.Registrations);
+            HasMany(x => x.Registrations).Cascade.All();
         }
     }
 }
