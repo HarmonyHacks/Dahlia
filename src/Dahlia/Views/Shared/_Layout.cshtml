@@ -13,13 +13,17 @@
 </head>
 
 <body>
-    <h1>OMG HAI!</h1>
-    <div>Re-assign:
-        <form action='/Participant/ReAssignSearchResults'>
-            <input type='textbox' name='searchString' />
-            <input type='submit' value='Search' />
-        </form>
-    </div>
+    <h1>Harmony Hills Admin</h1>
+    <ul id="main_navigation">
+        <li><a href="/Retreat/Create">Add a new retreat</a></li>
+        <li>
+            <form action='/Participant/ReAssignSearchResults'>
+                <label for="searchString">Re-assign:</label>
+                <input type='textbox' name='searchString' />
+                <input type='submit' value='Search' />
+            </form>
+        </li>
+    </ul>
     @RenderBody()
     <img src="http://thisiswhatgrindsmygears.files.wordpress.com/2009/11/gitrdone.jpg" />
 </body>
