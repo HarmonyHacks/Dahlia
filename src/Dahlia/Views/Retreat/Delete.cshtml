@@ -1,7 +1,11 @@
 ﻿@model Dahlia.ViewModels.DeleteRetreatViewModel
+           
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Popup.cshtml";
+}
 
-    <h3>Are you sure you want to delete the retreat for @Model.StartDate?</h3>
-    <br />description: @Model.Description<br />
+    <h3>Are you sure you want to delete the "@Model.Description" retreat on @Model.StartDate.ToShortDateString()?</h3>
 
     @using (Html.BeginForm()) {
         <p>

@@ -15,6 +15,7 @@ namespace Dahlia.ViewModels
     public class RetreatListRetreatViewModel
     {
         public DateTime Date { get; set; }
+        public int ActualId { get; set; }
         public string Id { get { return RetreatUiHelpers.RetreatUiId(Date); } }
         public bool Active { get; set; }
 

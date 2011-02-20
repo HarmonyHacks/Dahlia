@@ -59,12 +59,15 @@ namespace Dahlia.Repositories
 
         public void DeleteById(int retreatId)
         {
-            throw new NotImplementedException();
+           var retreat = GetById(retreatId);
+            _session.Delete(retreat);
+            _session.Flush();
         }
 
         public Retreat GetById(int id)
         {
-            throw new NotImplementedException();
+            return _session.CreateCriteria<Retreat>()
+                .Add(Restrictions.Eq("Id",id)).UniqueResult<Retreat>();
         }
     }
 }

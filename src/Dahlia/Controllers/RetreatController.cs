@@ -46,6 +46,7 @@ namespace Dahlia.Controllers
             return _retreatRepository.GetList().OrderBy(x => x.StartDate).Select(
                 x => new RetreatListRetreatViewModel
                      {
+                         ActualId = x.Id,
                          Date = x.StartDate,
                          AddParticipantLink = AddParticipantLinkForRetreat(x),
                          RegisteredParticipants = x.Registrations.Select(
