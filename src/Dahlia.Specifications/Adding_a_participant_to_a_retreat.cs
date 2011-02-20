@@ -52,6 +52,7 @@ namespace Dahlia.Specifications
                              FirstName = "firstbob",
                              LastName = "lastmartin",
                              DateReceived = DateTime.Today,
+                             PhysicalStatus = PhysicalStatus.Limited,
                              Notes = "yada yada yada...",
                          };
             _retreatDate = retreatDate;
@@ -65,20 +66,49 @@ namespace Dahlia.Specifications
 
         Because of = () => _controller.DoAddToRetreat(_viewModel);
 
-        It should_save_the_retreat = () => _retreatRepository.AssertWasCalled(x => x.Save(_retreat));
-        It should_add_the_participant_to_the_retreat = () => _retreat.RegisteredParticipants.Count.ShouldEqual(1);
-        It should_give_the_participant_the_right_first_name = () => _retreat.RegisteredParticipants[0].Participant.FirstName.ShouldEqual(_viewModel.FirstName);
-        It should_give_the_participant_the_right_last_name = () => _retreat.RegisteredParticipants[0].Participant.LastName.ShouldEqual(_viewModel.LastName);
-        It should_give_the_participant_the_right_date_recieved = () => _retreat.RegisteredParticipants[0].Participant.DateReceived.ShouldEqual(_viewModel.DateReceived);
-        It should_give_the_participant_the_right_notes = () => _retreat.RegisteredParticipants[0].Participant.Notes.ShouldEqual(_viewModel.Notes);
+        It should_save_the_retreat = () => 
+            _retreatRepository.AssertWasCalled(x => x.Save(_retreat));
+        
+        It should_add_the_participant_to_the_retreat = () => 
+            _retreat.RegisteredParticipants.Count.ShouldEqual(1);
+        
+        It should_give_the_participant_the_right_first_name = () => 
+            _retreat.RegisteredParticipants[0].Participant.FirstName.ShouldEqual(_viewModel.FirstName);
+        
+        It should_give_the_participant_the_right_last_name = () => 
+            _retreat.RegisteredParticipants[0].Participant.LastName.ShouldEqual(_viewModel.LastName);
+        
+        It should_give_the_participant_the_right_date_recieved = () => 
+            _retreat.RegisteredParticipants[0].Participant.DateReceived.ShouldEqual(_viewModel.DateReceived);
+        
+        It should_give_the_participant_the_right_notes = () => 
+            _retreat.RegisteredParticipants[0].Participant.Notes.ShouldEqual(_viewModel.Notes);
 
-        It should_assign_the_right_bed_code = () => _retreat.RegisteredParticipants[0].BedCode.ShouldEqual(_viewModel.BedCode);
-        It should_assign_the_retreat = () => _retreat.RegisteredParticipants[0].Retreat.ShouldEqual(_retreat);
+        It should_assign_the_right_bed_code = () => 
+            _retreat.RegisteredParticipants[0].BedCode.ShouldEqual(_viewModel.BedCode);
+        
+        It should_assign_the_retreat = () => 
+            _retreat.RegisteredParticipants[0].Retreat.ShouldEqual(_retreat);
+
+        It should_assign_the_physical_status = () =>
+            _retreat.RegisteredParticipants[0].PhysicalStatus.ShouldEqual(_viewModel.PhysicalStatus);
 
         static DateTime _retreatDate;
         static AddParticipantToRetreatViewModel _viewModel;
         static ParticipantController _controller;
         static IRetreatRepository _retreatRepository;
         static Retreat _retreat;
+    }
+
+    [Subject("Adding a participant to a retreat")]
+    public class When_adding_a_participant_to_the_list
+    {
+        Because of = () => 
+            _viewModel = new AddParticipantToRetreatViewModel();
+
+        It defaults_to_the_participant_being_unlimited = () =>
+            _viewModel.PhysicalStatus.ShouldEqual(PhysicalStatus.Unlimited);
+
+        static AddParticipantToRetreatViewModel _viewModel;
     }
 }

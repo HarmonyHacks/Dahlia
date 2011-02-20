@@ -2,7 +2,7 @@
 {
     public enum PhysicalStatus
     {
-        Limited,
-        Unlimited
+        Unlimited,
+        Limited
     }
 }
