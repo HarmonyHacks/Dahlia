@@ -84,7 +84,7 @@ namespace Dahlia.Controllers
             if (!ModelState.IsValid)
                 return View();
             _retreatRepository.Add(retreatModel);
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { id = retreatModel.StartDateStr.Replace("/", "_") });
         }
     }
 }
