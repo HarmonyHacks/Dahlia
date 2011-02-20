@@ -12,10 +12,10 @@ namespace Dahlia.Controllers
     public class ParticipantController : Controller
     {
         readonly IRetreatRepository _retreatRepository;
-        readonly ParticipantRepository _participantRepository;
+        readonly IParticipantRepository _participantRepository;
         readonly IParticipantSearchService _participantSearchService;
 
-        public ParticipantController(IRetreatRepository retreatRepository, ParticipantRepository participantRepository, IParticipantSearchService participantSearchService)
+        public ParticipantController(IRetreatRepository retreatRepository, IParticipantRepository participantRepository, IParticipantSearchService participantSearchService)
         {
             _retreatRepository = retreatRepository;
             _participantRepository = participantRepository;
@@ -96,6 +96,15 @@ namespace Dahlia.Controllers
             _retreatRepository.Save(retreat);
 
             return RedirectToAction("Index", "Retreat", new { id = postBack.RetreatUiId });
+        }
+
+        public ActionResult DoAssignToRetreat(DateTime retreatDate, int participantId)
+        {
+            // use the imaginary participant repository to read the participant.
+            // use the retreat repository to get the retreat.
+            var retreat = _retreatRepository.Get(retreatDate);
+            var participant = _participantRepository.
+            
         }
 
         public ActionResult ReAssignSearchResults(string lastnameISearchedFor)

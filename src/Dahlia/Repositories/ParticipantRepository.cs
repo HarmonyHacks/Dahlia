@@ -1,11 +1,39 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Dahlia.Models;
+using NHibernate;
 
 namespace Dahlia.Repositories
 {
-    public interface ParticipantRepository
+    public class ParticipantRepository : IParticipantRepository
     {
-        IEnumerable<Participant> WithLastName(string Lastname);
-        void Add(IEnumerable<Participant> expectedMatches);
+        readonly ISession _currentSession;
+
+        public ParticipantRepository(ISession currentSession)
+        {
+            _currentSession = currentSession;
+        }
+
+        IEnumerable<Participant> IParticipantRepository.WithLastName(string lastName)
+        {
+            const string query = @"from Participant p where p.LastName = :LastName";
+
+            var participants = _currentSession.CreateQuery(query);
+            participants.SetParameter("LastName", lastName);
+
+            return participants.List<Participant>();
+        }
+
+        void IParticipantRepository.Add(IEnumerable<Participant> participants)
+        {
+            foreach (var p in participants)
+                _currentSession.SaveOrUpdate(p);
+            _currentSession.Flush();
+        }
+
+        Participant IParticipantRepository.GetById(int id)
+        {
+            return _currentSession.Get<Participant>(id);
+        }
     }
 }
