@@ -15,6 +15,8 @@ namespace Dahlia.ViewModels
         public string Notes { get; set; }
         public PhysicalStatus PhysicalStatus { get; set; }
         public bool RetreatIsFull { get; set; }
+        public string Cancel { get; set; }
+        public string Save { get; set; }
 
         public string RetreatUiId
         {
