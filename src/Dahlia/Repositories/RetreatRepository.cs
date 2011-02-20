@@ -12,7 +12,9 @@ namespace Dahlia.Repositories
         IEnumerable<Retreat> GetList();
         void Add(Retreat retreat);
         Retreat Get(DateTime retreatDate);
+        Retreat GetById(int id);
         void Save(Retreat retreat);
+        void DeleteById(int retreatId);
     }
 
     public class RetreatRepository : IRetreatRepository
@@ -43,9 +45,21 @@ namespace Dahlia.Repositories
                 .UniqueResult<Retreat>();
         }
 
+        public Retreat GetById(int id)
+        {
+            return _session.Get<Retreat>(id);
+        }
+
         public void Save(Retreat retreat)
         {
             _session.SaveOrUpdate(retreat);
+            _session.Flush();
+        }
+
+        public void DeleteById(int retreatId)
+        {
+           var retreat = GetById(retreatId);
+            _session.Delete(retreat);
             _session.Flush();
         }
     }

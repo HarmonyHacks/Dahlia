@@ -21,13 +21,13 @@ namespace Dahlia.Models
         {
             get
             {
-                return Registrations.Where(x => !string.IsNullOrEmpty(x.BedCode)).Count() >= 29;
+                return Registrations.Where(x => x.Bed != null).Count() >= 29;
             }
         }
 
-        public virtual void AddParticipant(Participant newRegistration, string bedCode )
+        public virtual void AddParticipant(Participant newRegistration, Bed bed )
         {
-            var registration = new Registration {Participant = newRegistration, Retreat = this, BedCode = bedCode};
+            var registration = new Registration {Participant = newRegistration, Retreat = this, Bed = bed};
             Registrations.Add(registration);
         }
     }

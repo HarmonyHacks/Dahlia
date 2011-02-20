@@ -12,14 +12,16 @@ namespace Dahlia.Controllers
     public class ParticipantController : Controller
     {
         readonly IRetreatRepository _retreatRepository;
-        readonly ParticipantRepository _participantRepository;
+        readonly IParticipantRepository _participantRepository;
         readonly IParticipantSearchService _participantSearchService;
+        readonly IBedRepository _bedRepository;
 
-        public ParticipantController(IRetreatRepository retreatRepository, ParticipantRepository participantRepository, IParticipantSearchService participantSearchService)
+        public ParticipantController(IRetreatRepository retreatRepository, IParticipantRepository participantRepository, IParticipantSearchService participantSearchService, IBedRepository bedRepository)
         {
             _retreatRepository = retreatRepository;
             _participantRepository = participantRepository;
             _participantSearchService = participantSearchService;
+            _bedRepository = bedRepository;
         }
 
         public ViewResult AddToRetreat(DateTime retreatDate)
@@ -47,6 +49,11 @@ namespace Dahlia.Controllers
             return View("DeleteFromRetreat", viewModel);
         }
 
+        public ActionResult Reassign(ReassignParticipantSearchResultsViewModel viewModel)
+        {
+            return View("ReassignParticipant", viewModel);
+        }
+
         public ActionResult DoDeleteFromRetreat(DeleteParticipantFromRetreatViewModel viewModel)
         {
             var retreat = _retreatRepository.Get(viewModel.RetreatDate);
@@ -63,7 +70,7 @@ namespace Dahlia.Controllers
         public ActionResult DoAddToRetreat(AddParticipantToRetreatViewModel postBack)
         {
             if (postBack.Cancel != null)
-                return RedirectToAction("Index", "Retreat", new {id = postBack.RetreatUiId});
+                return RedirectToAction("Index", "Retreat", new {id = postBack.RetreatId});
 
             if(postBack.Search != null)
             {
@@ -91,11 +98,23 @@ namespace Dahlia.Controllers
                 PhysicalStatus = postBack.PhysicalStatus
             };
 
-            retreat.AddParticipant(newParticipant, postBack.BedCode);
+            var bed = _bedRepository.GetBy(postBack.BedCode);
+
+            retreat.AddParticipant(newParticipant, bed);
 
             _retreatRepository.Save(retreat);
 
-            return RedirectToAction("Index", "Retreat", new { id = postBack.RetreatUiId });
+            return RedirectToAction("Index", "Retreat", new { id = postBack.RetreatId });
+        }
+
+        public ActionResult DoAssignToRetreat(DateTime retreatDate, int participantId)
+        {
+            // use the imaginary participant repository to read the participant.
+            // use the retreat repository to get the retreat.
+            var retreat = _retreatRepository.Get(retreatDate);
+            var participant = _participantRepository.GetById(participantId);
+            throw new NotImplementedException();
+            //retreat.AddParticipant(participant, );
         }
 
         public ActionResult ReAssignSearchResults(string lastnameISearchedFor)

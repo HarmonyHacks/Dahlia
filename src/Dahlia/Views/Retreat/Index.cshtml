@@ -43,6 +43,7 @@
                         <div style="width:100%"> @participant.Notes </div></li>
                 }
             </ul>
+            @Html.ActionLink("Delete Retreat", "Delete", new { id = retreat.Id})
         </div>
     }
 </div>
