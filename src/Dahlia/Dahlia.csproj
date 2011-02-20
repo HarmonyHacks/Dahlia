@@ -118,7 +118,6 @@
     <Compile Include="Services\ExpressionExtensions.cs" />
     <Compile Include="Services\ParticipantSearchService.cs" />
     <Compile Include="Services\RequestContextProvider.cs" />
-    <Compile Include="Services\RetreatUiHelpers.cs" />
     <Compile Include="Services\UrlMapper.cs" />
     <Compile Include="ViewModels\AddParticipantToRetreatSearchResultsViewModel.cs" />
     <Compile Include="ViewModels\AddParticipantToRetreatViewModel.cs" />

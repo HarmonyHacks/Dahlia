@@ -46,7 +46,7 @@ namespace Dahlia.Controllers
             return _retreatRepository.GetList().OrderBy(x => x.StartDate).Select(
                 x => new RetreatListRetreatViewModel
                      {
-                         ActualId = x.Id,
+                         Id = x.Id,
                          Date = x.StartDate,
                          AddParticipantLink = AddParticipantLinkForRetreat(x),
                          RegisteredParticipants = x.Registrations.Select(
@@ -89,7 +89,7 @@ namespace Dahlia.Controllers
             if (!ModelState.IsValid)
                 return View();
             _retreatRepository.Add(retreatModel);
-            return RedirectToAction("Index", new { id = RetreatUiHelpers.RetreatUiId(retreatModel.StartDate) });
+            return RedirectToAction("Index", new { id = retreatModel.Id });
         }
 
         public ActionResult Delete(int id)

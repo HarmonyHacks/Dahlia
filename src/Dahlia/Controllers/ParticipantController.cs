@@ -70,7 +70,7 @@ namespace Dahlia.Controllers
         public ActionResult DoAddToRetreat(AddParticipantToRetreatViewModel postBack)
         {
             if (postBack.Cancel != null)
-                return RedirectToAction("Index", "Retreat", new {id = postBack.RetreatUiId});
+                return RedirectToAction("Index", "Retreat", new {id = postBack.RetreatId});
 
             if(postBack.Search != null)
             {
@@ -104,7 +104,7 @@ namespace Dahlia.Controllers
 
             _retreatRepository.Save(retreat);
 
-            return RedirectToAction("Index", "Retreat", new { id = postBack.RetreatUiId });
+            return RedirectToAction("Index", "Retreat", new { id = postBack.RetreatId });
         }
 
         public ActionResult DoAssignToRetreat(DateTime retreatDate, int participantId)
