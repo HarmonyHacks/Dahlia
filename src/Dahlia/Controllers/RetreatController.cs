@@ -51,6 +51,29 @@ namespace Dahlia.Controllers
             return View(model);
         }
 
+        public ActionResult Get(DateTime retreatDate)
+        {
+            var retreat = _retreatRepository.Get(retreatDate);
+
+            var viewModel = new RetreatListRetreatViewModel
+                            {
+                                Date = retreat.StartDate,
+                                AddParticipantLink = AddParticipantLinkForRetreat(retreat),
+                                RegisteredParticipants = retreat.RegisteredParticipants.Select(
+                                    y => new RetreatListParticipantViewModel
+                                         {
+                                             FirstName = y.Participant.FirstName,
+                                             LastName = y.Participant.LastName,
+                                             BedCode = y.BedCode,
+                                             DateReceived = y.Participant.DateReceived,
+                                             Notes = y.Participant.Notes,
+                                             DeleteLink = BuildDeleteLink(retreat, y)
+                                         })
+                            };
+
+            return View(viewModel);
+        }
+
         Uri BuildDeleteLink(Retreat retreat, RegisteredParticipant participant)
         {
             return _urlMapper.MapAction<ParticipantController>(
