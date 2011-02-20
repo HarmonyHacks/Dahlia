@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 using Dahlia.Models;
 using Dahlia.Repositories;
 using Dahlia.Services;
@@ -13,11 +14,13 @@ namespace Dahlia.Controllers
     {
         readonly IRetreatRepository _retreatRepository;
         readonly IUrlMapper _urlMapper;
+        readonly JavaScriptSerializer _serializer;
 
-        public RetreatController(IRetreatRepository retreatRepository, IUrlMapper urlMapper)
+        public RetreatController(IRetreatRepository retreatRepository, IUrlMapper urlMapper, JavaScriptSerializer serializer)
         {
             _retreatRepository = retreatRepository;
             _urlMapper = urlMapper;
+            _serializer = serializer;
         }
 
         public ActionResult Index()
@@ -79,7 +82,12 @@ namespace Dahlia.Controllers
 
         public ViewResult App()
         {
-            return View();
+            var retreats = _retreatRepository.GetList();
+            var model = new DahliaAppViewModel()
+            {
+                RetreatsJson = _serializer.Serialize(retreats)
+            };
+            return View(model);
         }
     }
 }
