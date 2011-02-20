@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Dahlia.Models;
 
 namespace Dahlia.ViewModels
 {
@@ -12,7 +13,9 @@ namespace Dahlia.ViewModels
     public class RetreatListRetreatViewModel
     {
         public DateTime Date { get; set; }
-        public Uri ViewLink { get; set; }
+        public string Id { get { return Date.ToShortDateString().Replace("/", "_"); } }
+        public bool Active { get; set; }
+
         public Uri AddParticipantLink { get; set; }
         public IEnumerable<RetreatListParticipantViewModel> RegisteredParticipants { get; set; }
     }
