@@ -5,14 +5,11 @@ using System.Text;
 using Dahlia.Models;
 using FluentNHibernate.Automapping;
 using NHibernate;
-using NHibernate.Cfg;
-using FluentNHibernate;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
-using System.Reflection;
 using NHibernate.Tool.hbm2ddl;
 
-namespace Dahlia
+namespace Dahlia.Specifications
 {
     public static class SQLiteSessionFactory
     {

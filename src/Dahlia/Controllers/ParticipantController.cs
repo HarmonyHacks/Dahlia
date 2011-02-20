@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Dahlia.Models;
@@ -11,12 +12,14 @@ namespace Dahlia.Controllers
     public class ParticipantController : Controller
     {
         readonly IRetreatRepository _retreatRepository;
+        readonly ParticipantRepository _participantRepository;
         readonly IParticipantSearchService _participantSearchService;
         readonly IBedRepository _bedRepository;
 
-        public ParticipantController(IRetreatRepository retreatRepository, IParticipantSearchService participantSearchService, IBedRepository bedRepository)
+        public ParticipantController(IRetreatRepository retreatRepository, ParticipantRepository participantRepository, IParticipantSearchService participantSearchService, IBedRepository bedRepository)
         {
             _retreatRepository = retreatRepository;
+            _participantRepository = participantRepository;
             _participantSearchService = participantSearchService;
             _bedRepository = bedRepository;
         }
@@ -99,12 +102,20 @@ namespace Dahlia.Controllers
             return RedirectToAction("Index", "Retreat", new { id = postBack.RetreatUiId });
         }
 
-        public ActionResult ReAssignSearchResults()
+        public ActionResult ReAssignSearchResults(string lastnameISearchedFor)
         {
+            //var ParticipantResults = _participantRepository.WithLastName(lastnameISearchedFor);
+            //var viewModel = new List<ReassignParticipantSearchResultsViewModel>(); 
+
+            //foreach (var P in ParticipantResults)
+            //{
+            //    viewModel.Add(new ReassignParticipantSearchResultViewModel { DateReceived = P.DateReceived, Name  = P.FirstName + " " + P.LastName, new Uri()});        
+            //}
+
 
             var viewModel = new ReassignParticipantSearchResultsViewModel
             {
-               Results = new[]
+                Results = new[]
                {
                    new ParticipantSearchResultViewModel { DateReceived = DateTime.Now, Name = "Bob Dobbs", SelectLink = new Uri("/Participant/DoReassign?participantId=42", UriKind.Relative)},
                    new ParticipantSearchResultViewModel { DateReceived = DateTime.Now, Name = "Bob Smith", SelectLink = new Uri("/Participant/DoReassign?participantId=432", UriKind.Relative)},

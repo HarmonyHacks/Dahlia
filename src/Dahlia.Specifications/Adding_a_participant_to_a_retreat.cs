@@ -21,7 +21,7 @@ namespace Dahlia.Specifications
         {
             _retreatDate = new DateTime(2007, 12, 15);
             _retreatRepository = MockRepository.GenerateStub<IRetreatRepository>();
-            _controller = new ParticipantController(_retreatRepository, null, null);
+            _controller = new ParticipantController(_retreatRepository, null, null, null);
 
             _retreat = new Retreat { };
             _retreatRepository.Stub(x => x.Get(_retreatDate)).Return(_retreat);
@@ -54,7 +54,7 @@ namespace Dahlia.Specifications
         {
             _retreatRepo = MockRepository.GenerateStub<IRetreatRepository>();
             _retreatDate = new DateTime(2007, 12, 15);
-            _controller = new ParticipantController(_retreatRepo, null, null);
+            _controller = new ParticipantController(_retreatRepo, null, null, null);
 
             var registrations = Builder<Registration>.CreateListOfSize(29)
                 .WhereAll().Have(x => x.Bed = Builder<Bed>.CreateNew().With(y => y.Code = "foo").Build()).Build();
@@ -106,7 +106,7 @@ namespace Dahlia.Specifications
             
             _retreatRepository = MockRepository.GenerateStub<IRetreatRepository>();
             var bedRepository = MockRepository.GenerateStub<IBedRepository>();
-            _controller = new ParticipantController(_retreatRepository, null, bedRepository);
+            _controller = new ParticipantController(_retreatRepository, null, null, bedRepository);
 
             _retreat = new Retreat{ StartDate = retreatDate };
             _retreatRepository.Stub(x => x.Get(retreatDate)).Return(_retreat);
@@ -176,7 +176,7 @@ namespace Dahlia.Specifications
                            };
             _participantSearchService.Stub(x => x.SearchParticipants("bob", "fred")).Return(_queryOutput);
             
-            _controller = new ParticipantController(_retreatRepository, _participantSearchService, null);
+            _controller = new ParticipantController(_retreatRepository, null, _participantSearchService, null);
 
             _retreat = new Retreat { StartDate = retreatDate };
             _retreatRepository.Stub(x => x.Get(retreatDate)).Return(_retreat);
