@@ -66,3 +66,13 @@ textarea
 {
     display: none;
 }
+
+.unselected_retreat 
+{
+    border: 1px solid #666;
+}
+
+.selected_retreat 
+{
+    border:2px solid black;
+}

@@ -6,7 +6,23 @@
 }
 
 <h2>App</h2>
+<div id="retreats_ui" style="width:600px;">
+    <div>
+        <div id="retreats_list" style="display:inline;"></div>
+        <br />
+        <div></div>
+    </div>
+</div>
 
 <script type="text/javascript">
     var retreats = @Html.Raw(Model.RetreatsJson) ;
+    $(function() {
+        var retreatsUI = new RetreatsUI({ rawRetreats: retreats, el: $('#retreats_ui')});
+        retreatsUI.render();
+        var foo = 'bar';
+    });
+</script>
+
+<script type="text/template" id="retreat_templ">
+    <div class="unselected_retreat" style="display:inline"><%= id %></div>
 </script>
