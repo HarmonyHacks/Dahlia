@@ -25,15 +25,21 @@ namespace Dahlia.Controllers
 
         public ActionResult Index()
         {
-            var retreats = GetRetreats();
-            var model = new RetreatListViewModel
-            {
-                CreateLink = new Uri("/Retreat/Create", UriKind.Relative),
-
-                Retreats = retreats
-            };
+            var model = GetModel();
 
             return View(model);
+        }
+
+        RetreatListViewModel GetModel()
+        {
+            var retreats = GetRetreats().ToArray();
+            retreats.First().Active = true;
+            return new RetreatListViewModel
+                   {
+                       CreateLink = new Uri("/Retreat/Create", UriKind.Relative),
+
+                       Retreats = retreats
+                   };
         }
 
         IEnumerable<RetreatListRetreatViewModel> GetRetreats()
@@ -87,14 +93,8 @@ namespace Dahlia.Controllers
 
         public ViewResult App()
         {
-            var retreats = _retreatRepository.GetList();
-            var retreatsVm = GetRetreats();
-            var model = new DahliaAppViewModel()
-            {
-                RetreatsJson = _serializer.Serialize(retreats),
-                CurrentRetreat = retreatsVm.First(),
-            };
-            return View(model);
+            var retreatsVm = GetModel();
+            return View(retreatsVm);
         }
     }
 }

@@ -103,7 +103,6 @@
     <Compile Include="Services\RequestContextProvider.cs" />
     <Compile Include="Services\UrlMapper.cs" />
     <Compile Include="ViewModels\AddParticipantToRetreatViewModel.cs" />
-    <Compile Include="ViewModels\DahliaAppViewModel.cs" />
     <Compile Include="ViewModels\DeleteParticipantFromRetreatViewModel.cs" />
     <Compile Include="ViewModels\RetreatListViewModel.cs" />
   </ItemGroup>

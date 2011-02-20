@@ -1,52 +1,45 @@
-﻿@model Dahlia.ViewModels.DahliaAppViewModel
+﻿@model Dahlia.ViewModels.RetreatListViewModel
 
 @{
     ViewBag.Title = "App";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>App</h2>
-<div id="retreats_ui" style="width:600px;">
-    <div>
-        <div id="retreats_tabs">
-            <ul></ul>
-        </div>
-    </div>
-</div>
-
 <script type="text/javascript">
-    var retreats = @Html.Raw(Model.RetreatsJson) ;
     $(function() {
-        var retreatsUI = new RetreatsUI({ rawRetreats: retreats, el: $('#retreats_ui')});
-        retreatsUI.render();
-        
-        $('#retreats_tabs').tabs();
+        $('#static_tabs').tabs();
     });
 </script>
 
-<script type="text/template" id="retreat_templ">
-    <div class="unselected_retreat" style="display:inline"><%= id %> .. goes here</div>
-</script>
-
-<br />
-<div style="width:500px;border-top:1px solid black;">&emsp;</div>
-
+<a href='@Model.CreateLink'>Add a new retreat</a>
 
 <div id="static_tabs" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
     <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
-        <li class="ui-state-default ui-corner-top"><a href="#blah">1/12/2012</a></li>
-        <li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="#blah">1/12/2012</a></li>
-        <li class="ui-state-default ui-corner-top"><a href="#blah">2/15/2012</a></li>
+        @foreach (var retreat in Model.Retreats)
+        {
+            <li class="ui-state-default ui-corner-top"><a href="#@retreat.Id">@retreat.Date.ToShortDateString()</a></li>
+        }
     </ul>
-    <div id="whatever_content" class="ui-tabs-panel ui-widget-content ui-corner-bottom ui-tabs-hide" style="display:inline">
-        hidden
-    </div>
-    <div id="whatever_content" class="ui-tabs-panel ui-widget-content ui-corner-bottom" style="display:inline">
-        lorum ipsum.
-    </div>
-    <div id="whatever_content" class="ui-tabs-panel ui-widget-content ui-corner-bottom ui-tabs-hide" style="display:inline">
-        hidden
-    </div>
+    @foreach (var retreat in Model.Retreats)
+    {
+        <div id="@retreat.Id" class="ui-tabs-panel ui-widget-content ui-corner-bottom @(!retreat.Active ? "ui-tabs-hide" : "")" style="display:inline">
+            <a href='@retreat.AddParticipantLink'>Add Participant</a><br />
+            <ul><b>Has Bed Code</b>
+                @foreach (var participant in retreat.RegisteredParticipants.Where(p => !String.IsNullOrWhiteSpace(p.BedCode)))
+                {
+                    <li><div style="width:100%"> @participant.FirstName @participant.LastName @participant.BedCode @participant.DateReceived <a href="@participant.DeleteLink">Delete</a> </div>
+                        <div style="width:100%"> @participant.Notes </div></li>
+                }
+            </ul>
+            <ul><b>Does Not Have Bed Code</b>
+                @foreach (var participant in retreat.RegisteredParticipants.Where(p => String.IsNullOrWhiteSpace(p.BedCode)).OrderBy(p => p.DateReceived))
+                {
+                    <li><div style="width:100%"> @participant.FirstName @participant.LastName @participant.BedCode @participant.DateReceived <a href="@participant.DeleteLink">Delete</a> </div>
+                        <div style="width:100%"> @participant.Notes </div></li>
+                }
+            </ul>
+        </div>
+    }
 </div>
 
 
