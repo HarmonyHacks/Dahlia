@@ -15,6 +15,7 @@ namespace Dahlia.ViewModels
         public string Id { get { return Date.ToShortDateString().Replace("/", "_"); } }
         public bool Active { get; set; }
 
+        public Uri ViewLink { get; set; }
         public Uri AddParticipantLink { get; set; }
         public IEnumerable<RetreatListParticipantViewModel> RegisteredParticipants { get; set; }
     }

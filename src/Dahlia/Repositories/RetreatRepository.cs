@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Dahlia.Models;
+using NHibernate;
 
 namespace Dahlia.Repositories
 {
@@ -16,6 +17,7 @@ namespace Dahlia.Repositories
     public class RetreatRepository : IRetreatRepository
     {
         static ICollection<Retreat> _Retreats;
+        static ISession _session;
 
         static RetreatRepository()
         {
@@ -25,6 +27,11 @@ namespace Dahlia.Repositories
                 new Retreat { StartDate = new DateTime(2011, 6, 1)},
                 new Retreat { StartDate = new DateTime(2011, 7, 15)},
             };
+        }
+
+        public RetreatRepository(ISession session)
+        {
+            _session = session;
         }
 
         IEnumerable<Retreat> IRetreatRepository.GetList()
@@ -44,6 +51,7 @@ namespace Dahlia.Repositories
 
         public void Save(Retreat retreat)
         {
+            _session.SaveOrUpdate(retreat);
         }
     }
 }
