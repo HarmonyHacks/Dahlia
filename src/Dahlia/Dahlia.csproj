@@ -96,8 +96,8 @@
     <Compile Include="Controllers\ParticipantController.cs" />
     <Compile Include="Controllers\RetreatController.cs" />
     <Compile Include="Conventions\HasManyConvention.cs" />
-    <Compile Include="Conventions\Overrides\RegistrationOverride.cs" />
     <Compile Include="Conventions\Overrides\RetreatOverride.cs" />
+    <Compile Include="Conventions\ReferenceConvention.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
