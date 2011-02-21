@@ -5,11 +5,14 @@
     Layout = "~/Views/Shared/_Popup.cshtml";
 }
 
-    <div>Are you sure you want to remove @Model.FirstName @Model.LastName from the @Model.RetreatDate.ToShortDateString() retreat?</div>
+    <fieldset>
+        <legend>Delete Retreat</legend>
+        <h3>Are you sure you want to remove @Model.FirstName @Model.LastName from the @Model.RetreatDate.ToShortDateString() retreat?</h3>
 
-    @using(Html.BeginForm()) {
-        <p>
-            <input type="submit" value="Remove" /> |
-            @Html.ActionLink("Cancel", "Index", "Retreat")
-        </p>
-    }
+        @using (Html.BeginForm()) {
+            <p>
+                <input type="submit" value="Remove" /> &nbsp;
+                <input type="button" value="Cancel" onclick="javascript:window.location='/';" />
+            </p>
+        }
+    </fieldset>
