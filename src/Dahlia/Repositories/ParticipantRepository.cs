@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Dahlia.Models;
 using NHibernate;
+using NHibernate.Criterion;
 
 namespace Dahlia.Repositories
 {
@@ -16,12 +17,16 @@ namespace Dahlia.Repositories
 
         IEnumerable<Participant> IParticipantRepository.WithLastName(string lastName)
         {
-            const string query = @"from Participant p where p.LastName like :LastName )";
+            return _currentSession.CreateCriteria<Participant>()
+                .Add(Restrictions.InsensitiveLike("LastName", lastName, MatchMode.End))
+                .List<Participant>();
 
-            var participants = _currentSession.CreateQuery(query);
-            participants.SetParameter("%LastName%", lastName);
+            //const string query = @"from Participant p where p.LastName like :LastName )";
 
-            return participants.List<Participant>();
+            //var participants = _currentSession.CreateQuery(query);
+            //participants.SetParameter("LastName", string.Format("%{0}%", lastName));
+
+            //return participants.List<Participant>();
         }
 
         void IParticipantRepository.Add(IEnumerable<Participant> participants)
