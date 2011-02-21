@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Dahlia.Controllers;
 using Dahlia.Models;
 using Dahlia.Repositories;
+using Dahlia.Services;
 using Dahlia.ViewModels;
 using FizzWare.NBuilder;
 using Machine.Specifications;
@@ -174,8 +175,9 @@ namespace Dahlia.Specifications
                                new Participant {FirstName = "bob", LastName = "Fredding"},
                            };
             _participantRepository.Stub(x => x.WithNameLike("bob", "fred")).Return(_queryOutput);
-            
-            _controller = new ParticipantController(_retreatRepository, null, null, null);
+
+            var urlMapper = MockRepository.GenerateStub<IUrlMapper>();
+            _controller = new ParticipantController(_retreatRepository, _participantRepository, null, urlMapper);
 
             _retreat = new Retreat { StartDate = retreatDate };
             _retreatRepository.Stub(x => x.Get(retreatDate)).Return(_retreat);
