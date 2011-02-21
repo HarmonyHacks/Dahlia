@@ -27,20 +27,29 @@
     {
         <div id="@retreat.Id">
             <a href='@retreat.AddParticipantLink'>Add Participant</a> &nbsp; @Html.ActionLink("Delete Retreat", "Delete", new { id = retreat.Id})<br />
-            <ul><b>Has Bed Code</b>
+            <b>Registered</b>
+            <ul>
                 @foreach (var participant in retreat.RegisteredParticipants.Where(p => !String.IsNullOrWhiteSpace(p.BedCode)))
                 {
-                    <li><div style="width:100%"> @participant.FirstName @participant.LastName @participant.BedCode @participant.DateReceived.ToShortDateString() <a href="@participant.DeleteLink">Delete</a> </div>
-                        <div style="width:100%"> @participant.PhysicalStatus </div>
-                        <div style="width:100%"> @participant.Notes </div></li>
+                    <li>
+                        <div><b>Name:</b> @participant.FirstName @participant.LastName <a href="@participant.DeleteLink">Delete</a></div>
+                        <div><b>Date Recieved:</b> @participant.DateReceived.ToShortDateString()</div>
+                        <div><b>Bed Code:</b> @participant.BedCode</div>
+                        <div><b>Physical Status:</b> @participant.PhysicalStatus </div>
+                        <div><b>Notes:</b> @participant.Notes</div>
+                    </li>
                 }
-            </ul>
-            <ul><b>Does Not Have Bed Code</b>
+            </ul><br />
+            <b>Waitlist</b>
+            <ul>
                 @foreach (var participant in retreat.RegisteredParticipants.Where(p => String.IsNullOrWhiteSpace(p.BedCode)).OrderBy(p => p.DateReceived))
                 {
-                    <li><div style="width:100%"> @participant.FirstName @participant.LastName @participant.BedCode @participant.DateReceived.ToShortDateString() <a href="@participant.DeleteLink">Delete</a> </div>
-                        <div style="width:100%"> @participant.PhysicalStatus </div>
-                        <div style="width:100%"> @participant.Notes </div></li>
+                    <li>
+                        <div><b>Name:</b> @participant.FirstName @participant.LastName <a href="@participant.DeleteLink">Delete</a></div>
+                        <div><b>Date Recieved:</b> @participant.DateReceived.ToShortDateString()</div>
+                        <div><b>Physical Status:</b> @participant.PhysicalStatus </div>
+                        <div><b>Notes:</b> @participant.Notes</div>
+                    </li>
                 }
             </ul>
         </div>
