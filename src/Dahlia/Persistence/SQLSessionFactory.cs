@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using Dahlia.Models;
@@ -29,15 +30,16 @@ namespace Dahlia.Persistence
                                     )
                                 
                                 )
-                                 //.ExposeConfiguration(BuildSchema)
+                                 .ExposeConfiguration(BuildSchema)
                                  //.ExposeConfiguration(x => x.SetProperty("current_session_context_class", "web"))
                                  .BuildSessionFactory();
         }
 
         public static void BuildSchema(NHibernate.Cfg.Configuration cfg)
         {
-            new SchemaExport(cfg)
-                .Create(false, true);
+            var rebuildSchema = ConfigurationManager.AppSettings["rebuildSchema"];
+            if (rebuildSchema == "true")
+                new SchemaExport(cfg).Create(false, true);
         }
     }
 }
