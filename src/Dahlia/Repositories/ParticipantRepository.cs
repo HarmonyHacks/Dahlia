@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Dahlia.Models;
 using NHibernate;
 using NHibernate.Criterion;
@@ -39,6 +40,20 @@ namespace Dahlia.Repositories
         Participant IParticipantRepository.GetById(int id)
         {
             return _currentSession.Get<Participant>(id);
+        }
+
+        public IEnumerable<Participant> WithNameLike(string firstName, string lastName)
+        {
+            if (lastName == null)
+                lastName = string.Empty;
+            if (firstName == null)
+                firstName = string.Empty;
+
+            var criteria = _currentSession.CreateCriteria(typeof (Participant));
+            return criteria
+                .Add(Restrictions.InsensitiveLike("LastName", lastName))
+                .Add(Restrictions.InsensitiveLike("FirstName", firstName))
+                .List<Participant>();
         }
     }
 }

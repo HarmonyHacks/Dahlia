@@ -5,8 +5,10 @@ using System.Web;
 
 namespace Dahlia.ViewModels
 {
-    public class AddParticipantToRetreatChooseBedCodeViewModel
+    public class AssignParticipantToRetreatChooseBedCodeViewModel
     {
+        public int RetreatId { get; set; }
+        public int ParticipantId { get; set; }
         public string BedCode { get; set; }
         public string[] BedCodeList { get; set; }
     }

@@ -1,4 +1,4 @@
-﻿@model Dahlia.ViewModels.AddParticipantToRetreatChooseBedCodeViewModel
+﻿@model Dahlia.ViewModels.AssignParticipantToRetreatChooseBedCodeViewModel
 
 @{
     ViewBag.Title = "AddToRetreatChooseBedCode";
@@ -7,7 +7,7 @@
 
 <h2>Please choose a bed code</h2>
 
-@Html.BeginForm("DoAssignToRetreat", "Participant")
+@using(Html.BeginForm("DoAssignToRetreat", "Participant"))
 {
     @Html.HiddenFor(m => m.RetreatId);
     @Html.HiddenFor(m => m.ParticipantId);

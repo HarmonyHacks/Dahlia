@@ -13,15 +13,15 @@ namespace Dahlia.Controllers
     {
         readonly IRetreatRepository _retreatRepository;
         readonly IParticipantRepository _participantRepository;
-        readonly IParticipantSearchService _participantSearchService;
         readonly IBedRepository _bedRepository;
+        readonly IUrlMapper _urlMapper;
 
-        public ParticipantController(IRetreatRepository retreatRepository, IParticipantRepository participantRepository, IParticipantSearchService participantSearchService, IBedRepository bedRepository)
+        public ParticipantController(IRetreatRepository retreatRepository, IParticipantRepository participantRepository, IBedRepository bedRepository, IUrlMapper urlMapper)
         {
             _retreatRepository = retreatRepository;
             _participantRepository = participantRepository;
-            _participantSearchService = participantSearchService;
             _bedRepository = bedRepository;
+            _urlMapper = urlMapper;
         }
 
         public ViewResult AddToRetreat(DateTime retreatDate)
@@ -75,11 +75,12 @@ namespace Dahlia.Controllers
 
             if(postBack.Search != null)
             {
-                var queryResults = _participantSearchService.SearchParticipants(postBack.FirstName, postBack.LastName);
+                var queryResults = _participantRepository.WithNameLike(postBack.FirstName, postBack.LastName);
                 var searchResults = queryResults.Select(x => new ParticipantSearchResultViewModel
                 {
                     Name = string.Format("{0} {1}", x.FirstName, x.LastName),
                     DateReceived = x.DateReceived,
+                    SelectLink = _urlMapper.MapAction<ParticipantController>(c => c.AssignToRetreatChooseBedCode(postBack.RetreatId, x.Id)),
                 });
                 TempData["searchResults"] = new AddParticipantToRetreatSearchResultsViewModel
                 {
@@ -108,13 +109,26 @@ namespace Dahlia.Controllers
             return RedirectToAction("Index", "Retreat", new { id = postBack.RetreatId });
         }
 
-        public ActionResult DoAssignToRetreat(int retreatId, int participantId, string bedCode)
+        public ActionResult AssignToRetreatChooseBedCode(int retreatId, int participantId)
         {
-            var retreat = _retreatRepository.GetById(retreatId);
-            var participant = _participantRepository.GetById(participantId);
+            var bedCodes = _bedRepository.GetAll().Select(x => x.Code).OrderBy(x => x);
+            var model = new AssignParticipantToRetreatChooseBedCodeViewModel
+            {
+                RetreatId = retreatId,
+                ParticipantId = participantId,
+                BedCodeList = new[] {"(none)"}.Concat(bedCodes).ToArray(),
+                BedCode = "(none)",
+            };
+            return View(model);
+        }
+
+        public ActionResult DoAssignToRetreat(AssignParticipantToRetreatChooseBedCodeViewModel postBack)
+        {
+            var retreat = _retreatRepository.GetById(postBack.RetreatId);
+            var participant = _participantRepository.GetById(postBack.ParticipantId);
             Bed bed = null;
-            if (!string.IsNullOrEmpty(bedCode))
-                bed = _bedRepository.GetBy(bedCode);
+            if (!string.IsNullOrEmpty(postBack.BedCode))
+                bed = _bedRepository.GetBy(postBack.BedCode);
             retreat.AddParticipant(participant, bed);
             return RedirectToAction("Index", "Retreat", new {id = retreat.Id });
         }

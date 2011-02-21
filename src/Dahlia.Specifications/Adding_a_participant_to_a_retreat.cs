@@ -6,7 +6,6 @@ using System.Web.Mvc;
 using Dahlia.Controllers;
 using Dahlia.Models;
 using Dahlia.Repositories;
-using Dahlia.Services;
 using Dahlia.ViewModels;
 using FizzWare.NBuilder;
 using Machine.Specifications;
@@ -106,7 +105,7 @@ namespace Dahlia.Specifications
             
             _retreatRepository = MockRepository.GenerateStub<IRetreatRepository>();
             var bedRepository = MockRepository.GenerateStub<IBedRepository>();
-            _controller = new ParticipantController(_retreatRepository, null, null, bedRepository);
+            _controller = new ParticipantController(_retreatRepository, null, bedRepository, null);
 
             _retreat = new Retreat{ StartDate = retreatDate };
             _retreatRepository.Stub(x => x.Get(retreatDate)).Return(_retreat);
@@ -167,16 +166,16 @@ namespace Dahlia.Specifications
             _firstDateReceived = new DateTime(2007, 12, 31);
 
             _retreatRepository = MockRepository.GenerateStub<IRetreatRepository>();
-            _participantSearchService = MockRepository.GenerateStub<IParticipantSearchService>();
+            _participantRepository = MockRepository.GenerateStub<IParticipantRepository>();
 
             _queryOutput = new[]
                            {
                                new Participant {FirstName = "Bobathon", LastName = "fred", DateReceived = _firstDateReceived },
                                new Participant {FirstName = "bob", LastName = "Fredding"},
                            };
-            _participantSearchService.Stub(x => x.SearchParticipants("bob", "fred")).Return(_queryOutput);
+            _participantRepository.Stub(x => x.WithNameLike("bob", "fred")).Return(_queryOutput);
             
-            _controller = new ParticipantController(_retreatRepository, null, _participantSearchService, null);
+            _controller = new ParticipantController(_retreatRepository, null, null, null);
 
             _retreat = new Retreat { StartDate = retreatDate };
             _retreatRepository.Stub(x => x.Get(retreatDate)).Return(_retreat);
@@ -208,7 +207,7 @@ namespace Dahlia.Specifications
         static IRetreatRepository _retreatRepository;
         static Retreat _retreat;
         static ActionResult _result;
-        static IParticipantSearchService _participantSearchService;
+        static IParticipantRepository _participantRepository;
         static Participant[] _queryOutput;
         static DateTime _firstDateReceived;
     }

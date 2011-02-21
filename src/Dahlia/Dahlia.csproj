@@ -116,7 +116,6 @@
     <Compile Include="Repositories\ParticipantRepository.cs" />
     <Compile Include="Repositories\RetreatRepository.cs" />
     <Compile Include="Services\ExpressionExtensions.cs" />
-    <Compile Include="Services\ParticipantSearchService.cs" />
     <Compile Include="Services\RequestContextProvider.cs" />
     <Compile Include="Services\UrlMapper.cs" />
     <Compile Include="ViewModels\AddParticipantToRetreatChooseBedCodeViewModel.cs" />
@@ -197,7 +196,7 @@
     <Content Include="Views\Participant\ReassignParticipant.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Participant\AddToRetreatChooseBedCode.cshtml" />
+    <Content Include="Views\Participant\AssignToRetreatChooseBedCode.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
