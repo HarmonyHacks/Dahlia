@@ -29,7 +29,7 @@ task version {
 
 task compile -depends build_dir, version {
 
-	& $msbuild $sln_file /p:OutputPath="$build_output_dir\" /p:Configuration=Release /p:Platform="Any CPU"
+	& $msbuild $sln_file /p:OutputPath="$build_output_dir\" /p:Configuration=Release /p:Platform="x86"
   
   if($lastExitCode -ne 0) {
 		throw "Compile Failed."
