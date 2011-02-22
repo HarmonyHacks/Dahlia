@@ -1,7 +1,8 @@
 using System.Collections.Generic;
+using System.Linq;
 using Dahlia.Models;
 using NHibernate;
-using NHibernate.Criterion;
+using NHibernate.Linq;
 
 namespace Dahlia.Repositories
 {
@@ -22,15 +23,14 @@ namespace Dahlia.Repositories
 
         public IEnumerable<Bed> GetAll()
         {
-            return _session.CreateCriteria(typeof (Bed))
-                .List<Bed>();
+            return _session.Query<Bed>();
         }
 
         public Bed GetBy(string code)
         {
-            return _session.CreateCriteria(typeof (Bed))
-                .Add(Restrictions.Eq("Code", code))
-                .UniqueResult<Bed>();
+            return _session.Query<Bed>()
+                .Where(x => x.Code == code)
+                .FirstOrDefault();
         }
     }
 }

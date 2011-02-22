@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Dahlia.Models;
 using NHibernate;
-using NHibernate.Criterion;
+using NHibernate.Linq;
 
 namespace Dahlia.Repositories
 {
@@ -28,8 +28,7 @@ namespace Dahlia.Repositories
 
         IEnumerable<Retreat> IRetreatRepository.GetList()
         {
-            return _session.CreateCriteria(typeof(Retreat))
-                .List<Retreat>();
+            return _session.Query<Retreat>();
         }
 
         void IRetreatRepository.Add(Retreat retreat)
@@ -40,9 +39,9 @@ namespace Dahlia.Repositories
 
         public Retreat Get(DateTime retreatDate)
         {
-            return _session.CreateCriteria(typeof (Retreat))
-                .Add(Restrictions.Eq("StartDate", retreatDate))
-                .UniqueResult<Retreat>();
+            return _session.Query<Retreat>()
+                .Where(x => x.StartDate == retreatDate)
+                .FirstOrDefault();
         }
 
         public Retreat GetById(int id)
