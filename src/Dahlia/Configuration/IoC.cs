@@ -14,6 +14,11 @@ namespace Dahlia.Configuration
     {
         public static IContainer Initialize()
         {
+            return Initialize(true);
+        }
+
+        public static IContainer Initialize(bool useRealDatabaseObjects)
+        {
             ObjectFactory.Initialize(x =>
             {
                 x.Scan(scan =>
@@ -22,8 +27,15 @@ namespace Dahlia.Configuration
                     scan.WithDefaultConventions();
                 });
 
-                x.For<ISessionFactory>().Singleton().Use(SQLSessionFactory.CreateSessionFactory());
-                x.For<ISession>().HybridHttpOrThreadLocalScoped().Use(context => context.GetInstance<ISessionFactory>().OpenSession());
+                if (useRealDatabaseObjects)
+                {
+                    x.For<ISessionFactory>().Singleton().Use(SQLSessionFactory.CreateSessionFactory());
+                    x.For<ISession>().HybridHttpOrThreadLocalScoped().Use(context => context.GetInstance<ISessionFactory>().OpenSession());
+                }
+                else
+                {
+                    x.For<ISession>().HybridHttpOrThreadLocalScoped().Use(() => null);
+                }
 
                 x.For<ILog>().Use(LogManager.GetLogger("Dahlia"));
                 x.For<RouteCollection>().Use(RouteTable.Routes);
