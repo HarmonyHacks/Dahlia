@@ -19,5 +19,6 @@ namespace Dahlia.ViewModels
         public string Save { get; set; }
         public string Search { get; set; }
         public int RetreatId { get; set; }
+        public IEnumerable<Bed> Beds { get; set; }
     }
 }

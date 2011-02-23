@@ -21,10 +21,18 @@ namespace Dahlia.Specifications
         {
             _retreatDate = new DateTime(2007, 12, 15);
             _retreatRepository = MockRepository.GenerateStub<IRetreatRepository>();
-            _controller = new ParticipantController(_retreatRepository, null, null, null);
+            var bedRepository = MockRepository.GenerateStub<IBedRepository>();
+            _controller = new ParticipantController(_retreatRepository, null, bedRepository, null);
+            _beds = new[]
+            {
+                new Bed { Code = "Bed 1" },
+                new Bed { Code = "Bed 2" },
+                new Bed { Code = "Bed 3" }
+            };
 
             _retreat = new Retreat { };
             _retreatRepository.Stub(x => x.Get(_retreatDate)).Return(_retreat);
+            bedRepository.Stub((x => x.GetAll())).Return(_beds);
         };
 
         Because of = () =>
@@ -39,12 +47,15 @@ namespace Dahlia.Specifications
 
         It should_have_a_default_date_equal_to_today_for_the_received_date = () => _viewModel.DateReceived.ShouldEqual(DateTime.Today);
 
+        It should_return_a_view_model_that_contains_all_beds = () => _viewModel.Beds.SequenceEqual(_beds).ShouldBeTrue();
+
         static DateTime _retreatDate;
         static ViewResult _viewResult;
         static AddParticipantToRetreatViewModel _viewModel;
         static ParticipantController _controller;
         static IRetreatRepository _retreatRepository;
         static Retreat _retreat;
+        static IEnumerable<Bed> _beds;
     }
 
     [Subject("Adding a participant to a retreat")]
@@ -54,7 +65,8 @@ namespace Dahlia.Specifications
         {
             _retreatRepo = MockRepository.GenerateStub<IRetreatRepository>();
             _retreatDate = new DateTime(2007, 12, 15);
-            _controller = new ParticipantController(_retreatRepo, null, null, null);
+            var bedRepository = MockRepository.GenerateStub<IBedRepository>();
+            _controller = new ParticipantController(_retreatRepo, null, bedRepository, null);
 
             var registrations = Builder<Registration>.CreateListOfSize(29)
                 .WhereAll().Have(x => x.Bed = Builder<Bed>.CreateNew().With(y => y.Code = "foo").Build()).Build();

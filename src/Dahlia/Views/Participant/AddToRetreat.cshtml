@@ -21,7 +21,7 @@
         <label>Bed Code: </label>
         @if (!Model.RetreatIsFull) 
         {
-            @Html.TextBoxFor(x => x.BedCode)
+            @Html.DropDownList("BedCode", new[] { new SelectListItem() }.Union(Model.Beds.Select(x => new SelectListItem { Text = x.Code })))
         }
         else 
         {

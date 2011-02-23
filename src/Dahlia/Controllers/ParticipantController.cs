@@ -27,12 +27,14 @@ namespace Dahlia.Controllers
         public ViewResult AddToRetreat(DateTime retreatDate)
         {
             var retreat = _retreatRepository.Get(retreatDate);
+            var beds = _bedRepository.GetAll();
 
             var viewModel = new AddParticipantToRetreatViewModel
             {
                 RetreatDate = retreatDate,
                 DateReceived = DateTime.Today,
                 RetreatIsFull = retreat.IsFull,
+                Beds = beds,
             };
 
             return View("AddToRetreat", viewModel);
