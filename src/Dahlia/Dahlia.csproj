@@ -122,6 +122,7 @@
     </Compile>
     <Compile Include="MarkupHelpers.cs" />
     <Compile Include="Migrations\001_Add_Beds.cs" />
+    <Compile Include="Migrations\002_Add_Participants.cs" />
     <Compile Include="Migrations\SqlMigrationRunner.cs" />
     <Compile Include="Migrations\MigrationHelpers.cs" />
     <Compile Include="Models\Bed.cs" />
