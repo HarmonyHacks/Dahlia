@@ -50,6 +50,12 @@
     <Reference Include="Castle.Core">
       <HintPath>..\..\lib\Castle.Core.2.5.2\lib\NET35\Castle.Core.dll</HintPath>
     </Reference>
+    <Reference Include="FluentMigrator">
+      <HintPath>..\..\lib\FluentMigrator.0.9.0.0\lib\35\FluentMigrator.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentMigrator.Runner">
+      <HintPath>..\..\lib\FluentMigrator.0.9.0.0\tools\FluentMigrator.Runner.dll</HintPath>
+    </Reference>
     <Reference Include="FluentNHibernate">
       <HintPath>..\..\lib\FluentNHibernate.1.1.1.694\lib\FluentNHibernate.dll</HintPath>
     </Reference>
@@ -105,6 +111,7 @@
     <Compile Include="Configuration\AppStart_StructureMap.cs" />
     <Compile Include="Configuration\IoC.cs" />
     <Compile Include="Configuration\SmDependencyResolver.cs" />
+    <Compile Include="Controllers\MigrateController.cs" />
     <Compile Include="Controllers\ParticipantController.cs" />
     <Compile Include="Controllers\RetreatController.cs" />
     <Compile Include="Conventions\HasManyConvention.cs" />
@@ -114,6 +121,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="MarkupHelpers.cs" />
+    <Compile Include="Migrations\001_Add_Beds.cs" />
+    <Compile Include="Migrations\SqlMigrationRunner.cs" />
+    <Compile Include="Migrations\MigrationHelpers.cs" />
     <Compile Include="Models\Bed.cs" />
     <Compile Include="Models\IAmPersistable.cs" />
     <Compile Include="Models\Participant.cs" />
@@ -128,6 +138,7 @@
     <Compile Include="Repositories\ParticipantRepository.cs" />
     <Compile Include="Repositories\RetreatRepository.cs" />
     <Compile Include="Services\ExpressionExtensions.cs" />
+    <Compile Include="Services\IMigrationService.cs" />
     <Compile Include="Services\RequestContextProvider.cs" />
     <Compile Include="Services\UrlMapper.cs" />
     <Compile Include="ViewModels\AddParticipantToRetreatChooseBedCodeViewModel.cs" />
