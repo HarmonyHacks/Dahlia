@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Routing;
+using Dahlia.Migrations;
 using Dahlia.Persistence;
+using Dahlia.Services;
 using log4net;
 using NHibernate;
 using StructureMap;
@@ -31,6 +33,7 @@ namespace Dahlia.Configuration
                 {
                     x.For<ISessionFactory>().Singleton().Use(SQLSessionFactory.CreateSessionFactory());
                     x.For<ISession>().HybridHttpOrThreadLocalScoped().Use(context => context.GetInstance<ISessionFactory>().OpenSession());
+                    x.For<IMigrationService>().Singleton().Use<SqlMigrationService>();
                 }
                 else
                 {
