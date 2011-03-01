@@ -5,7 +5,7 @@ using FluentMigrator;
 namespace Dahlia.Migrations
 {
     [Migration(002)]
-    public class Add_Participants : Migration
+    public class Add_Participant : Migration
     {
         public override void Up()
         {
