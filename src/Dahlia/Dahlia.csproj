@@ -165,7 +165,9 @@
     <Content Include="Scripts\backbone.js" />
     <Content Include="Scripts\dahlia.js" />
     <Content Include="Scripts\underscore.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

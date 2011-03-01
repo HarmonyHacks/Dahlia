@@ -16,30 +16,38 @@ namespace Dahlia.Persistence
     {
         public static ISessionFactory CreateSessionFactory()
         {
+            // If you get a "failed to attach" exception here, that's because you need to create a database file.
+            // In VS, right-click the Dahlia\App_Data folder, choose Add | New Item | SQL Server Database, name it Dahlia.mdf.
             return Fluently.Configure()
                 .Database(
-                MsSqlConfiguration.MsSql2005.ConnectionString(
-                  c => c.FromConnectionStringWithKey("dahliaSQL")))
-                  .Mappings(x => x.AutoMappings.Add(
-                                    AutoMap.AssemblyOf<IAmPersistable>(
-                                        type => type.GetInterfaces()
-                                            .Any(z => z == typeof(IAmPersistable))
-                                            )
-                                           .UseOverridesFromAssemblyOf<IAmPersistable>()
-                                           .Conventions.AddFromAssemblyOf<IAmPersistable>()
-                                    )
-                                
-                                )
-                                 .ExposeConfiguration(BuildSchema)
-                                 //.ExposeConfiguration(x => x.SetProperty("current_session_context_class", "web"))
-                                 .BuildSessionFactory();
+                    MsSqlConfiguration.MsSql2005.ConnectionString(
+                        c => c.FromConnectionStringWithKey("dahliaSQL")))
+                .Mappings(x => x.AutoMappings.Add(
+                    AutoMap.AssemblyOf<IAmPersistable>(
+                        type => type.GetInterfaces()
+                            .Any(z => z == typeof (IAmPersistable))
+                        )
+                        .UseOverridesFromAssemblyOf<IAmPersistable>()
+                        .Conventions.AddFromAssemblyOf<IAmPersistable>()
+                     )
+                )
+                .ExposeConfiguration(BuildSchema)
+                .BuildSessionFactory();
         }
 
         public static void BuildSchema(NHibernate.Cfg.Configuration cfg)
         {
-            var rebuildSchema = ConfigurationManager.AppSettings["rebuildSchema"];
-            if (rebuildSchema == "true")
+            bool rebuildSchema = bool.Parse(ConfigurationManager.AppSettings["rebuildSchema"]);
+            bool updateSchema = bool.Parse(ConfigurationManager.AppSettings["updateSchema"]);
+
+            if (rebuildSchema)
+            {
                 new SchemaExport(cfg).Create(false, true);
+            }
+            else if (updateSchema)
+            {
+                new SchemaUpdate(cfg).Execute(false, true);
+            }
         }
     }
 }
