@@ -1,4 +1,5 @@
 using System;
+using Dahlia.Configuration.Persistence;
 using Dahlia.Models;
 using Machine.Specifications;
 using NHibernate;

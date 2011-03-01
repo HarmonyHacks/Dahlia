@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using Dahlia.Models;
 using FluentNHibernate.Automapping;
 using NHibernate;
@@ -9,7 +6,7 @@ using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using NHibernate.Tool.hbm2ddl;
 
-namespace Dahlia.Specifications
+namespace Dahlia.Configuration.Persistence
 {
     public static class SQLiteSessionFactory
     {

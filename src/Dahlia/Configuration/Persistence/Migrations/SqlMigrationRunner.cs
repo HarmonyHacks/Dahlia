@@ -1,4 +1,3 @@
-using System;
 using System.Configuration;
 using System.Data.SqlClient;
 using Dahlia.Services;
@@ -9,7 +8,7 @@ using FluentMigrator.Runner.Initialization;
 using FluentMigrator.Runner.Processors;
 using FluentMigrator.Runner.Processors.SqlServer;
 
-namespace Dahlia.Migrations
+namespace Dahlia.Configuration.Persistence.Migrations
 {
     public class SqlMigrationService : IMigrationService
     {

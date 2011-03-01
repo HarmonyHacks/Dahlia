@@ -1,7 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Dahlia.Configuration.Persistence;
 using Dahlia.Controllers;
 using Dahlia.Models;
 using Dahlia.Repositories;
@@ -9,7 +9,7 @@ using Dahlia.ViewModels;
 using Machine.Specifications;
 using Rhino.Mocks;
 
-namespace Dahlia.Specifications
+namespace Dahlia.Specifications.Services
 {
     [Subject("Searching For Participants")]
     public class when_entering_a_participants_lastname

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
+﻿using System.Configuration;
 using System.Linq;
-using System.Text;
 using Dahlia.Models;
 using FluentNHibernate.Automapping;
 using NHibernate;
@@ -10,7 +7,7 @@ using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using NHibernate.Tool.hbm2ddl;
 
-namespace Dahlia.Persistence
+namespace Dahlia.Configuration.Persistence
 {
     public static class SQLSessionFactory
     {
