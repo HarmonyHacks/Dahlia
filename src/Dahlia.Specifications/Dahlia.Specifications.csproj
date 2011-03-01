@@ -110,6 +110,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\Persistence\Migrations\When_getting_the_available_versions.cs" />
+    <Compile Include="Configuration\Persistence\Migrations\When_getting_the_current_version.cs" />
+    <Compile Include="Controllers\Migrations\When_viewing_the_available_migrations.cs" />
     <Compile Include="Controllers\Participants\Adding_a_participant_to_a_retreat.cs" />
     <Compile Include="..\ProjectInfo.cs">
       <Link>Properties\ProjectInfo.cs</Link>
@@ -135,9 +138,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controllers\Migrations\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
