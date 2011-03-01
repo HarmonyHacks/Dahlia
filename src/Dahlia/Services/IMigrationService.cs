@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using Dahlia.Models;
+
 namespace Dahlia.Services
 {
     public interface IMigrationService

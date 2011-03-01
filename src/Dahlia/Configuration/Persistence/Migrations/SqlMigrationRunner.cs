@@ -1,5 +1,8 @@
+using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
+using Dahlia.Models;
 using Dahlia.Services;
 using FluentMigrator.Runner;
 using FluentMigrator.Runner.Announcers;
@@ -16,7 +19,8 @@ namespace Dahlia.Configuration.Persistence.Migrations
 
         public SqlMigrationService()
         {
-            var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["dahliaSQL"].ConnectionString);
+            var connectionString = ConfigurationManager.ConnectionStrings["dahliaSQL"].ConnectionString;
+            var connection = new SqlConnection(connectionString);
             var assembly = typeof(SqlMigrationService).Assembly;
             var ns = typeof(SqlMigrationService).Namespace;
             var generator = new SqlServer2005Generator();
