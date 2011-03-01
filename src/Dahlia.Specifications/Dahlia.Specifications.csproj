@@ -110,16 +110,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Adding_a_participant_to_a_retreat.cs" />
+    <Compile Include="Controllers\Participants\Adding_a_participant_to_a_retreat.cs" />
     <Compile Include="..\ProjectInfo.cs">
       <Link>Properties\ProjectInfo.cs</Link>
     </Compile>
-    <Compile Include="ParticipantSearchServiceTests.cs" />
-    <Compile Include="Deleting_a_retreat.cs" />
+    <Compile Include="Services\ParticipantSearchServiceTests.cs" />
+    <Compile Include="Controllers\Retreats\Deleting_a_retreat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="when_checking_mappings.cs" />
+    <Compile Include="Configuration\when_checking_mappings.cs" />
     <Compile Include="When_creating_new_entities.cs" />
-    <Compile Include="When_structure_map_is_bootstrapped.cs" />
+    <Compile Include="Configuration\When_structure_map_is_bootstrapped.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Dahlia\Dahlia.csproj">
@@ -134,6 +134,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controllers\Migrations\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

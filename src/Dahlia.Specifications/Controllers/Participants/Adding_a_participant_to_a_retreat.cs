@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Web.Mvc;
 using Dahlia.Controllers;
 using Dahlia.Models;
@@ -12,7 +11,7 @@ using FizzWare.NBuilder;
 using Machine.Specifications;
 using Rhino.Mocks;
 
-namespace Dahlia.Specifications
+namespace Dahlia.Specifications.Controllers.Participants
 {
     [Subject("Adding a participant to a retreat")]
     public class When_showing_the_add_participant_screen_for_a_retreat
@@ -222,7 +221,7 @@ namespace Dahlia.Specifications
         static Retreat _retreat;
         static ActionResult _result;
         static IParticipantRepository _participantRepository;
-        static Participant[] _queryOutput;
+        static Models.Participant[] _queryOutput;
         static DateTime _firstDateReceived;
     }
 

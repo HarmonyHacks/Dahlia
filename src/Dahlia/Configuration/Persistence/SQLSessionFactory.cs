@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Configuration;
 using System.Linq;
-using System.Text;
 using Dahlia.Models;
 using FluentNHibernate.Automapping;
 using NHibernate;
@@ -9,16 +7,16 @@ using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using NHibernate.Tool.hbm2ddl;
 
-namespace Dahlia.Specifications
+namespace Dahlia.Configuration.Persistence
 {
-    public static class SQLiteSessionFactory
+    public static class SQLSessionFactory
     {
         public static ISessionFactory CreateSessionFactory()
         {
             return Fluently.Configure()
                 .Database(
-                SQLiteConfiguration.Standard.ConnectionString(
-                  c => c.FromConnectionStringWithKey("dahlia")))
+                MsSqlConfiguration.MsSql2005.ConnectionString(
+                  c => c.FromConnectionStringWithKey("dahliaSQL")))
                   .Mappings(x => x.AutoMappings.Add(
                                     AutoMap.AssemblyOf<IAmPersistable>(
                                         type => type.GetInterfaces()
@@ -27,19 +25,18 @@ namespace Dahlia.Specifications
                                            .UseOverridesFromAssemblyOf<IAmPersistable>()
                                            .Conventions.AddFromAssemblyOf<IAmPersistable>()
                                     )
-
+                                
                                 )
                                  .ExposeConfiguration(BuildSchema)
+                                 //.ExposeConfiguration(x => x.SetProperty("current_session_context_class", "web"))
                                  .BuildSessionFactory();
-
-            
-                              
         }
 
         public static void BuildSchema(NHibernate.Cfg.Configuration cfg)
         {
-            new SchemaExport(cfg)
-                .Create(false, true);
+            var rebuildSchema = ConfigurationManager.AppSettings["rebuildSchema"];
+            if (rebuildSchema == "true")
+                new SchemaExport(cfg).Create(false, true);
         }
     }
 }

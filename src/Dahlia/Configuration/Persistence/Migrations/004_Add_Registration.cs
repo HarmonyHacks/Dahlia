@@ -2,7 +2,7 @@ using System;
 using Dahlia.Models;
 using FluentMigrator;
 
-namespace Dahlia.Migrations
+namespace Dahlia.Configuration.Persistence.Migrations
 {
     [Migration(4)]
     public class Add_Registration : Migration

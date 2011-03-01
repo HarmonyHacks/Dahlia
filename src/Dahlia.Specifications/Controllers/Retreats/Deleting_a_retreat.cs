@@ -1,14 +1,13 @@
 using System;
 using System.Web.Mvc;
 using Dahlia.Controllers;
-using Dahlia.Models;
 using Dahlia.Repositories;
 using Dahlia.ViewModels;
 using Machine.Specifications;
 using MvcContrib.TestHelper;
 using Rhino.Mocks;
 
-namespace Dahlia.Specifications.Deleting_a_retreat
+namespace Dahlia.Specifications.Controllers.Retreats
 {
     [Subject("Deleting A Retreat")]
     public class when_getting_the_view_to_ask_the_user_about_deleting_a_retreat
@@ -16,7 +15,7 @@ namespace Dahlia.Specifications.Deleting_a_retreat
         Establish context = () =>
         {
             _repo = MockRepository.GenerateStub<IRetreatRepository>();
-            _repo.Stub(x => x.GetById(100)).Return(new Retreat {Id = 100,StartDate = new DateTime(2011,1,1)});
+            _repo.Stub(x => x.GetById(100)).Return(new Models.Retreat {Id = 100,StartDate = new DateTime(2011,1,1)});
             _controller = new RetreatController(_repo, null);
         };
 

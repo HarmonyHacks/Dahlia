@@ -1,8 +1,7 @@
-using System;
 using FluentNHibernate.Conventions;
 using FluentNHibernate.Conventions.Instances;
 
-namespace Dahlia.Conventions
+namespace Dahlia.Configuration.Persistence.Conventions
 {
     public class HasManyConvention : IHasManyConvention 
     {

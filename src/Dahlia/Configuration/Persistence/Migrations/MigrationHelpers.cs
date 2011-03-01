@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq.Expressions;
-using System.Reflection;
 using FluentMigrator.Builders;
 using FluentMigrator.Builders.Create;
 using FluentMigrator.Builders.Create.Table;
@@ -8,7 +7,7 @@ using FluentMigrator.Builders.Delete;
 using FluentMigrator.Builders.Insert;
 using FluentNHibernate.Utils;
 
-namespace Dahlia.Migrations
+namespace Dahlia.Configuration.Persistence.Migrations
 {
 
     public static class MigrationHelpers

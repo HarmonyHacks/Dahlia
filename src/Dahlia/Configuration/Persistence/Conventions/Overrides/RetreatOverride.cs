@@ -2,7 +2,7 @@
 using FluentNHibernate.Automapping;
 using FluentNHibernate.Automapping.Alterations;
 
-namespace Dahlia.Conventions.Overrides
+namespace Dahlia.Configuration.Persistence.Conventions.Overrides
 {
     public class RetreatOverride : IAutoMappingOverride<Retreat>
     {

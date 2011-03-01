@@ -1,8 +1,7 @@
-using System;
 using Dahlia.Models;
 using FluentMigrator;
 
-namespace Dahlia.Migrations
+namespace Dahlia.Configuration.Persistence.Migrations
 {
     [Migration(003)]
     public class Add_Retreat : Migration
