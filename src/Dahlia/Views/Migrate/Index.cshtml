@@ -7,3 +7,7 @@
 
 <h2>Index</h2>
 
+@foreach (var item in @Model.AvailableVersions)
+{
+    <li>@item.Version - @item.Name</li>
+}
