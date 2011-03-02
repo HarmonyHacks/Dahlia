@@ -26,6 +26,7 @@
     @foreach (var retreat in Model.Retreats)
     {
         <div id="@retreat.Id">
+            <h2>@retreat.Description</h2>
             <a href='@retreat.AddParticipantLink'>Add Participant</a> &nbsp; @Html.ActionLink("Delete Retreat", "Delete", new { id = retreat.Id})<br />
             <b>Registered</b>
             <ul>

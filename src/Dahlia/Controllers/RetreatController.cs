@@ -47,6 +47,7 @@ namespace Dahlia.Controllers
                 x => new RetreatListRetreatViewModel
                      {
                          Id = x.Id,
+                         Description = x.Description,
                          Date = x.StartDate,
                          AddParticipantLink = AddParticipantLinkForRetreat(x),
                          RegisteredParticipants = x.Registrations.Select(
