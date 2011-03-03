@@ -33,7 +33,7 @@ namespace Dahlia.Configuration
                 {
                     x.For<ISessionFactory>().Singleton().Use(SQLSessionFactory.CreateSessionFactory());
                     x.For<ISession>().HybridHttpOrThreadLocalScoped().Use(context => context.GetInstance<ISessionFactory>().OpenSession());
-                    x.For<IMigrationService>().Singleton().Use<SqlMigrationService>();
+                    x.For<IMigrationService>().Use<SqlMigrationService>();
                 }
                 else
                 {

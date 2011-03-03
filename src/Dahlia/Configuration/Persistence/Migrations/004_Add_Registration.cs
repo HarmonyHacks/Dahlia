@@ -18,7 +18,7 @@ namespace Dahlia.Configuration.Persistence.Migrations
 
         public override void Down()
         {
-            throw new NotImplementedException();
+            Delete.Table<Registration>();
         }
     }
 }

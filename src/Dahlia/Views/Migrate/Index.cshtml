@@ -5,20 +5,18 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Migration Tool</h2>
+
+<h3>@Html.ActionLink("Migrate Up", "Up", "Migrate") | @Html.ActionLink("Migrate Down", "Down", "Migrate", new { id = @Model.CurrentVersion }, null)</h3>
 
 @foreach (var item in @Model.AvailableVersions)
 {
     
     if (item.Version < @Model.CurrentVersion) {
-        <li>@Html.ActionLink(@item.Version + "-" + @item.Name, "Down", "Migrate",new{ id = @item.Version}, null)</li>
-    }
-    
-    if(item.Version > @Model.CurrentVersion) {
-        <li>@Html.ActionLink(@item.Version + "-" + @item.Name, "Up", "Migrate",new{ id = @item.Version}, null)</li>
-    }
-    
-    if(item.Version == @Model.CurrentVersion) {
+        <li>@Html.ActionLink(@item.Version + "-" + @item.Name, "Down", "Migrate",new{ id = @item.Version + 1}, null)</li>
+    } else if (item.Version > @Model.CurrentVersion) {
+        <li>@Html.ActionLink(@item.Version + "-" + @item.Name, "Up", "Migrate",new{ id = @item.Version + 1}, null)</li>
+    } else {
         <li>@item.Version - @item.Name</li>
     }
 }

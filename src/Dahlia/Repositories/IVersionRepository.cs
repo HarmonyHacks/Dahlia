@@ -22,9 +22,11 @@ namespace Dahlia.Repositories
 
         public VersionInfo GetCurrent()
         {
-            return _session.Query<VersionInfo>()
+            var version = _session.Query<VersionInfo>()
                            .ToList()
-                           .Last();
+                           .LastOrDefault();
+
+            return version ?? new VersionInfo();
 
         }
     }
