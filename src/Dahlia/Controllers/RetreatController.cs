@@ -72,6 +72,7 @@ namespace Dahlia.Controllers
                 x => x.DeleteFromRetreat(
                     retreat.Id, 
                     retreat.StartDate,
+                    participant.Id,
                     participant.FirstName,
                     participant.LastName));
         }

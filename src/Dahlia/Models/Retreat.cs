@@ -25,10 +25,15 @@ namespace Dahlia.Models
             }
         }
 
-        public virtual void AddParticipant(Participant newRegistration, Bed bed )
+        public virtual void AddParticipant(Participant participant, Bed bed )
         {
-            var registration = new Registration {Participant = newRegistration, Retreat = this, Bed = bed};
+            var registration = new Registration {Participant = participant, Retreat = this, Bed = bed};
             Registrations.Add(registration);
+        }
+
+        public virtual void RemoveParticipant(int participantId)
+        {
+            ((List<Registration>)Registrations).RemoveAll(r => r.Participant.Id == participantId);
         }
     }
 }

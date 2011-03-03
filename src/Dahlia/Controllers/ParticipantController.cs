@@ -66,6 +66,7 @@ namespace Dahlia.Controllers
 
             var retreat = _retreatRepository.Get(postBack.RetreatDate);
 
+            // TODO: what if we already have a participant with this name in the db?
             var newParticipant = new Participant
             {
                 FirstName = postBack.FirstName,
@@ -78,18 +79,18 @@ namespace Dahlia.Controllers
             var bed = _bedRepository.GetBy(postBack.BedCode);
 
             retreat.AddParticipant(newParticipant, bed);
-
             _retreatRepository.Save(retreat);
 
             return this.RedirectToAction<RetreatController>(c => c.Index(postBack.RetreatId));
         }
 
-        public ViewResult DeleteFromRetreat(int retreatId, DateTime retreatDate, string firstName, string lastName)
+        public ViewResult DeleteFromRetreat(int retreatId, DateTime retreatDate, int participantId, string firstName, string lastName)
         {
             var viewModel = new DeleteParticipantFromRetreatViewModel
                             {
                                 RetreatId = retreatId,
                                 RetreatDate = retreatDate,
+                                ParticipantId = participantId,
                                 FirstName = firstName,
                                 LastName = lastName,
                             };
@@ -100,11 +101,7 @@ namespace Dahlia.Controllers
         public ActionResult DeleteFromRetreat(DeleteParticipantFromRetreatViewModel viewModel)
         {
             var retreat = _retreatRepository.GetById(viewModel.RetreatId);
-            var participantToRemove =
-            retreat.Registrations.First(
-                    x => x.Participant.FirstName == viewModel.FirstName 
-                                && x.Participant.LastName == viewModel.LastName);
-            retreat.Registrations.Remove(participantToRemove);
+            retreat.RemoveParticipant(viewModel.ParticipantId);
             _retreatRepository.Save(retreat);
 
             return this.RedirectToAction<RetreatController>(c => c.Index(viewModel.RetreatId));
@@ -131,7 +128,15 @@ namespace Dahlia.Controllers
             Bed bed = null;
             if (!string.IsNullOrEmpty(postBack.BedCode))
                 bed = _bedRepository.GetBy(postBack.BedCode);
+
+            // TODO: this 
             retreat.AddParticipant(participant, bed);
+            _retreatRepository.Save(retreat);
+
+            // TODO: do we need to remove the participant from any retreat they were previously
+            // registered for?  What if they were registered for multiple retreats?  Do we
+            // support that?
+
             return this.RedirectToAction<RetreatController>(c => c.Index(retreat.Id)); 
         }
 
