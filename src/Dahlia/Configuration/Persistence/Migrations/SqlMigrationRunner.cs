@@ -14,9 +14,8 @@ namespace Dahlia.Configuration.Persistence.Migrations
 {
     public class SqlMigrationService : IMigrationService
     {
-        MigrationRunner _runner;
-
-        public SqlMigrationService()
+        
+       MigrationRunner getRunner()
         {
             var connectionString = ConfigurationManager.ConnectionStrings["dahliaSQL"].ConnectionString;
             var connection = new SqlConnection(connectionString);
@@ -24,23 +23,22 @@ namespace Dahlia.Configuration.Persistence.Migrations
             var ns = typeof(SqlMigrationService).Namespace;
             var generator = new SqlServer2005Generator();
             var processor = new SqlServerProcessor(connection, generator, new NullAnnouncer(), new ProcessorOptions());
-            
-            _runner = new MigrationRunner(assembly, new RunnerContext(new NullAnnouncer()) { Namespace = ns },
-                                          processor);
 
+            return new MigrationRunner(assembly, new RunnerContext(new NullAnnouncer()) { Namespace = ns },
+                                          processor);
         }
 
         public void MigrateUp(long? version)
         {
             if(version.HasValue)
-                _runner.MigrateUp(version.Value);
+                getRunner().MigrateUp(version.Value);
             else
-                _runner.MigrateUp();
+                getRunner().MigrateUp();
         }
 
         public void MigrateDown(long version)
         {
-            _runner.MigrateDown(version);
+            getRunner().MigrateDown(version);
         }
     }
 }

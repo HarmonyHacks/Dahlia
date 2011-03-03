@@ -1,4 +1,7 @@
 using System;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using Dahlia.Models;
 using NHibernate;
@@ -22,11 +25,20 @@ namespace Dahlia.Repositories
 
         public VersionInfo GetCurrent()
         {
-            var version = _session.Query<VersionInfo>()
-                           .ToList()
-                           .LastOrDefault();
-
-            return version ?? new VersionInfo();
+            var version = new VersionInfo();
+            try
+            {
+                version = _session.Query<VersionInfo>()
+                    .ToList()
+                    .LastOrDefault();
+            }
+            catch(ADOException e)
+            {
+                //this is an ugly hack to get around non existant VersionInfo table
+                if (!e.Message.Contains("VersionInfo"))
+                    throw;
+            }
+            return version;
 
         }
     }
