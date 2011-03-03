@@ -7,7 +7,7 @@
 
 <h2>Please choose a bed code</h2>
 
-@using(Html.BeginForm("DoAssignToRetreat", "Participant"))
+@using (Html.BeginForm("AssignToRetreatChooseBedCode", "Participant"))
 {
     @Html.HiddenFor(m => m.RetreatId);
     @Html.HiddenFor(m => m.ParticipantId);

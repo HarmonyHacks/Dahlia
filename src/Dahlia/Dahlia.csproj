@@ -142,7 +142,7 @@
     <Compile Include="ViewModels\DeleteParticipantFromRetreatViewModel.cs" />
     <Compile Include="ViewModels\ParticipantSearchResultViewModel.cs" />
     <Compile Include="ViewModels\ReassignParticipantViewModel.cs" />
-    <Compile Include="ViewModels\ReAssignParticipantSearchResultsViewModel.cs" />
+    <Compile Include="ViewModels\ReassignParticipantSearchResultsViewModel.cs" />
     <Compile Include="ViewModels\DeleteRetreatViewModel.cs" />
     <Compile Include="ViewModels\RetreatListViewModel.cs" />
   </ItemGroup>
@@ -210,7 +210,7 @@
     <Content Include="Views\Retreat\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Participant\ReAssignSearchResults.cshtml" />
+    <Content Include="Views\Participant\ReassignSearchResults.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_Popup.cshtml" />

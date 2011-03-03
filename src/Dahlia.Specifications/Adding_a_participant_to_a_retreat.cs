@@ -127,7 +127,7 @@ namespace Dahlia.Specifications
             bedRepository.Stub(x => x.GetBy(bed.Code)).Return(bed);
         };
 
-        Because of = () => _controller.DoAddToRetreat(_viewModel);
+        Because of = () => _controller.AddToRetreat(_viewModel);
 
         It should_save_the_retreat = () => 
             _retreatRepository.AssertWasCalled(x => x.Save(_retreat));
@@ -197,7 +197,7 @@ namespace Dahlia.Specifications
             _retreatRepository.Stub(x => x.Get(retreatDate)).Return(_retreat);
         };
 
-        Because of = () => _result = _controller.DoAddToRetreat(_viewModel);
+        Because of = () => _result = _controller.AddToRetreat(_viewModel);
 
         It should_redirect_back_to_the_add_to_retreat_view =
             () => ((RedirectToRouteResult) _result).RouteValues["action"].ShouldEqual("AddToRetreat");

@@ -63,7 +63,7 @@ namespace Dahlia.Specifications
 
         Because of = () => 
         {
-           var result = controller.ReAssignSearchResults(lastnameISearchedFor) as ViewResult;
+           var result = controller.ReassignSearchResults(lastnameISearchedFor) as ViewResult;
            SearchResults = result.Model as IEnumerable<ParticipantSearchResultViewModel>;
         };
 

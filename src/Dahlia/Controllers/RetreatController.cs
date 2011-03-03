@@ -87,7 +87,7 @@ namespace Dahlia.Controllers
             return View();
         }
 
-        [AcceptVerbs(HttpVerbs.Post)]
+        [HttpPost]
         public ActionResult Create(Retreat retreatModel)
         {
             if (!ModelState.IsValid)

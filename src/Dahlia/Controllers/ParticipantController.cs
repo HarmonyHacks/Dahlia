@@ -42,43 +42,13 @@ namespace Dahlia.Controllers
             return View("AddToRetreat", viewModel);
         }
 
-        public ViewResult DeleteFromRetreat(int retreatId, DateTime retreatDate, string firstName, string lastName)
-        {
-            var viewModel = new DeleteParticipantFromRetreatViewModel
-                            {
-                                RetreatId = retreatId,
-                                RetreatDate = retreatDate,
-                                FirstName = firstName,
-                                LastName = lastName,
-                            };
-            return View("DeleteFromRetreat", viewModel);
-        }
-
-        public ActionResult Reassign(ReassignParticipantSearchResultsViewModel viewModel)
-        {
-            return View("ReassignParticipant", viewModel);
-        }
-
         [HttpPost]
-        public ActionResult DeleteFromRetreat(DeleteParticipantFromRetreatViewModel viewModel)
-        {
-            var retreat = _retreatRepository.GetById(viewModel.RetreatId);
-            var participantToRemove =
-            retreat.Registrations.First(
-                    x => x.Participant.FirstName == viewModel.FirstName 
-                                && x.Participant.LastName == viewModel.LastName);
-            retreat.Registrations.Remove(participantToRemove);
-            _retreatRepository.Save(retreat);
-
-            return this.RedirectToAction<RetreatController>(c => c.Index(viewModel.RetreatId));
-        }
-
-        public ActionResult DoAddToRetreat(AddParticipantToRetreatViewModel postBack)
+        public ActionResult AddToRetreat(AddParticipantToRetreatViewModel postBack)
         {
             if (postBack.Cancel != null)
                 return this.RedirectToAction<RetreatController>(c => c.Index(postBack.RetreatId));
 
-            if(postBack.Search != null)
+            if (postBack.Search != null)
             {
                 var queryResults = _participantRepository.WithNameLike(postBack.FirstName, postBack.LastName);
                 var searchResults = queryResults.Select(x => new ParticipantSearchResultViewModel
@@ -114,6 +84,32 @@ namespace Dahlia.Controllers
             return this.RedirectToAction<RetreatController>(c => c.Index(postBack.RetreatId));
         }
 
+        public ViewResult DeleteFromRetreat(int retreatId, DateTime retreatDate, string firstName, string lastName)
+        {
+            var viewModel = new DeleteParticipantFromRetreatViewModel
+                            {
+                                RetreatId = retreatId,
+                                RetreatDate = retreatDate,
+                                FirstName = firstName,
+                                LastName = lastName,
+                            };
+            return View("DeleteFromRetreat", viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteFromRetreat(DeleteParticipantFromRetreatViewModel viewModel)
+        {
+            var retreat = _retreatRepository.GetById(viewModel.RetreatId);
+            var participantToRemove =
+            retreat.Registrations.First(
+                    x => x.Participant.FirstName == viewModel.FirstName 
+                                && x.Participant.LastName == viewModel.LastName);
+            retreat.Registrations.Remove(participantToRemove);
+            _retreatRepository.Save(retreat);
+
+            return this.RedirectToAction<RetreatController>(c => c.Index(viewModel.RetreatId));
+        }
+
         public ActionResult AssignToRetreatChooseBedCode(int retreatId, int participantId)
         {
             var bedCodes = _bedRepository.GetAll().Select(x => x.Code).OrderBy(x => x);
@@ -127,7 +123,8 @@ namespace Dahlia.Controllers
             return View(model);
         }
 
-        public ActionResult DoAssignToRetreat(AssignParticipantToRetreatChooseBedCodeViewModel postBack)
+        [HttpPost]
+        public ActionResult AssignToRetreatChooseBedCode(AssignParticipantToRetreatChooseBedCodeViewModel postBack)
         {
             var retreat = _retreatRepository.GetById(postBack.RetreatId);
             var participant = _participantRepository.GetById(postBack.ParticipantId);
@@ -138,9 +135,9 @@ namespace Dahlia.Controllers
             return this.RedirectToAction<RetreatController>(c => c.Index(retreat.Id)); 
         }
 
-        public ActionResult ReAssignSearchResults(string lastnameISearchedFor)
+        public ActionResult ReassignSearchResults(string searchString)
         {
-            var participantResults = _participantRepository.WithLastName(lastnameISearchedFor);
+            var participantResults = _participantRepository.WithLastName(searchString);
             var viewModel = participantResults.Select(p => new ParticipantSearchResultViewModel()
                             {
                                 DateReceived = p.DateReceived, 
@@ -152,7 +149,13 @@ namespace Dahlia.Controllers
             return View(viewModel);
         }
 
-        public ActionResult DoReAssign(int participantId)
+        public ActionResult Reassign(ReassignParticipantSearchResultsViewModel viewModel)
+        {
+            return View("ReassignParticipant", viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Reassign(int participantId)
         {
             return View();
         }
