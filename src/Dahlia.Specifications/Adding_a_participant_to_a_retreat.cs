@@ -19,7 +19,7 @@ namespace Dahlia.Specifications
     {
         Establish context = () =>
         {
-            _retreatDate = new DateTime(2007, 12, 15);
+            _retreatId = 1;
             _retreatRepository = MockRepository.GenerateStub<IRetreatRepository>();
             var bedRepository = MockRepository.GenerateStub<IBedRepository>();
             _controller = new ParticipantController(_retreatRepository, null, bedRepository, null);
@@ -31,25 +31,25 @@ namespace Dahlia.Specifications
             };
 
             _retreat = new Retreat { };
-            _retreatRepository.Stub(x => x.Get(_retreatDate)).Return(_retreat);
+            _retreatRepository.Stub(x => x.GetById(_retreatId)).Return(_retreat);
             bedRepository.Stub((x => x.GetAll())).Return(_beds);
         };
 
         Because of = () =>
         {
-            _viewResult = _controller.AddToRetreat(_retreatDate);
+            _viewResult = _controller.AddToRetreat(_retreatId);
             _viewModel = (AddParticipantToRetreatViewModel) _viewResult.ViewData.Model;
         };
 
         It should_return_a_view_result_for_the_add_participant_view = () => _viewResult.ViewName.ShouldEqual("AddToRetreat");
 
-        It should_return_a_view_model_that_contains_the_retreat_date = () => _viewModel.RetreatDate.ShouldEqual(_retreatDate);
+        It should_return_a_view_model_that_contains_the_retreat_id = () => _viewModel.RetreatId.ShouldEqual(_retreatId);
 
         It should_have_a_default_date_equal_to_today_for_the_received_date = () => _viewModel.DateReceived.ShouldEqual(DateTime.Today);
 
         It should_return_a_view_model_that_contains_all_beds = () => _viewModel.Beds.SequenceEqual(_beds).ShouldBeTrue();
 
-        static DateTime _retreatDate;
+        static int _retreatId;
         static ViewResult _viewResult;
         static AddParticipantToRetreatViewModel _viewModel;
         static ParticipantController _controller;
@@ -64,6 +64,7 @@ namespace Dahlia.Specifications
         Establish context = () =>
         {
             _retreatRepo = MockRepository.GenerateStub<IRetreatRepository>();
+            _retreatId = 1;
             _retreatDate = new DateTime(2007, 12, 15);
             var bedRepository = MockRepository.GenerateStub<IBedRepository>();
             _controller = new ParticipantController(_retreatRepo, null, bedRepository, null);
@@ -76,19 +77,20 @@ namespace Dahlia.Specifications
                 .And(x => x.Registrations = registrations)
                 .Build();
 
-            _retreatRepo.Stub(x => x.Get(_retreatDate)).Return(retreat);
+            _retreatRepo.Stub(x => x.GetById(_retreatId)).Return(retreat);
 
         };
 
         Because of = () =>
         {
-            _viewResult = _controller.AddToRetreat(_retreatDate);
+            _viewResult = _controller.AddToRetreat(_retreatId);
             _viewModel = (AddParticipantToRetreatViewModel)_viewResult.ViewData.Model;
         };
 
         It should_disable_assigning_bed_codes = () =>
             _viewModel.RetreatIsFull.ShouldBeTrue();
 
+        static int _retreatId;
         static DateTime _retreatDate;
         static ViewResult _viewResult;
         static AddParticipantToRetreatViewModel _viewModel;

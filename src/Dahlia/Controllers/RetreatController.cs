@@ -6,6 +6,7 @@ using Dahlia.Models;
 using Dahlia.Repositories;
 using Dahlia.Services;
 using Dahlia.ViewModels;
+using MvcContrib;
 
 namespace Dahlia.Controllers
 {
@@ -20,10 +21,10 @@ namespace Dahlia.Controllers
             _urlMapper = urlMapper;
         }
 
-        public ActionResult Index(string id)
+        public ActionResult Index(int? id)
         {
             var model = GetModel();
-            model.CurrentRetreatId = id ?? string.Empty;
+            model.CurrentRetreatId = id ?? -1;
             return View(model);
         }
 
@@ -69,7 +70,8 @@ namespace Dahlia.Controllers
             // TODO: should have a delete view model here instead?
             return _urlMapper.MapAction<ParticipantController>(
                 x => x.DeleteFromRetreat(
-                    retreat.StartDate, 
+                    retreat.Id, 
+                    retreat.StartDate,
                     participant.FirstName,
                     participant.LastName));
         }
@@ -77,7 +79,7 @@ namespace Dahlia.Controllers
         Uri AddParticipantLinkForRetreat(Retreat retreat)
         {
             return _urlMapper.MapAction<ParticipantController>(
-                x => x.AddToRetreat(retreat.StartDate));
+                x => x.AddToRetreat(retreat.Id));
         }
 
         public ActionResult Create()
@@ -91,7 +93,7 @@ namespace Dahlia.Controllers
             if (!ModelState.IsValid)
                 return View();
             _retreatRepository.Add(retreatModel);
-            return RedirectToAction("Index", new { id = retreatModel.Id });
+            return this.RedirectToAction(c => c.Index(retreatModel.Id));
         }
 
         public ActionResult Delete(int id)
@@ -104,9 +106,8 @@ namespace Dahlia.Controllers
         public ActionResult Delete(int id, FormCollection collection)
         {
             _retreatRepository.DeleteById(id);
-            // TODO: this is more explicit than it needs to be because we can't get MvcContrib.TestHelper to
-            // assert the right thing without a controller name for some reason.  Please fix!
-            return RedirectToAction("Index", "Retreat");
+
+            return this.RedirectToAction(c => c.Index(null));
         }
     }
 }

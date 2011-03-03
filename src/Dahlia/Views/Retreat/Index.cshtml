@@ -9,7 +9,7 @@
     var currentId = '@Model.CurrentRetreatId';
     $(function() {
         $('#static_tabs').tabs();
-        if (currentId !== "")
+        if (currentId !== 0)
         {
             $('#static_tabs').tabs('select', '#'+ '@Model.CurrentRetreatId');
         }

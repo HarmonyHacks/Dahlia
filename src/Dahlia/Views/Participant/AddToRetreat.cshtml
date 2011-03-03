@@ -12,6 +12,7 @@
 <h2>Add Participant to Retreat</h2>
 
 @using (Html.BeginForm("DoAddToRetreat", "Participant")) {
+    @Html.HiddenFor(x => x.RetreatId)
     @Html.HiddenFor(x => x.RetreatDate)
     <fieldset>
         <legend>Add Participant</legend>
@@ -19,11 +20,11 @@
         <label>Last Name: </label>@Html.TextBoxFor(x => x.LastName)<br />
         <label>Date Received: </label>@Html.TextBoxFor(x => x.DateReceived, new { @class = "datepicker" })<br />
         <label>Bed Code: </label>
-        @if (!Model.RetreatIsFull) 
+        @if (!Model.RetreatIsFull)
         {
             @Html.DropDownList("BedCode", new[] { new SelectListItem() }.Union(Model.Beds.Select(x => new SelectListItem { Text = x.Code })))
         }
-        else 
+        else
         {
             <span class='ui-warning'>All beds full</span>
         }
