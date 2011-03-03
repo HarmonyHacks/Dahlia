@@ -98,13 +98,22 @@
       <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="EnumMember" />
       <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="Other" />
       <UserRule Inspect="True" Prefix="" Suffix="" Style="aa_bb" StaticnessKind="Static, Instance" AccessRight="Private, Protected, ProtectedInternal, Internal, Public" Description="MSpec lower-case elements">
-        <ElementKinds />
+        <ElementKinds>
+          <Kind Name="Machine.Specifications_Behavior" />
+          <Kind Name="Machine.Specifications_Specification" />
+          <Kind Name="Machine.Specifications_SupportingField" />
+        </ElementKinds>
       </UserRule>
       <UserRule Inspect="True" Prefix="_" Suffix="" Style="aaBb" StaticnessKind="Static, Instance" AccessRight="Public" Description="MSpec public static fields">
-        <ElementKinds />
+        <ElementKinds>
+          <Kind Name="Machine.Specifications_Field" />
+        </ElementKinds>
       </UserRule>
       <UserRule Inspect="True" Prefix="" Suffix="" Style="Aa_bb" StaticnessKind="Static, Instance" AccessRight="Private, Protected, ProtectedInternal, Internal, Public" Description="MSpec test class">
-        <ElementKinds />
+        <ElementKinds>
+          <Kind Name="Machine.Specifications_Context" />
+          <Kind Name="Machine.Specifications_ContextBase" />
+        </ElementKinds>
         <ExtraRule Prefix="" Suffix="" Style="aa_bb" />
       </UserRule>
     </Naming2>

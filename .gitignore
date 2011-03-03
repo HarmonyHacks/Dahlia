@@ -8,10 +8,9 @@ dahlia.db
 #OS junk files
 [Tt]humbs.db
 *.DS_Store
+
 #build directory
 CI
-
-src/Dahlia.5.1.ReSharper
 
 #Visual Studio files
 *.[Oo]bj
@@ -44,7 +43,6 @@ Ankh.NoLoad
 
 #Tooling
 _ReSharper*/
-*.resharper
 [Tt]est[Rr]esult*
 
 #Subversion files

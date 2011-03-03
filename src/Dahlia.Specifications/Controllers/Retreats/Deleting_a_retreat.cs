@@ -37,20 +37,20 @@ namespace Dahlia.Specifications.Controllers.Retreats
     {
         Establish context = () =>
         {
-            repo = MockRepository.GenerateStub<IRetreatRepository>();
-            controller = new RetreatController(repo, null);
+            _repo = MockRepository.GenerateStub<IRetreatRepository>();
+            _controller = new RetreatController(_repo, null);
         };
 
         Because of = () =>
-            _actionResult = controller.Delete(100,null);
+            _actionResult = _controller.Delete(100,null);
 
-        It should_delete_the_retreat_from_the_repo = () => repo.AssertWasCalled(x => x.DeleteById(100));
+        It should_delete_the_retreat_from_the_repo = () => _repo.AssertWasCalled(x => x.DeleteById(100));
 
         It should_redirect_to_the_retreat_index = () =>
-            _actionResult.AssertActionRedirect().ToAction<RetreatController>(c => c.Index(string.Empty));
+            _actionResult.AssertActionRedirect().ToAction<RetreatController>(c => c.Index(null));
 
-        static IRetreatRepository repo;
-        static RetreatController controller;
+        static IRetreatRepository _repo;
+        static RetreatController _controller;
         static ActionResult _actionResult;
     }
 }

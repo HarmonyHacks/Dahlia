@@ -9,13 +9,14 @@ namespace Dahlia.ViewModels
     {
         public IEnumerable<RetreatListRetreatViewModel> Retreats { get; set; }
         public Uri CreateLink { get; set; }
-        public string CurrentRetreatId { get; set; }
+        public int CurrentRetreatId { get; set; }
     }
 
     public class RetreatListRetreatViewModel
     {
-        public DateTime Date { get; set; }
         public int Id { get; set; }
+        public DateTime Date { get; set; }
+        public string Description { get; set; }
         public bool Active { get; set; }
 
         public Uri AddParticipantLink { get; set; }

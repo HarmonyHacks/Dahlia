@@ -69,6 +69,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Web.Mvc">
+      <HintPath>..\..\lib\Mvc3Futures.3.0.20105.0\lib\Microsoft.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="MvcContrib">
+      <HintPath>..\..\lib\MvcContrib.Mvc3-ci.3.0.59.0\lib\MvcContrib.dll</HintPath>
+    </Reference>
     <Reference Include="NHibernate">
       <HintPath>..\..\lib\NHibernate.3.0.0.4000\lib\NHibernate.dll</HintPath>
     </Reference>
@@ -155,7 +161,7 @@
     <Compile Include="ViewModels\MigrationsViewModel.cs" />
     <Compile Include="ViewModels\ParticipantSearchResultViewModel.cs" />
     <Compile Include="ViewModels\ReassignParticipantViewModel.cs" />
-    <Compile Include="ViewModels\ReAssignParticipantSearchResultsViewModel.cs" />
+    <Compile Include="ViewModels\ReassignParticipantSearchResultsViewModel.cs" />
     <Compile Include="ViewModels\DeleteRetreatViewModel.cs" />
     <Compile Include="ViewModels\RetreatListViewModel.cs" />
   </ItemGroup>
@@ -223,7 +229,7 @@
     <Content Include="Views\Retreat\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Participant\ReAssignSearchResults.cshtml" />
+    <Content Include="Views\Participant\ReassignSearchResults.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_Popup.cshtml" />
