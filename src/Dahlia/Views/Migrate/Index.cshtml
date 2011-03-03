@@ -9,5 +9,16 @@
 
 @foreach (var item in @Model.AvailableVersions)
 {
-    <li>@item.Version - @item.Name</li>
+    
+    if (item.Version < @Model.CurrentVersion) {
+        <li>@Html.ActionLink(@item.Version + "-" + @item.Name, "Down", "Migrate",new{ id = @item.Version}, null)</li>
+    }
+    
+    if(item.Version > @Model.CurrentVersion) {
+        <li>@Html.ActionLink(@item.Version + "-" + @item.Name, "Up", "Migrate",new{ id = @item.Version}, null)</li>
+    }
+    
+    if(item.Version == @Model.CurrentVersion) {
+        <li>@item.Version - @item.Name</li>
+    }
 }
