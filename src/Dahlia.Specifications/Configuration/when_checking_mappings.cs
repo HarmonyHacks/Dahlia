@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.SQLite;
 using Dahlia.Configuration.Persistence;
 using Machine.Specifications;
 using FluentNHibernate.Testing;
@@ -12,6 +13,8 @@ namespace Dahlia.Specifications.Configuration
         {
             var session = SQLiteSessionFactory.
                 CreateSessionFactory().OpenSession();
+            new SqliteMigrationRunner((SQLiteConnection)session.Connection).MigrateUp(null);
+            
 
             new PersistenceSpecification<Retreat>(session)
                     .CheckProperty(c => c.Id, 1)
@@ -24,7 +27,8 @@ namespace Dahlia.Specifications.Configuration
         {
             var session = SQLiteSessionFactory.
                 CreateSessionFactory().OpenSession();
-
+            new SqliteMigrationRunner((SQLiteConnection)session.Connection).MigrateUp(null);
+            
             new PersistenceSpecification<Participant>(session)
                     .CheckProperty(c => c.Id, 1)
                     .CheckProperty(c => c.DateReceived, new DateTime(2011, 2, 12))

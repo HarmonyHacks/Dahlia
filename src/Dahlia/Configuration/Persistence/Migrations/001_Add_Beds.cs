@@ -9,7 +9,7 @@ namespace Dahlia.Configuration.Persistence.Migrations
         public override void Up()
         {
             Create.Table<Bed>()
-                .WithColumn<Bed>(x => x.Id).AsInt32().Identity()
+                .WithColumn<Bed>(x => x.Id).AsInt32().NotNullable().PrimaryKey().Identity()
                 .WithColumn<Bed>(x => x.Code).AsAnsiString(128).NotNullable()
                 .WithColumn<Bed>(x => x.IsUpstairs).AsBoolean().NotNullable();
 

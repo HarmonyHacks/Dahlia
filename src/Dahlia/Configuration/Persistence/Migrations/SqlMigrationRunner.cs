@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
-using Dahlia.Models;
 using Dahlia.Services;
 using FluentMigrator.Runner;
 using FluentMigrator.Runner.Announcers;

@@ -56,6 +56,14 @@
     <Reference Include="FizzWare.NBuilder">
       <HintPath>..\..\lib\NBuilder.2.3.0.0\lib\FizzWare.NBuilder.dll</HintPath>
     </Reference>
+    <Reference Include="FluentMigrator, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\FluentMigrator.0.9.0.0\lib\35\FluentMigrator.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentMigrator.Runner, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\FluentMigrator.0.9.0.0\tools\FluentMigrator.Runner.dll</HintPath>
+    </Reference>
     <Reference Include="FluentNHibernate">
       <HintPath>..\..\lib\FluentNHibernate.1.1.1.694\lib\FluentNHibernate.dll</HintPath>
     </Reference>
@@ -121,6 +129,8 @@
     <Compile Include="Controllers\Retreats\Deleting_a_retreat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Configuration\when_checking_mappings.cs" />
+    <Compile Include="SqliteMigrationRunner.cs" />
+    <Compile Include="SQLiteSessionFactory.cs" />
     <Compile Include="When_creating_new_entities.cs" />
     <Compile Include="Configuration\When_structure_map_is_bootstrapped.cs" />
   </ItemGroup>

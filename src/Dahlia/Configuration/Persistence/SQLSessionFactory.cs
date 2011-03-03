@@ -27,16 +27,8 @@ namespace Dahlia.Configuration.Persistence
                                     )
                                 
                                 )
-                                 .ExposeConfiguration(BuildSchema)
-                                 //.ExposeConfiguration(x => x.SetProperty("current_session_context_class", "web"))
                                  .BuildSessionFactory();
         }
 
-        public static void BuildSchema(NHibernate.Cfg.Configuration cfg)
-        {
-            var rebuildSchema = ConfigurationManager.AppSettings["rebuildSchema"];
-            if (rebuildSchema == "true")
-                new SchemaExport(cfg).Create(false, true);
-        }
     }
 }

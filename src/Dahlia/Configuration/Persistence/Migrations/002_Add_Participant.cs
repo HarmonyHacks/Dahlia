@@ -9,7 +9,7 @@ namespace Dahlia.Configuration.Persistence.Migrations
         public override void Up()
         {
             Create.Table<Participant>()
-                .WithColumn<Participant>(x => x.Id).AsInt32().Identity()
+                .WithColumn<Participant>(x => x.Id).AsInt32().NotNullable().PrimaryKey().Identity()
                 .WithColumn<Participant>(x => x.FirstName).AsString(128).NotNullable()
                 .WithColumn<Participant>(x => x.LastName).AsString().NotNullable()
                 .WithColumn<Participant>(x => x.DateReceived).AsDateTime().NotNullable()

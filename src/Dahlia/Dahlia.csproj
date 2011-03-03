@@ -141,7 +141,6 @@
     <Compile Include="Models\PhysicalStatus.cs" />
     <Compile Include="Models\Registration.cs" />
     <Compile Include="Models\Retreat.cs" />
-    <Compile Include="Configuration\Persistence\SQLiteSessionFactory.cs" />
     <Compile Include="Configuration\Persistence\SQLSessionFactory.cs" />
     <Compile Include="Models\VersionInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

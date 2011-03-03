@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Data.SQLite;
 using System.Linq;
 using System.Web.Mvc;
 using Dahlia.Configuration.Persistence;
@@ -17,6 +18,8 @@ namespace Dahlia.Specifications.Services
         Establish context = () =>
         {
             var CurrentSession = SQLiteSessionFactory.CreateSessionFactory().OpenSession();
+            new SqliteMigrationRunner((SQLiteConnection)CurrentSession.Connection).MigrateUp(null);
+            
             Participants = new ParticipantRepository(CurrentSession);
 
             var AllParticipants = new List<Participant>()

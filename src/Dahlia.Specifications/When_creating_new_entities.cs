@@ -1,4 +1,5 @@
 using System;
+using System.Data.SQLite;
 using Dahlia.Configuration.Persistence;
 using Dahlia.Models;
 using Machine.Specifications;
@@ -12,7 +13,7 @@ namespace Dahlia.Specifications
         Establish context = () =>
         {
             _session = SQLiteSessionFactory.CreateSessionFactory().OpenSession();
-
+            new SqliteMigrationRunner((SQLiteConnection)_session.Connection).MigrateUp(null);
             _retreat = new Retreat { StartDate = DateTime.Today };
             var participant = new Participant { FirstName = "Dirk", LastName = "Diggler" };
 
@@ -36,6 +37,7 @@ namespace Dahlia.Specifications
         static ISession _session;
         static Retreat _retreat;
         static Retreat _persistedRetreat;
+        static SQLiteConnection _connection;
     }
 
 
@@ -46,7 +48,8 @@ namespace Dahlia.Specifications
         Establish context = () =>
         {
             _session = SQLiteSessionFactory.CreateSessionFactory().OpenSession();
-
+            new SqliteMigrationRunner((SQLiteConnection)_session.Connection).MigrateUp(null);
+            
             var retreat = new Retreat { StartDate = DateTime.Today };
             _retreatId = _session.Save(retreat);
 

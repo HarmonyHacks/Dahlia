@@ -1,10 +1,10 @@
-﻿using System.Linq;
+﻿using System.Data.SQLite;
+using System.Linq;
 using Dahlia.Models;
 using FluentNHibernate.Automapping;
 using NHibernate;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
-using NHibernate.Tool.hbm2ddl;
 
 namespace Dahlia.Configuration.Persistence
 {
@@ -14,8 +14,7 @@ namespace Dahlia.Configuration.Persistence
         {
             return Fluently.Configure()
                 .Database(
-                SQLiteConfiguration.Standard.ConnectionString(
-                  c => c.FromConnectionStringWithKey("dahlia")))
+                SQLiteConfiguration.Standard.InMemory())
                   .Mappings(x => x.AutoMappings.Add(
                                     AutoMap.AssemblyOf<IAmPersistable>(
                                         type => type.GetInterfaces()
@@ -26,17 +25,10 @@ namespace Dahlia.Configuration.Persistence
                                     )
 
                                 )
-                                 .ExposeConfiguration(BuildSchema)
                                  .BuildSessionFactory();
 
             
                               
-        }
-
-        public static void BuildSchema(NHibernate.Cfg.Configuration cfg)
-        {
-            new SchemaExport(cfg)
-                .Create(false, true);
         }
     }
 }
