@@ -19,7 +19,7 @@ namespace Dahlia.Repositories
         IEnumerable<Participant> IParticipantRepository.WithLastName(string lastName)
         {
             return _session.Query<Participant>()
-                .Where(x => x.LastName.EndsWith(lastName));
+                .Where(x => x.LastName.Contains(lastName));
         }
 
         void IParticipantRepository.Add(IEnumerable<Participant> participants)
@@ -40,8 +40,7 @@ namespace Dahlia.Repositories
                 lastName = string.Empty;
             if (firstName == null)
                 firstName = string.Empty;
-
-
+            
             return _session.Query<Participant>()
                 .Where(x => x.FirstName == firstName)
                 .Where(x => x.LastName == lastName);
