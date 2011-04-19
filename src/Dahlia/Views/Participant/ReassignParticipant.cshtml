@@ -1,4 +1,4 @@
-﻿@model Dahlia.ViewModels.ReassignParticipantSearchResultsViewModel
+﻿
 @{
     ViewBag.Title = "Reassign Participant";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -6,9 +6,9 @@
 
 <h2>@Model.ParticipantName</h2>
 
-Physiscal Status:
+Physiscal Status: @Model.ParticipantPhysicalStatus
 <br />
-Note:<br />
+Note: @Model.ParticipantNote
 <br />
 Bed Reserved
 <hr />

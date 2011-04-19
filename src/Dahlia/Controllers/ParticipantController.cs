@@ -169,9 +169,11 @@ namespace Dahlia.Controllers
         {
           var participant = _participantRepository.GetById(participantId);
 
-          var viewModel = new ReassignParticipantSearchResultsViewModel
+          var viewModel = new ReassignParticipantViewModel
           {
-            ParticipantName = participant.LastName + ", " + participant.FirstName
+            ParticipantName = participant.LastName + ", " + participant.FirstName,
+            ParticipantPhysicalStatus = participant.PhysicalStatus,
+            ParticipantNote = participant.Notes
           };
           return View(viewModel);
         }

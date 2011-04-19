@@ -139,7 +139,6 @@
     <Compile Include="Models\IAmPersistable.cs" />
     <Compile Include="Models\Participant.cs" />
     <Compile Include="Models\PhysicalStatus.cs" />
-    <Compile Include="Models\ReassignParticipantViewModel.cs" />
     <Compile Include="Models\Registration.cs" />
     <Compile Include="Models\Retreat.cs" />
     <Compile Include="Configuration\Persistence\SQLSessionFactory.cs" />
