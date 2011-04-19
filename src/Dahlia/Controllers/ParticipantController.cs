@@ -145,9 +145,9 @@ namespace Dahlia.Controllers
             var participantResults = _participantRepository.WithLastName(searchString);
             var viewModel = participantResults.Select(p => new ParticipantSearchResultViewModel()
                             {
-                                DateReceived = p.DateReceived, 
-                                Name = p.FirstName + " " + p.LastName, 
-                                SelectLink = new Uri("anystring", UriKind.Relative)
+                              DateReceived = p.DateReceived,
+                              Name = p.FirstName + " " + p.LastName,
+                              SelectLink = new Uri("/Participant/ReassignParticipant?participantId=" + p.Id, UriKind.Relative)
                             }).ToList();
 
 
@@ -163,6 +163,17 @@ namespace Dahlia.Controllers
         public ActionResult Reassign(int participantId)
         {
             return View();
+        }
+
+        public ActionResult ReassignParticipant(int participantId)
+        {
+          var participant = _participantRepository.GetById(participantId);
+
+          var viewModel = new ReassignParticipantSearchResultsViewModel
+          {
+            ParticipantName = participant.LastName + ", " + participant.FirstName
+          };
+          return View(viewModel);
         }
     }
 }
