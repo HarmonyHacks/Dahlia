@@ -43,6 +43,7 @@ Ankh.NoLoad
 
 #Tooling
 _ReSharper*/
+*.ReSharper
 [Tt]est[Rr]esult*
 
 #Subversion files
