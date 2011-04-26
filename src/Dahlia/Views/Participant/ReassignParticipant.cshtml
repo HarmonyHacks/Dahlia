@@ -14,4 +14,9 @@ Bed Reserved
 Wait Listed
 <hr />
 Available Retreats
-<hr />
+<ul>
+@foreach (var retreat in Model.AvailableRetreats)
+{
+  <li>@retreat.Description</li>
+}
+</ul>
