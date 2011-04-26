@@ -10,5 +10,6 @@ namespace Dahlia.ViewModels
       public string ParticipantName;
       public PhysicalStatus ParticipantPhysicalStatus;
       public string ParticipantNote;
+      public IEnumerable<Retreat> AvailableRetreats;
     }
 }

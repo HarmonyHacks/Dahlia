@@ -173,7 +173,8 @@ namespace Dahlia.Controllers
           {
             ParticipantName = participant.LastName + ", " + participant.FirstName,
             ParticipantPhysicalStatus = participant.PhysicalStatus,
-            ParticipantNote = participant.Notes
+            ParticipantNote = participant.Notes,
+            AvailableRetreats = _retreatRepository.GetList().Where(retreat=>!retreat.IsFull).ToArray(),
           };
           return View(viewModel);
         }
