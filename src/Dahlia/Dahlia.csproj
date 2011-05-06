@@ -117,6 +117,7 @@
     <Compile Include="Configuration\AppStart_StructureMap.cs" />
     <Compile Include="Configuration\IoC.cs" />
     <Compile Include="Configuration\Persistence\Conventions\Overrides\VersionInfoOverride.cs" />
+    <Compile Include="Configuration\Persistence\Migrations\005_Make_Registration_FKs_nullable.cs" />
     <Compile Include="Configuration\Persistence\Migrations\IMigrationInformation.cs" />
     <Compile Include="Configuration\SmDependencyResolver.cs" />
     <Compile Include="Controllers\MigrateController.cs" />
