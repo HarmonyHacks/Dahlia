@@ -71,8 +71,8 @@ namespace Dahlia.Specifications.Controllers.Participants
                 .WhereAll().Have(x => x.Bed = Builder<Bed>.CreateNew().With(y => y.Code = "Bed 1").Build()).Build();
 
             var retreat = Builder<Retreat>.CreateNew()
+                .WithConstructor(() => new Retreat(registrations))
                 .With(x => x.StartDate = _retreatDate)
-                .And(x => x.Registrations = registrations)
                 .Build();
 
             _retreatRepo = MockRepository.GenerateStub<IRetreatRepository>();
@@ -123,8 +123,8 @@ namespace Dahlia.Specifications.Controllers.Participants
                 .WhereAll().Have(x => x.Bed = Builder<Bed>.CreateNew().With(y => y.Code = "foo").Build()).Build();
 
             var retreat = Builder<Retreat>.CreateNew()
+                .WithConstructor(() => new Retreat(registrations))
                 .With(x => x.StartDate = _retreatDate)
-                .And(x => x.Registrations = registrations)
                 .Build();
 
             _retreatRepo.Stub(x => x.GetById(_retreatId)).Return(retreat);

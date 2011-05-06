@@ -14,6 +14,11 @@ namespace Dahlia.Models
             _registrations = new List<Registration>();
         }
 
+        public Retreat(IList<Registration> registrations)
+        {
+            _registrations = registrations;
+        }
+
         public virtual int Id { get; set; }
 
         public virtual String Description { get; set; }
@@ -23,7 +28,6 @@ namespace Dahlia.Models
         public virtual IEnumerable<Registration> Registrations
         {
             get { return _registrations; }
-            set { _registrations = value as IList<Registration>; }
         }
 
         public virtual bool IsFull
@@ -73,7 +77,11 @@ namespace Dahlia.Models
 
         public virtual void RemoveParticipant(int participantId)
         {
-            ((List<Registration>)Registrations).RemoveAll(r => r.Participant.Id == participantId);
+            var registrationsToRemove = _registrations.Where(r => r.Participant.Id == participantId).ToList();
+            foreach (var registration in registrationsToRemove)
+            {
+                _registrations.Remove(registration);
+            }
         }
     }
 }

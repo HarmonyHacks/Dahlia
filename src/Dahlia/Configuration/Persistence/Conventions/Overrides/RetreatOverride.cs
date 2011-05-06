@@ -10,6 +10,7 @@ namespace Dahlia.Configuration.Persistence.Conventions.Overrides
         {
             mapping.IgnoreProperty(x => x.IsFull);
             mapping.IgnoreProperty(x => x.AssignedBeds);
+            mapping.HasMany(x => x.Registrations);
         }
     }
 }
