@@ -9,6 +9,7 @@ namespace Dahlia.Configuration.Persistence.Conventions.Overrides
         public void Override(AutoMapping<Retreat> mapping)
         {
             mapping.IgnoreProperty(x => x.IsFull);
+            mapping.IgnoreProperty(x => x.AssignedBeds);
         }
     }
 }

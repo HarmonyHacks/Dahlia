@@ -14,24 +14,26 @@ using Rhino.Mocks;
 namespace Dahlia.Specifications.Controllers.Participants
 {
     [Subject("Adding a participant to a retreat")]
-    public class When_showing_the_add_participant_screen_for_a_retreat
+    public class When_showing_the_add_participant_screen_for_an_empty_retreat
     {
         Establish context = () =>
         {
             _retreatId = 1;
+
+            _retreat = new Retreat();
             _retreatRepository = MockRepository.GenerateStub<IRetreatRepository>();
-            var bedRepository = MockRepository.GenerateStub<IBedRepository>();
-            _controller = new ParticipantController(_retreatRepository, null, bedRepository, null);
+            _retreatRepository.Stub(x => x.GetById(_retreatId)).Return(_retreat);
+
             _beds = new[]
             {
                 new Bed { Code = "Bed 1" },
                 new Bed { Code = "Bed 2" },
                 new Bed { Code = "Bed 3" }
             };
-
-            _retreat = new Retreat { };
-            _retreatRepository.Stub(x => x.GetById(_retreatId)).Return(_retreat);
+            var bedRepository = MockRepository.GenerateStub<IBedRepository>();
             bedRepository.Stub((x => x.GetAll())).Return(_beds);
+
+            _controller = new ParticipantController(_retreatRepository, null, bedRepository, null);
         };
 
         Because of = () =>
@@ -58,6 +60,54 @@ namespace Dahlia.Specifications.Controllers.Participants
     }
 
     [Subject("Adding a participant to a retreat")]
+    public class When_showing_the_add_participant_screen_for_a_partially_full_retreat
+    {
+        Establish context = () =>
+        {
+            _retreatId = 1;
+            _retreatDate = new DateTime(2007, 12, 15);
+
+            var registrations = Builder<Registration>.CreateListOfSize(1)
+                .WhereAll().Have(x => x.Bed = Builder<Bed>.CreateNew().With(y => y.Code = "Bed 1").Build()).Build();
+
+            var retreat = Builder<Retreat>.CreateNew()
+                .With(x => x.StartDate = _retreatDate)
+                .And(x => x.Registrations = registrations)
+                .Build();
+
+            _retreatRepo = MockRepository.GenerateStub<IRetreatRepository>();
+            _retreatRepo.Stub(x => x.GetById(_retreatId)).Return(retreat);
+
+            var beds = new[]
+            {
+                new Bed { Code = "Bed 1" },
+                new Bed { Code = "Bed 2" },
+                new Bed { Code = "Bed 3" }
+            };
+            var bedRepository = MockRepository.GenerateStub<IBedRepository>();
+            bedRepository.Stub((x => x.GetAll())).Return(beds);
+
+            _controller = new ParticipantController(_retreatRepo, null, bedRepository, null);
+        };
+
+        Because of = () =>
+        {
+            _viewResult = _controller.AddToRetreat(_retreatId);
+            _viewModel = (AddParticipantToRetreatViewModel)_viewResult.ViewData.Model;
+        };
+
+        It should_not_display_assigned_beds = () =>
+            _viewModel.Beds.Any(bed => bed.Code == "Bed 1").ShouldBeFalse();
+
+        static int _retreatId;
+        static DateTime _retreatDate;
+        static ViewResult _viewResult;
+        static AddParticipantToRetreatViewModel _viewModel;
+        static ParticipantController _controller;
+        static IRetreatRepository _retreatRepo;
+    }
+
+    [Subject("Adding a participant to a retreat")]
     public class When_showing_the_add_participant_screen_for_a_full_retreat
     {
         Establish context = () =>
@@ -65,8 +115,9 @@ namespace Dahlia.Specifications.Controllers.Participants
             _retreatRepo = MockRepository.GenerateStub<IRetreatRepository>();
             _retreatId = 1;
             _retreatDate = new DateTime(2007, 12, 15);
+
             var bedRepository = MockRepository.GenerateStub<IBedRepository>();
-            _controller = new ParticipantController(_retreatRepo, null, bedRepository, null);
+            bedRepository.Stub((x => x.GetAll())).Return(new List<Bed>());
 
             var registrations = Builder<Registration>.CreateListOfSize(29)
                 .WhereAll().Have(x => x.Bed = Builder<Bed>.CreateNew().With(y => y.Code = "foo").Build()).Build();
@@ -78,6 +129,7 @@ namespace Dahlia.Specifications.Controllers.Participants
 
             _retreatRepo.Stub(x => x.GetById(_retreatId)).Return(retreat);
 
+            _controller = new ParticipantController(_retreatRepo, null, bedRepository, null);
         };
 
         Because of = () =>

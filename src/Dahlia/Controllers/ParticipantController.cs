@@ -36,7 +36,7 @@ namespace Dahlia.Controllers
                 RetreatDate = retreat.StartDate,
                 DateReceived = DateTime.Today,
                 RetreatIsFull = retreat.IsFull,
-                Beds = beds,
+                Beds = retreat.GetUnassignedBeds(beds),
             };
 
             return View("AddToRetreat", viewModel);

@@ -128,13 +128,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="MarkupHelpers.cs" />
     <Compile Include="Configuration\Persistence\Migrations\001_Add_Beds.cs" />
     <Compile Include="Configuration\Persistence\Migrations\002_Add_Participant.cs" />
     <Compile Include="Configuration\Persistence\Migrations\003_Add_Retreat.cs" />
     <Compile Include="Configuration\Persistence\Migrations\004_Add_Registration.cs" />
     <Compile Include="Configuration\Persistence\Migrations\SqlMigrationRunner.cs" />
     <Compile Include="Configuration\Persistence\Migrations\MigrationHelpers.cs" />
+    <Compile Include="Misc\LambdaComparer.cs" />
+    <Compile Include="Misc\MarkupHelpers.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Models\Bed.cs" />
     <Compile Include="Models\IAmPersistable.cs" />
     <Compile Include="Models\Participant.cs" />

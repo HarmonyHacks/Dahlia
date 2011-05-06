@@ -6,7 +6,7 @@ using NHibernate;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 
-namespace Dahlia.Configuration.Persistence
+namespace Dahlia.Specifications
 {
     public static class SQLiteSessionFactory
     {

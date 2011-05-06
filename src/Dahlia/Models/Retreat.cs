@@ -35,7 +35,18 @@ namespace Dahlia.Models
             }
         }
 
-        public virtual void AddParticipant(Participant participant, Bed bed )
+        public virtual IEnumerable<Bed> AssignedBeds
+        {
+            get { return _registrations.Select(r => r.Bed); }
+        }
+
+        public virtual IEnumerable<Bed> GetUnassignedBeds(IEnumerable<Bed> beds)
+        {
+            var comparer = new LambdaComparer<Bed>((first, second) => first.Code == second.Code);
+            return beds.Except(AssignedBeds, comparer);
+        }
+
+        public virtual void AddParticipant(Participant participant, Bed bed)
         {
             EnsureRetreatIsNotFull();
             EnsureBedIsNotAssigned(bed);
