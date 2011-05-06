@@ -1,5 +1,6 @@
 using System;
 using System.Data.SQLite;
+using System.Linq;
 using Dahlia.Configuration.Persistence;
 using Dahlia.Models;
 using Machine.Specifications;
@@ -31,8 +32,8 @@ namespace Dahlia.Specifications
         };
 
         It should_save_the_retreat = () => _persistedRetreat.StartDate.ShouldEqual(DateTime.Today);
-        It should_save_the_registration = () => _persistedRetreat.Registrations[0].Bed.Code.ShouldEqual("bedCode");
-        It should_save_the_participant = () => _persistedRetreat.Registrations[0].Participant.FirstName.ShouldEqual("Dirk");
+        It should_save_the_registration = () => _persistedRetreat.Registrations.First().Bed.Code.ShouldEqual("bedCode");
+        It should_save_the_participant = () => _persistedRetreat.Registrations.First().Participant.FirstName.ShouldEqual("Dirk");
 
         static ISession _session;
         static Retreat _retreat;
@@ -81,13 +82,13 @@ namespace Dahlia.Specifications
         };
 
         It should_have_a_registration = () =>
-            _persistedRetreat.Registrations.Count.ShouldEqual(1);
+            _persistedRetreat.Registrations.Count().ShouldEqual(1);
 
         It should_have_the_correct_participant_registered = () =>
-            _persistedRetreat.Registrations[0].Participant.Id.ShouldEqual(_participantId);
+            _persistedRetreat.Registrations.First().Participant.Id.ShouldEqual(_participantId);
 
         It should_have_the_correct_bed_code = () =>
-            _persistedRetreat.Registrations[0].Bed.Code.ShouldEqual("FOO");
+            _persistedRetreat.Registrations.First().Bed.Code.ShouldEqual("FOO");
 			
 
         static object _participantId;

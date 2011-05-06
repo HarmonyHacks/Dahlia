@@ -132,28 +132,28 @@ namespace Dahlia.Specifications.Controllers.Participants
             _retreatRepository.AssertWasCalled(x => x.Save(_retreat));
         
         It should_add_the_participant_to_the_retreat = () => 
-            _retreat.Registrations.Count.ShouldEqual(1);
+            _retreat.Registrations.Count().ShouldEqual(1);
         
         It should_give_the_participant_the_right_first_name = () => 
-            _retreat.Registrations[0].Participant.FirstName.ShouldEqual(_viewModel.FirstName);
+            _retreat.Registrations.First().Participant.FirstName.ShouldEqual(_viewModel.FirstName);
         
         It should_give_the_participant_the_right_last_name = () => 
-            _retreat.Registrations[0].Participant.LastName.ShouldEqual(_viewModel.LastName);
+            _retreat.Registrations.First().Participant.LastName.ShouldEqual(_viewModel.LastName);
         
         It should_give_the_participant_the_right_date_recieved = () => 
-            _retreat.Registrations[0].Participant.DateReceived.ShouldEqual(_viewModel.DateReceived);
+            _retreat.Registrations.First().Participant.DateReceived.ShouldEqual(_viewModel.DateReceived);
         
         It should_give_the_participant_the_right_notes = () => 
-            _retreat.Registrations[0].Participant.Notes.ShouldEqual(_viewModel.Notes);
+            _retreat.Registrations.First().Participant.Notes.ShouldEqual(_viewModel.Notes);
 
         It should_assign_the_right_bed_code = () => 
-            _retreat.Registrations[0].Bed.Code.ShouldEqual(_viewModel.BedCode);
+            _retreat.Registrations.First().Bed.Code.ShouldEqual(_viewModel.BedCode);
         
         It should_assign_the_retreat = () => 
-            _retreat.Registrations[0].Retreat.StartDate.ShouldEqual(_retreat.StartDate);
+            _retreat.Registrations.First().Retreat.StartDate.ShouldEqual(_retreat.StartDate);
 
         It should_assign_the_physical_status = () =>
-            _retreat.Registrations[0].Participant.PhysicalStatus.ShouldEqual(_viewModel.PhysicalStatus);
+            _retreat.Registrations.First().Participant.PhysicalStatus.ShouldEqual(_viewModel.PhysicalStatus);
 
         static DateTime _retreatDate;
         static AddParticipantToRetreatViewModel _viewModel;
@@ -223,7 +223,7 @@ namespace Dahlia.Specifications.Controllers.Participants
         static Retreat _retreat;
         static ActionResult _result;
         static IParticipantRepository _participantRepository;
-        static Models.Participant[] _queryOutput;
+        static Participant[] _queryOutput;
         static DateTime _firstDateReceived;
     }
 
