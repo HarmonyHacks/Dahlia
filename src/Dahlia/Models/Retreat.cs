@@ -81,6 +81,7 @@ namespace Dahlia.Models
             foreach (var registration in registrationsToRemove)
             {
                 _registrations.Remove(registration);
+                registration.Retreat = null;
             }
         }
     }
