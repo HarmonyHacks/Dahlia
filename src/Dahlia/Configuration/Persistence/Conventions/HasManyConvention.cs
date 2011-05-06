@@ -11,6 +11,7 @@ namespace Dahlia.Configuration.Persistence.Conventions
             instance.Access.CamelCaseField(CamelCasePrefix.Underscore);
             instance.Access.ReadOnlyPropertyThroughCamelCaseField(CamelCasePrefix.Underscore);
             instance.Cascade.All();
+            instance.Inverse();
         }
     }
 }
