@@ -120,6 +120,10 @@
   <ItemGroup>
     <Compile Include="Configuration\Persistence\Migrations\When_getting_the_available_versions.cs" />
     <Compile Include="Configuration\Persistence\Migrations\When_getting_the_current_version.cs" />
+    <Compile Include="Controllers\Migrations\When_migrating_down_to_a_newer_version.cs" />
+    <Compile Include="Controllers\Migrations\When_migrating_down_to_the_same_version.cs" />
+    <Compile Include="Controllers\Migrations\When_migrating_up_to_the_same_version.cs" />
+    <Compile Include="Controllers\Migrations\When_migrating_up_to_an_older_version.cs" />
     <Compile Include="Controllers\Migrations\When_viewing_the_available_migrations.cs" />
     <Compile Include="Controllers\Participants\Adding_a_participant_to_a_retreat.cs" />
     <Compile Include="..\ProjectInfo.cs">
