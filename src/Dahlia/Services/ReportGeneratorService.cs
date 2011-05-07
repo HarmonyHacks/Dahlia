@@ -91,7 +91,7 @@ namespace Dahlia.Services
                         font-size:x-large;
                         text-align:center;
                         padding: 10px auto 10px auto;
-                        width:900px;
+                        width:600px;
                         border:none;
                     }
                     .column_headers td
@@ -116,6 +116,10 @@ namespace Dahlia.Services
                     {
                         background-color:#f90;
                     }
+                    .reg_row
+                    {
+                        padding:4px;
+                    }
                 </style>
             </head>
             <body>
@@ -130,17 +134,19 @@ namespace Dahlia.Services
                         <td class='retreat_header' colspan='4'>CONFIDENTIAL<br />CANCER RETREAT PARTICIPANTS<br />{0}<br />{1}</td>
                     </tr>
                     <tr class='column_headers'>
-                        <td>NAME/CONTACT INFO</td>
-                        <td>NOTES</td>
-                        <td>Special Notes: Allergies, Dietary & Mobility Issues</td>
-                        <td>Room Assignment</td>
+                        <td style='width:120px;'>NAME/CONTACT INFO</td>
+                        <td style='width:300px;'>NOTES</td>
+                        <td style='width:90px;'>Special Notes: Allergies, Dietary & Mobility Issues</td>
+                        <td style='width:90px;'>Room Assignment</td>
                     </tr>
         ";
 
         const string _reportHtmlRegistrationInfo = @"
-                    <tr>
+                    <tr class='reg_row'>
                         <td>{0}</td>
-                        <td>{1}</td>
+                        <td>
+                            {1}
+                        </td>
                         <td>&nbsp;</td>
                         <td class='highlight_{2}'>{3}</td>
                     </tr>
@@ -182,7 +188,7 @@ namespace Dahlia.Services
                         bedCode.StartsWith("L") ? "blue" :
                         bedCode.StartsWith("GH") ? "orange" :
                         "green";
-                    return memo + string.Format(_reportHtmlRegistrationInfo, name, notes, color, bedCode);
+                    return memo + string.Format(_reportHtmlRegistrationInfo, name, notes.Replace("\n", "<br />"), color, bedCode);
                 });
 
             }
