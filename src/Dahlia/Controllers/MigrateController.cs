@@ -37,16 +37,50 @@ namespace Dahlia.Controllers
 
         public ActionResult Up(int? id)
         {
-            _migrator.MigrateUp(id);
+            string resultText;
+            var version = _migrationInformation.CurrentVersion().Version;
 
-            return new ContentResult{Content = "Migrated!"};
+            if (!id.HasValue)
+            {
+                resultText = "No version specified.";
+            }
+            else if (version == id)
+            {
+                resultText = "Already on this version.";
+            }
+            else if (version > id)
+            {
+                resultText = "On a newer version.";
+            }
+            else
+            {
+                _migrator.MigrateUp(id);
+                resultText = "Migrated!";
+            }
+
+            return new ContentResult{Content = resultText};
         }
 
         public ActionResult Down(int id)
         {
-            _migrator.MigrateDown(id);
+            string resultText;
+            var version = _migrationInformation.CurrentVersion().Version;
 
-            return new ContentResult { Content = "Downgraded!" };
+            if (version == id)
+            {
+                resultText = "Already on this version.";
+            }
+            else if (version < id)
+            {
+                resultText = "On an older version.";
+            }
+            else
+            {
+                _migrator.MigrateDown(id);
+                resultText = "Downgraded!";
+            }
+
+            return new ContentResult { Content = resultText };
         }
 
     }
