@@ -62,7 +62,7 @@ namespace Dahlia.Controllers
             string resultText;
             var version = _migrationInformation.CurrentVersion().Version;
 
-            if (version == id)
+            if ((version + 1) == id)
             {
                 resultText = "Already on this version.";
             }
