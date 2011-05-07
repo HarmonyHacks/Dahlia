@@ -14,11 +14,13 @@ namespace Dahlia.Controllers
     {
         readonly IRetreatRepository _retreatRepository;
         readonly IUrlMapper _urlMapper;
+        readonly IReportGeneratorService _reportGenerator;
 
-        public RetreatController(IRetreatRepository retreatRepository, IUrlMapper urlMapper)
+        public RetreatController(IRetreatRepository retreatRepository, IUrlMapper urlMapper, IReportGeneratorService reportGenerator)
         {
             _retreatRepository = retreatRepository;
             _urlMapper = urlMapper;
+            _reportGenerator = reportGenerator;
         }
 
         public ActionResult Index(int? id)
@@ -26,6 +28,18 @@ namespace Dahlia.Controllers
             var model = GetModel();
             model.CurrentRetreatId = id ?? -1;
             return View(model);
+        }
+
+        public FileResult GenerateReport()
+        {
+            var result = _reportGenerator.GenerateRetreatsReportCsv();
+            return File(result, "text/csv", "all_retreats_report.csv");
+        }
+
+        public FileResult GenerateReportFor(int retreat)
+        {
+            var result = _reportGenerator.GenerateRetreatsReportCsvFor(retreat);
+            return File(result, "text/csv", "retreat_report" + retreat.ToString() + ".csv");
         }
 
         RetreatListViewModel GetModel()
