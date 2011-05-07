@@ -69,7 +69,7 @@ namespace Dahlia.Models
 
         void EnsureBedIsNotAssigned(Bed bed)
         {
-            if (Registrations.Any(r => r.Bed == bed))
+            if (bed != null && Registrations.Any(r => r.Bed == bed))
             {
                 throw new InvalidOperationException("Cannot assign the same bed twice for the same retreat.");
             }

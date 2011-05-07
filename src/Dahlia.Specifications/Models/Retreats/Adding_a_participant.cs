@@ -89,4 +89,48 @@ namespace Dahlia.Specifications.Models.Retreats
         static Retreat _retreat;
         static Exception _exception;
     }
+
+    [Subject("Adding a participant")]
+    public class when_adding_a_participant_to_the_waitlist
+    {
+        Establish context = () =>
+        {
+            _participant = new Participant();
+            _retreat = new Retreat();
+        };
+
+        Because of = () =>
+            _retreat.AddParticipant(_participant, null);
+
+        It should_add_the_participant_to_the_waitlist = () =>
+            _retreat.Registrations.Any(r => r.Participant == _participant && r.Bed == null).ShouldBeTrue();
+
+        static Bed _bed;
+        static Participant _participant;
+        static Retreat _retreat;
+        static Exception _exception;
+    }
+
+    [Subject("Adding a participant")]
+    public class when_adding_multiple_participants_to_the_waitlist
+    {
+        Establish context = () =>
+        {
+            _participant = new Participant();
+            _retreat = new Retreat();
+
+            _retreat.AddParticipant(new Participant(), null);
+        };
+
+        Because of = () =>
+            _retreat.AddParticipant(_participant, null);
+
+        It should_add_the_participant_to_the_waitlist = () =>
+            _retreat.Registrations.Any(r => r.Participant == _participant && r.Bed == null).ShouldBeTrue();
+
+        static Bed _bed;
+        static Participant _participant;
+        static Retreat _retreat;
+        static Exception _exception;
+    }
 }
