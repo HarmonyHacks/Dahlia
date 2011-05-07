@@ -17,7 +17,7 @@
 </script>
 
 <div id="static_tabs">
-    <ul >
+    <ul>
         @foreach (var retreat in Model.Retreats)
         {
             <li><a href="#@retreat.Id">@retreat.Date.ToShortDateString()</a></li>

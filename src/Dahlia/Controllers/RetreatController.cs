@@ -32,14 +32,14 @@ namespace Dahlia.Controllers
 
         public FileResult GenerateReport()
         {
-            var result = _reportGenerator.GenerateRetreatsReportCsv();
-            return File(result, "text/csv", "all_retreats_report.csv");
+            var result = _reportGenerator.GenerateRetreatsReportExcelHtml();
+            return File(result, "application/vnd.ms-excel", "all_retreats_report.xls");
         }
 
         public FileResult GenerateReportFor(int retreat)
         {
-            var result = _reportGenerator.GenerateRetreatsReportCsvFor(retreat);
-            return File(result, "text/csv", "retreat_report" + retreat.ToString() + ".csv");
+            var result = _reportGenerator.GenerateRetreatReportExcelHtmlFor(retreat);
+            return File(result, "application/vnd.ms-excel", "retreat_report_" + retreat.ToString() + ".xls");
         }
 
         RetreatListViewModel GetModel()

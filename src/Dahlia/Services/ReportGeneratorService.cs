@@ -13,6 +13,8 @@ namespace Dahlia.Services
     {
         byte[] GenerateRetreatsReportCsv();
         byte[] GenerateRetreatsReportCsvFor(int retreatId);
+        byte[] GenerateRetreatsReportExcelHtml();
+        byte[] GenerateRetreatReportExcelHtmlFor(int retreatId);
     }
 
     public class ReportGeneratorService : IReportGeneratorService
@@ -58,6 +60,135 @@ namespace Dahlia.Services
             return Encoding.ASCII.GetBytes(sb.ToString());
         }
 
+        const string _reportHtmlHeader = @"
+        <html>
+            <head>
+                <style>
+                    body
+                    {
+                        background-color:white;
+                        color:black;
+                        font-weight:normal;
+                        font-size:large;
+                    }
+                    #root_div
+                    {  
+                        width:600px;
+                        padding:10px;
+                    }
+                    .report_table
+                    {
+                        border-collapse:collapse;
+                        width:100px;
+                    }
+                    .report_table td 
+                    {
+                        border: 1px solid black;
+                    }
+                    .retreat_header
+                    {
+                        font-weight:bolder;
+                        font-size:x-large;
+                        text-align:center;
+                        padding: 10px auto 10px auto;
+                        width:900px;
+                        border:none;
+                    }
+                    .column_headers td
+                    {
+                        text-align:center;
+                        font-weight:bolder;
+                        font-size:larger;
+                    }
+                    .highlight_blue
+                    {
+                        background-color:#66f;
+                    }
+                    .highlight_rose
+                    {
+                        background-color:#f66;
+                    }
+                    .highlight_green
+                    {
+                        background-color:#6c6;
+                    }
+                    .highlight_orange
+                    {
+                        background-color:#f90;
+                    }
+                </style>
+            </head>
+            <body>
+                <div id='root_div'>
+                <table class='report_table'>
+        ";
+
+
+
+        const string _reportHtmlRetreatInfo = @"
+                    <tr>
+                        <td class='retreat_header' colspan='4'>CONFIDENTIAL<br />CANCER RETREAT PARTICIPANTS<br />{0}<br />{1}</td>
+                    </tr>
+                    <tr class='column_headers'>
+                        <td>NAME/CONTACT INFO</td>
+                        <td>NOTES</td>
+                        <td>Special Notes: Allergies, Dietary & Mobility Issues</td>
+                        <td>Room Assignment</td>
+                    </tr>
+        ";
+
+        const string _reportHtmlRegistrationInfo = @"
+                    <tr>
+                        <td>{0}</td>
+                        <td>{1}</td>
+                        <td>&nbsp;</td>
+                        <td class='highlight_{2}'>{3}</td>
+                    </tr>
+        ";
+
+        const string _reportHtmlFooter = @"
+                </table>
+                </div>
+            </body>
+        </html>    
+        ";
+        public byte[] GenerateRetreatReportExcelHtmlFor(int retreatId)
+        {
+            var retreat = _retreatRepository.GetById(retreatId);
+            if (retreat == null)
+            {
+                throw new Exception("barf.. null retreat");
+            }
+            var output = _reportHtmlHeader;
+            output = GenerateReportHtmlForRetreat(retreat, output);
+            output += _reportHtmlFooter;
+
+            return Encoding.ASCII.GetBytes(output);
+        }
+
+        string GenerateReportHtmlForRetreat(Retreat retreat, string seed)
+        {
+            if (retreat != null)
+            {
+
+                seed += string.Format(_reportHtmlRetreatInfo, retreat.StartDate.ToLongDateString(), retreat.Description);
+
+                seed = retreat.Registrations.Aggregate(seed, (memo, r) =>
+                {
+                    var name = r.Participant.FirstName + " " + r.Participant.LastName;
+                    var notes = r.Participant.Notes;
+                    var bedCode = r.Bed.Code;
+                    var color = bedCode.StartsWith("CS") ? "rose" :
+                        bedCode.StartsWith("L") ? "blue" :
+                        bedCode.StartsWith("GH") ? "orange" :
+                        "green";
+                    return memo + string.Format(_reportHtmlRegistrationInfo, name, notes, color, bedCode);
+                });
+
+            }
+            return seed;
+        }
+
         public byte[] GenerateRetreatsReportCsv()
         {
             var retreats = _retreatRepository.GetList();
@@ -70,6 +201,17 @@ namespace Dahlia.Services
             }
             
             return Encoding.ASCII.GetBytes(sb.ToString());
+        }
+        public byte[] GenerateRetreatsReportExcelHtml()
+        {
+            var retreats = _retreatRepository.GetList();
+            var output = _reportHtmlHeader;
+            foreach (var retreat in retreats)
+            {
+                output = GenerateReportHtmlForRetreat(retreat, output);
+            }
+            output += _reportHtmlFooter;
+            return Encoding.ASCII.GetBytes(output);
         }
     }
 }
