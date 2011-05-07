@@ -27,7 +27,11 @@
     {
         <div id="@retreat.Id">
             <h2>@retreat.Description</h2>
-            <a href='@retreat.AddParticipantLink'>Add Participant</a> &nbsp; @Html.ActionLink("Delete Retreat", "Delete", new { id = retreat.Id})<br />
+            <a href='@retreat.AddParticipantLink'>Add Participant</a>
+            @Html.ActionLink("Delete Retreat", "Delete", new { id = retreat.Id})
+            <a target="_blank" href="/retreat/generatereportfor?retreat=@retreat.Id">Report</a>
+            <br />
+            
             <b>Registered</b>
             <ul>
                 @foreach (var participant in retreat.RegisteredParticipants.Where(p => !String.IsNullOrWhiteSpace(p.BedCode)))

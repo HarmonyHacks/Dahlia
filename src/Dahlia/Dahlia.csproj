@@ -155,6 +155,7 @@
     <Compile Include="Repositories\RetreatRepository.cs" />
     <Compile Include="Services\ExpressionExtensions.cs" />
     <Compile Include="Services\IMigrationService.cs" />
+    <Compile Include="Services\ReportGeneratorService.cs" />
     <Compile Include="Services\RequestContextProvider.cs" />
     <Compile Include="Services\UrlMapper.cs" />
     <Compile Include="ViewModels\AddParticipantToRetreatChooseBedCodeViewModel.cs" />
