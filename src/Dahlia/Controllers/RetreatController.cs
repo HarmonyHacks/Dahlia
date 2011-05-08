@@ -78,21 +78,8 @@ namespace Dahlia.Controllers
                                       DateReceived = y.Participant.DateReceived,
                                       PhysicalStatus = y.Participant.PhysicalStatus,
                                       Notes = y.Participant.Notes,
-                                      DeleteLink = BuildDeleteLink(x, y.Participant)
                                   })
                      });
-        }
-
-        Uri BuildDeleteLink(Retreat retreat, Participant participant)
-        {
-            // TODO: should have a delete view model here instead?
-            return _urlMapper.MapAction<RetreatController>(
-                x => x.UnregisterParticipant(
-                    retreat.Id, 
-                    retreat.StartDate,
-                    participant.Id,
-                    participant.FirstName,
-                    participant.LastName));
         }
 
         Uri AddParticipantLinkForRetreat(Retreat retreat)
@@ -129,15 +116,29 @@ namespace Dahlia.Controllers
             return this.RedirectToAction(c => c.Index(null));
         }
 
-        public ViewResult UnregisterParticipant(int retreatId, DateTime retreatDate, int participantId, string firstName, string lastName)
+        public ActionResult UnregisterParticipant(int retreatId, int participantId)
         {
+            var retreat = _retreatRepository.GetById(retreatId);
+            if (retreat == null)
+            {
+                return this.RedirectToAction(c => c.Index(retreatId));
+            }
+
+            var participant = (from registration in retreat.Registrations
+                               where registration.Participant.Id == participantId
+                               select registration.Participant).SingleOrDefault();
+            if (participant == null)
+            {
+                return this.RedirectToAction(c => c.Index(retreatId));
+            }
+
             var viewModel = new DeleteParticipantFromRetreatViewModel
             {
                 RetreatId = retreatId,
-                RetreatDate = retreatDate,
                 ParticipantId = participantId,
-                FirstName = firstName,
-                LastName = lastName,
+                RetreatDate = retreat.StartDate,
+                FirstName = participant.FirstName,
+                LastName = participant.LastName,
             };
 
             return View(viewModel);
