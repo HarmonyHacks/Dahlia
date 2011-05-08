@@ -168,7 +168,7 @@ namespace Dahlia.Specifications.Controllers.Retreats
             _actionResult = _controller.AddNewParticipant(_viewModel);
         };
 
-        It should_cause_the_participant_to_be_unregistered = () =>
+        It should_cause_the_participant_to_be_added = () =>
             _invoker.SuppliedInput.ShouldBeTheSameAs(_viewModel);
 
         It should_redirect_to_the_retreat_index_view = () =>

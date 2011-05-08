@@ -40,7 +40,7 @@
                 @foreach (var participant in retreat.RegisteredParticipants.Where(p => !String.IsNullOrWhiteSpace(p.BedCode)))
                 {
                     <li>
-                        <div><b>Name:</b> @participant.FirstName @participant.LastName @(Html.ActionLink<ParticipantController>(c => c.Edit(participant.Id), "Edit")) @(Html.ActionLink<RetreatController>(c => c.UnregisterParticipant(retreat.Id, participant.Id), "Remove"))</div>
+                        <div><b>Name:</b> @participant.FirstName @participant.LastName @(Html.ActionLink<ParticipantController>(c => c.Edit(participant.Id), "Edit")) @(Html.ActionLink<RetreatController>(c => c.RemoveParticipant(retreat.Id, participant.Id), "Remove"))</div>
                         <div><b>Date Recieved:</b> @participant.DateReceived.ToShortDateString()</div>
                         <div><b>Bed Code:</b> @participant.BedCode</div>
                         <div><b>Physical Status:</b> @participant.PhysicalStatus </div>
@@ -53,7 +53,7 @@
                 @foreach (var participant in retreat.RegisteredParticipants.Where(p => String.IsNullOrWhiteSpace(p.BedCode)).OrderBy(p => p.DateReceived))
                 {
                     <li>
-                        <div><b>Name:</b> @participant.FirstName @participant.LastName @(Html.ActionLink<ParticipantController>(c => c.Edit(participant.Id), "Edit")) @(Html.ActionLink<RetreatController>(c => c.UnregisterParticipant(retreat.Id, participant.Id), "Remove"))</div>
+                        <div><b>Name:</b> @participant.FirstName @participant.LastName @(Html.ActionLink<ParticipantController>(c => c.Edit(participant.Id), "Edit")) @(Html.ActionLink<RetreatController>(c => c.RemoveParticipant(retreat.Id, participant.Id), "Remove"))</div>
                         <div><b>Date Recieved:</b> @participant.DateReceived.ToShortDateString()</div>
                         <div><b>Physical Status:</b> @participant.PhysicalStatus </div>
                         <div><b>Notes:</b> @participant.Notes</div>

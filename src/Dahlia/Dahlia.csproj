@@ -122,7 +122,7 @@
     <Compile Include="Commands\IControllerCommand.cs" />
     <Compile Include="Commands\IControllerCommandInvoker.cs" />
     <Compile Include="Commands\RegisterNewParticipantCommand.cs" />
-    <Compile Include="Commands\UnregisterParticipantCommand.cs" />
+    <Compile Include="Commands\RemoveParticipantFromRetreatCommand.cs" />
     <Compile Include="Configuration\AppStart_StructureMap.cs" />
     <Compile Include="Configuration\IoC.cs" />
     <Compile Include="Configuration\Persistence\Conventions\Overrides\VersionInfoOverride.cs" />
@@ -171,7 +171,7 @@
     <Compile Include="ViewModels\AddParticipantToRetreatSearchResultsViewModel.cs" />
     <Compile Include="ViewModels\AddNewParticipantViewModel.cs" />
     <Compile Include="ViewModels\CreateParticipantViewModel.cs" />
-    <Compile Include="ViewModels\DeleteParticipantFromRetreatViewModel.cs" />
+    <Compile Include="ViewModels\RemoveParticipantFromRetreatViewModel.cs" />
     <Compile Include="ViewModels\EditParticipantViewModel.cs" />
     <Compile Include="ViewModels\MigrationsViewModel.cs" />
     <Compile Include="ViewModels\ParticipantSearchResultViewModel.cs" />
@@ -260,7 +260,7 @@
     <Content Include="Views\Retreat\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Retreat\UnregisterParticipant.cshtml" />
+    <Content Include="Views\Retreat\RemoveParticipant.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Retreat\Index.cshtml" />

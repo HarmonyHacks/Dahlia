@@ -7,16 +7,16 @@ using Dahlia.ViewModels;
 
 namespace Dahlia.Commands
 {
-    public class UnregisterParticipantCommand : IControllerCommand<DeleteParticipantFromRetreatViewModel>
+    public class RemoveParticipantFromRetreatCommand : IControllerCommand<RemoveParticipantFromRetreatViewModel>
     {
         readonly IRetreatRepository _retreatRepository;
 
-        public UnregisterParticipantCommand(IRetreatRepository retreatRepository)
+        public RemoveParticipantFromRetreatCommand(IRetreatRepository retreatRepository)
         {
             _retreatRepository = retreatRepository;
         }
 
-        public bool Execute(DeleteParticipantFromRetreatViewModel viewModel)
+        public bool Execute(RemoveParticipantFromRetreatViewModel viewModel)
         {
             try
             {

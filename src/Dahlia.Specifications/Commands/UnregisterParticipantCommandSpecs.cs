@@ -11,12 +11,12 @@ using Rhino.Mocks;
 
 namespace Dahlia.Specifications.Commands
 {
-    [Subject(typeof(UnregisterParticipantCommand))]
-    public class when_the_unregister_participant_command_is_executed_and_succeeds : UnregisterParticipantCommandContext
+    [Subject(typeof(RemoveParticipantFromRetreatCommand))]
+    public class when_the_remove_participant_command_is_executed_and_succeeds : RemoveParticipantCommandContext
     {
         Establish context = () =>
         {
-            _viewModel = new DeleteParticipantFromRetreatViewModel
+            _viewModel = new RemoveParticipantFromRetreatViewModel
             {
                 RetreatId = 123,
                 ParticipantId = 456
@@ -35,7 +35,7 @@ namespace Dahlia.Specifications.Commands
         It should_indicate_success = () =>
             _isSuccessful.ShouldBeTrue();
 
-        It should_unregister_the_participant_from_the_retreat = () =>
+        It should_remove_the_participant_from_the_retreat = () =>
             _retreat.Registrations.Any(r => r.Participant == _participant).ShouldBeFalse();
 
         static Participant _participant;
@@ -43,8 +43,8 @@ namespace Dahlia.Specifications.Commands
     }
 
 
-    [Subject(typeof(UnregisterParticipantCommand))]
-    public class when_the_unregister_participant_command_is_executed_and_fails : UnregisterParticipantCommandContext
+    [Subject(typeof(RemoveParticipantFromRetreatCommand))]
+    public class when_the_remove_participant_command_is_executed_and_fails : RemoveParticipantCommandContext
     {
         Establish context = () =>
             _repository.Stub(x => x.GetById(123)).Return(null);
@@ -56,19 +56,19 @@ namespace Dahlia.Specifications.Commands
             _isSuccessful.ShouldBeFalse();
     }
 
-    public class UnregisterParticipantCommandContext
+    public class RemoveParticipantCommandContext
     {
         public static IRetreatRepository _repository;
-        public static UnregisterParticipantCommand _command;
+        public static RemoveParticipantFromRetreatCommand _command;
 
-        public static DeleteParticipantFromRetreatViewModel _viewModel;
+        public static RemoveParticipantFromRetreatViewModel _viewModel;
         public static bool _isSuccessful;
 
         Establish context = () =>
         {
             _repository = MockRepository.GenerateStub<IRetreatRepository>();
-            _command = new UnregisterParticipantCommand(_repository);
-            _viewModel = new DeleteParticipantFromRetreatViewModel();
+            _command = new RemoveParticipantFromRetreatCommand(_repository);
+            _viewModel = new RemoveParticipantFromRetreatViewModel();
         };
     }
 }

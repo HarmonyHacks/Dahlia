@@ -58,7 +58,7 @@ namespace Dahlia.Specifications.Commands
     }
 
 
-    [Subject(typeof(UnregisterParticipantCommand))]
+    [Subject(typeof(RemoveParticipantFromRetreatCommand))]
     public class when_the_register_new_participant_command_is_executed_and_fails : RegisterNewParticipantCommandContext
     {
         Establish context = () =>

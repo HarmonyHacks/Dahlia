@@ -138,7 +138,7 @@
     <Compile Include="Controllers\Participants\Editing_a_participant.cs" />
     <Compile Include="Controllers\Retreats\Adding_a_new_participant.cs" />
     <Compile Include="Controllers\Retreats\Creating_a_retreat.cs" />
-    <Compile Include="Controllers\Retreats\Unregistering_a_participant.cs" />
+    <Compile Include="Controllers\Retreats\Removing_a_participant.cs" />
     <Compile Include="FakeControllerCommandInvoker.cs" />
     <Compile Include="Models\Retreats\Adding_a_participant.cs" />
     <Compile Include="Services\ParticipantSearchServiceTests.cs" />

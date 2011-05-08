@@ -147,7 +147,7 @@ namespace Dahlia.Controllers
             return result;
         }
         
-        public ActionResult UnregisterParticipant(int retreatId, int participantId)
+        public ActionResult RemoveParticipant(int retreatId, int participantId)
         {
             var retreat = _retreatRepository.GetById(retreatId);
             if (retreat == null)
@@ -163,7 +163,7 @@ namespace Dahlia.Controllers
                 return this.RedirectToAction(c => c.Index(retreatId));
             }
 
-            var viewModel = new DeleteParticipantFromRetreatViewModel
+            var viewModel = new RemoveParticipantFromRetreatViewModel
             {
                 RetreatId = retreatId,
                 ParticipantId = participantId,
@@ -176,10 +176,10 @@ namespace Dahlia.Controllers
         }
 
         [HttpPost]
-        public ActionResult UnregisterParticipant(DeleteParticipantFromRetreatViewModel viewModel)
+        public ActionResult RemoveParticipant(RemoveParticipantFromRetreatViewModel viewModel)
         {
             var result = _commandInvoker.Invoke(viewModel,
-                                                typeof(UnregisterParticipantCommand),
+                                                typeof(RemoveParticipantFromRetreatCommand),
                                                 () => this.RedirectToAction(c => c.Index(viewModel.RetreatId)),
                                                 () => this.RedirectToAction(c => c.Index(viewModel.RetreatId)),
                                                 ModelState);
