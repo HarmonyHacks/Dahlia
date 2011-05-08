@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Dahlia.Configuration.Persistence.Migrations;
+using Dahlia.Services;
 using HibernatingRhinos.Profiler.Appender.NHibernate;
 using StructureMap;
 
@@ -37,6 +40,9 @@ namespace Dahlia
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
+
+            if (ConfigurationManager.AppSettings["AutoMigrateDatabase"] == "true")
+                ObjectFactory.GetInstance<IMigrationService>().MigrateUp(null); //should migrate up all versions
         }
 
         protected void Application_EndRequest()

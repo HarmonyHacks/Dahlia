@@ -40,15 +40,11 @@ namespace Dahlia.Controllers
             string resultText;
             var version = _migrationInformation.CurrentVersion().Version;
 
-            if (!id.HasValue)
-            {
-                resultText = "No version specified.";
-            }
-            else if (version == id)
+            if (version == id)
             {
                 resultText = "Already on this version.";
             }
-            else if (version > id)
+            else if (id.HasValue && version > id)
             {
                 resultText = "On a newer version.";
             }
@@ -66,7 +62,7 @@ namespace Dahlia.Controllers
             string resultText;
             var version = _migrationInformation.CurrentVersion().Version;
 
-            if (version == id)
+            if ((version + 1) == id)
             {
                 resultText = "Already on this version.";
             }
