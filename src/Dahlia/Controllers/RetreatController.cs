@@ -89,12 +89,14 @@ namespace Dahlia.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(Retreat retreatModel)
+        public ActionResult Create(Retreat viewModel)
         {
-            if (!ModelState.IsValid)
-                return View();
-            _retreatRepository.Add(retreatModel);
-            return this.RedirectToAction(c => c.Index(retreatModel.Id));
+            var result = _commandInvoker.Invoke(viewModel,
+                                                typeof(CreateRetreatCommand),
+                                                () => this.RedirectToAction(c => c.Index(viewModel.Id)),
+                                                () => this.RedirectToAction(c => c.Index(viewModel.Id)),
+                                                ModelState);
+            return result;
         }
 
         public ActionResult Delete(int id)

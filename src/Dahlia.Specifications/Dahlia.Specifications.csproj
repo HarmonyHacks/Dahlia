@@ -120,6 +120,7 @@
   <ItemGroup>
     <Compile Include="Commands\ControllerCommandInvokerSpecs.cs" />
     <Compile Include="Commands\CreateParticipantCommandSpecs.cs" />
+    <Compile Include="Commands\CreateRetreatCommandSpecs.cs" />
     <Compile Include="Commands\EditParticipantCommandSpecs.cs" />
     <Compile Include="Commands\RegisterNewParticipantCommandSpecs.cs" />
     <Compile Include="Commands\UnregisterParticipantCommandSpecs.cs" />
@@ -130,12 +131,12 @@
     <Compile Include="Controllers\Migrations\When_migrating_up_to_the_same_version.cs" />
     <Compile Include="Controllers\Migrations\When_migrating_up_to_an_older_version.cs" />
     <Compile Include="Controllers\Migrations\When_viewing_the_available_migrations.cs" />
-    <Compile Include="Controllers\Participants\Adding_a_participant_to_a_retreat.cs" />
     <Compile Include="..\ProjectInfo.cs">
       <Link>Properties\ProjectInfo.cs</Link>
     </Compile>
     <Compile Include="Controllers\Participants\Editing_a_participant.cs" />
     <Compile Include="Controllers\Retreats\Adding_a_new_participant.cs" />
+    <Compile Include="Controllers\Retreats\Creating_a_retreat.cs" />
     <Compile Include="Controllers\Retreats\Unregistering_a_participant.cs" />
     <Compile Include="FakeControllerCommandInvoker.cs" />
     <Compile Include="Models\Retreats\Adding_a_participant.cs" />
