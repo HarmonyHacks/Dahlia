@@ -67,7 +67,6 @@ namespace Dahlia.Controllers
                          Id = x.Id,
                          Description = x.Description,
                          Date = x.StartDate,
-                         AddParticipantLink = AddParticipantLinkForRetreat(x),
                          RegisteredParticipants = x.Registrations.Select(
                              y => new RetreatListParticipantViewModel
                                   {
@@ -80,12 +79,6 @@ namespace Dahlia.Controllers
                                       Notes = y.Participant.Notes,
                                   })
                      });
-        }
-
-        Uri AddParticipantLinkForRetreat(Retreat retreat)
-        {
-            return _urlMapper.MapAction<ParticipantController>(
-                x => x.AddToRetreat(retreat.Id));
         }
 
         public ActionResult Create()

@@ -19,7 +19,6 @@ namespace Dahlia.ViewModels
         public string Description { get; set; }
         public bool Active { get; set; }
 
-        public Uri AddParticipantLink { get; set; }
         public IEnumerable<RetreatListParticipantViewModel> RegisteredParticipants { get; set; }
     }
 
@@ -32,6 +31,5 @@ namespace Dahlia.ViewModels
         public DateTime DateReceived { get; set; }
         public string Notes { get; set; }
         public PhysicalStatus PhysicalStatus { get; set; }
-        public Uri DeleteLink { get; set; }
     }
 }
