@@ -33,7 +33,7 @@ namespace Dahlia.Specifications.Controllers.Participants
             var bedRepository = MockRepository.GenerateStub<IBedRepository>();
             bedRepository.Stub((x => x.GetAll())).Return(_beds);
 
-            _controller = new ParticipantController(_retreatRepository, null, bedRepository, null);
+            _controller = new ParticipantController(_retreatRepository, null, bedRepository, null, null);
         };
 
         Because of = () =>
@@ -87,7 +87,7 @@ namespace Dahlia.Specifications.Controllers.Participants
             var bedRepository = MockRepository.GenerateStub<IBedRepository>();
             bedRepository.Stub((x => x.GetAll())).Return(beds);
 
-            _controller = new ParticipantController(_retreatRepo, null, bedRepository, null);
+            _controller = new ParticipantController(_retreatRepo, null, bedRepository, null, null);
         };
 
         Because of = () =>
@@ -129,7 +129,7 @@ namespace Dahlia.Specifications.Controllers.Participants
 
             _retreatRepo.Stub(x => x.GetById(_retreatId)).Return(retreat);
 
-            _controller = new ParticipantController(_retreatRepo, null, bedRepository, null);
+            _controller = new ParticipantController(_retreatRepo, null, bedRepository, null, null);
         };
 
         Because of = () =>
@@ -171,7 +171,7 @@ namespace Dahlia.Specifications.Controllers.Participants
             
             _retreatRepository = MockRepository.GenerateStub<IRetreatRepository>();
             var bedRepository = MockRepository.GenerateStub<IBedRepository>();
-            _controller = new ParticipantController(_retreatRepository, null, bedRepository, null);
+            _controller = new ParticipantController(_retreatRepository, null, bedRepository, null, null);
 
             _retreat = new Retreat{ StartDate = retreatDate };
             _retreatRepository.Stub(x => x.Get(retreatDate)).Return(_retreat);
@@ -242,7 +242,7 @@ namespace Dahlia.Specifications.Controllers.Participants
             _participantRepository.Stub(x => x.WithNameLike("bob", "fred")).Return(_queryOutput);
 
             var urlMapper = MockRepository.GenerateStub<IUrlMapper>();
-            _controller = new ParticipantController(_retreatRepository, _participantRepository, null, urlMapper);
+            _controller = new ParticipantController(_retreatRepository, _participantRepository, null, urlMapper, null);
 
             _retreat = new Retreat { StartDate = retreatDate };
             _retreatRepository.Stub(x => x.Get(retreatDate)).Return(_retreat);

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Dahlia.Commands;
 using Dahlia.Models;
 using Dahlia.Repositories;
 using Dahlia.Services;
@@ -16,13 +17,15 @@ namespace Dahlia.Controllers
         readonly IParticipantRepository _participantRepository;
         readonly IBedRepository _bedRepository;
         readonly IUrlMapper _urlMapper;
+        readonly IControllerCommandInvoker _commandInvoker;
 
-        public ParticipantController(IRetreatRepository retreatRepository, IParticipantRepository participantRepository, IBedRepository bedRepository, IUrlMapper urlMapper)
+        public ParticipantController(IRetreatRepository retreatRepository, IParticipantRepository participantRepository, IBedRepository bedRepository, IUrlMapper urlMapper, IControllerCommandInvoker commandInvoker)
         {
             _retreatRepository = retreatRepository;
             _participantRepository = participantRepository;
             _bedRepository = bedRepository;
             _urlMapper = urlMapper;
+            _commandInvoker = commandInvoker;
         }
 
         public ViewResult AddToRetreat(int retreatId)
@@ -205,27 +208,11 @@ namespace Dahlia.Controllers
         [HttpPost]
         public ActionResult Edit(EditParticipantViewModel viewModel)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(viewModel);
-            }
-
-            var participant = _participantRepository.GetById(viewModel.Id);
-
-            if (participant == null)
-            {
-                return View(viewModel);
-            }
-
-            participant.FirstName = viewModel.FirstName;
-            participant.LastName = viewModel.LastName;
-            participant.DateReceived = viewModel.DateReceived;
-            participant.Notes = viewModel.Notes;
-            participant.PhysicalStatus = viewModel.PhysicalStatus;
-
-            _participantRepository.Save(participant);
-
-            return this.RedirectToAction<RetreatController>(c => c.Index(null));
+            var result = _commandInvoker.Invoke(viewModel,
+                                                typeof (EditParticipantCommand),
+                                                () => this.RedirectToAction<RetreatController>(c => c.Index(null)),
+                                                () => View(viewModel), ModelState);
+            return result;
         }
     }
 }

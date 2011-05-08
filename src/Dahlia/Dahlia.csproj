@@ -114,6 +114,11 @@
     <Compile Include="..\ProjectInfo.cs">
       <Link>Properties\ProjectInfo.cs</Link>
     </Compile>
+    <Compile Include="Commands\ControllerCommandInvoker.cs" />
+    <Compile Include="Commands\EditParticipantCommand.cs" />
+    <Compile Include="Commands\IControllerCommand.cs" />
+    <Compile Include="Commands\IControllerCommandInvoker.cs" />
+    <Compile Include="Commands\UnregisterParticipantCommand.cs" />
     <Compile Include="Configuration\AppStart_StructureMap.cs" />
     <Compile Include="Configuration\IoC.cs" />
     <Compile Include="Configuration\Persistence\Conventions\Overrides\VersionInfoOverride.cs" />
@@ -274,6 +279,7 @@
   <ItemGroup>
     <Content Include="Views\Participant\Edit.cshtml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
