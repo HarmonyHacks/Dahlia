@@ -87,29 +87,6 @@ namespace Dahlia.Controllers
             return this.RedirectToAction<RetreatController>(c => c.Index(postBack.RetreatId));
         }
 
-        public ViewResult DeleteFromRetreat(int retreatId, DateTime retreatDate, int participantId, string firstName, string lastName)
-        {
-            var viewModel = new DeleteParticipantFromRetreatViewModel
-                            {
-                                RetreatId = retreatId,
-                                RetreatDate = retreatDate,
-                                ParticipantId = participantId,
-                                FirstName = firstName,
-                                LastName = lastName,
-                            };
-            return View("DeleteFromRetreat", viewModel);
-        }
-
-        [HttpPost]
-        public ActionResult DeleteFromRetreat(DeleteParticipantFromRetreatViewModel viewModel)
-        {
-            var retreat = _retreatRepository.GetById(viewModel.RetreatId);
-            retreat.RemoveParticipant(viewModel.ParticipantId);
-            _retreatRepository.Save(retreat);
-
-            return this.RedirectToAction<RetreatController>(c => c.Index(viewModel.RetreatId));
-        }
-
         public ActionResult AssignToRetreatChooseBedCode(int retreatId, int participantId)
         {
             var bedCodes = _bedRepository.GetAll().Select(x => x.Code).OrderBy(x => x);

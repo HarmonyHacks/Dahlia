@@ -22,7 +22,7 @@ namespace Dahlia.Specifications.Commands
                 ParticipantId = 456
             };
 
-            _participant = new Participant();
+            _participant = new Participant {Id = 456};
             _retreat = new Retreat();
             _repository.Stub(x => x.GetById(123)).Return(_retreat);
 

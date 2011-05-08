@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Dahlia.Commands;
 using Dahlia.Models;
 using Dahlia.Repositories;
 using Dahlia.Services;
@@ -13,12 +14,14 @@ namespace Dahlia.Controllers
     public class RetreatController : Controller
     {
         readonly IRetreatRepository _retreatRepository;
+        readonly IControllerCommandInvoker _commandInvoker;
         readonly IUrlMapper _urlMapper;
         readonly IReportGeneratorService _reportGenerator;
 
-        public RetreatController(IRetreatRepository retreatRepository, IUrlMapper urlMapper, IReportGeneratorService reportGenerator)
+        public RetreatController(IRetreatRepository retreatRepository, IControllerCommandInvoker commandInvoker, IUrlMapper urlMapper, IReportGeneratorService reportGenerator)
         {
             _retreatRepository = retreatRepository;
+            _commandInvoker = commandInvoker;
             _urlMapper = urlMapper;
             _reportGenerator = reportGenerator;
         }
@@ -83,8 +86,8 @@ namespace Dahlia.Controllers
         Uri BuildDeleteLink(Retreat retreat, Participant participant)
         {
             // TODO: should have a delete view model here instead?
-            return _urlMapper.MapAction<ParticipantController>(
-                x => x.DeleteFromRetreat(
+            return _urlMapper.MapAction<RetreatController>(
+                x => x.UnregisterParticipant(
                     retreat.Id, 
                     retreat.StartDate,
                     participant.Id,
@@ -124,6 +127,31 @@ namespace Dahlia.Controllers
             _retreatRepository.DeleteById(id);
 
             return this.RedirectToAction(c => c.Index(null));
+        }
+
+        public ViewResult UnregisterParticipant(int retreatId, DateTime retreatDate, int participantId, string firstName, string lastName)
+        {
+            var viewModel = new DeleteParticipantFromRetreatViewModel
+            {
+                RetreatId = retreatId,
+                RetreatDate = retreatDate,
+                ParticipantId = participantId,
+                FirstName = firstName,
+                LastName = lastName,
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult UnregisterParticipant(DeleteParticipantFromRetreatViewModel viewModel)
+        {
+            var result = _commandInvoker.Invoke(viewModel,
+                                                typeof(UnregisterParticipantCommand),
+                                                () => this.RedirectToAction(c => c.Index(viewModel.RetreatId)),
+                                                () => this.RedirectToAction(c => c.Index(viewModel.RetreatId)),
+                                                ModelState);
+            return result;
         }
     }
 }

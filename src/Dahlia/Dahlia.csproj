@@ -255,7 +255,7 @@
     <Content Include="Views\Retreat\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Participant\DeleteFromRetreat.cshtml" />
+    <Content Include="Views\Retreat\UnregisterParticipant.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Retreat\Index.cshtml" />

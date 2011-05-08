@@ -28,9 +28,7 @@ namespace Dahlia.Specifications.Controllers.Participants
                 PhysicalStatus = PhysicalStatus.Limited
             };
             _viewModel = new EditParticipantViewModel();
-            _participantRepository = MockRepository.GenerateStub<IParticipantRepository>();
             _participantRepository.Stub(x => x.GetById(123)).Return(_participant);
-            _controller = new ParticipantController(null, _participantRepository, null, null, _invoker);
         };
 
         Because of = () =>
@@ -66,9 +64,7 @@ namespace Dahlia.Specifications.Controllers.Participants
     {
         Establish context = () =>
         {
-            _participantRepository = MockRepository.GenerateStub<IParticipantRepository>();
             _participantRepository.Stub(x => x.GetById(123)).Return(null);
-            _controller = new ParticipantController(null, _participantRepository, null, null, null);
         };
 
         Because of = () =>
@@ -136,5 +132,4 @@ namespace Dahlia.Specifications.Controllers.Participants
             _controller = new ParticipantController(null, _participantRepository, null, null, _invoker);
         };
     }
-
 }
