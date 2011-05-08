@@ -1,27 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
+using Dahlia.Models;
 using Dahlia.Repositories;
 using Dahlia.ViewModels;
 
 namespace Dahlia.Commands
 {
-    public class EditParticipantCommand : IControllerCommand<EditParticipantViewModel>
+    public class CreateParticipantCommand : IControllerCommand<CreateParticipantViewModel>
     {
         readonly IParticipantRepository _participantRepository;
 
-        public EditParticipantCommand(IParticipantRepository participantRepository)
+        public CreateParticipantCommand(IParticipantRepository participantRepository)
         {
             _participantRepository = participantRepository;
         }
 
-        public bool Execute(EditParticipantViewModel viewModel)
+        public bool Execute(CreateParticipantViewModel viewModel)
         {
             try
             {
-                var participant = _participantRepository.GetById(viewModel.Id);
-
+                var participant = new Participant();
                 participant.FirstName = viewModel.FirstName;
                 participant.LastName = viewModel.LastName;
                 participant.DateReceived = viewModel.DateReceived;
@@ -29,6 +29,8 @@ namespace Dahlia.Commands
                 participant.PhysicalStatus = viewModel.PhysicalStatus;
 
                 _participantRepository.Save(participant);
+
+                CreatedParticipant = participant;
             }
             catch (Exception e)
             {
@@ -40,5 +42,7 @@ namespace Dahlia.Commands
         }
 
         public Exception Exception { get; private set; }
+
+        public Participant CreatedParticipant { get; private set; }
     }
 }

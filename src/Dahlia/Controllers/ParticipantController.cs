@@ -28,65 +28,6 @@ namespace Dahlia.Controllers
             _commandInvoker = commandInvoker;
         }
 
-        public ViewResult AddToRetreat(int retreatId)
-        {
-            var retreat = _retreatRepository.GetById(retreatId);
-            var beds = _bedRepository.GetAll();
-
-            var viewModel = new AddParticipantToRetreatViewModel
-            {
-                RetreatId = retreatId,
-                RetreatDate = retreat.StartDate,
-                DateReceived = DateTime.Today,
-                RetreatIsFull = retreat.IsFull,
-                Beds = retreat.GetUnassignedBeds(beds),
-            };
-
-            return View("AddToRetreat", viewModel);
-        }
-
-        [HttpPost]
-        public ActionResult AddToRetreat(AddParticipantToRetreatViewModel postBack)
-        {
-            if (postBack.Cancel != null)
-                return this.RedirectToAction<RetreatController>(c => c.Index(postBack.RetreatId));
-
-            if (postBack.Search != null)
-            {
-                var queryResults = _participantRepository.WithNameLike(postBack.FirstName, postBack.LastName);
-                var searchResults = queryResults.Select(x => new ParticipantSearchResultViewModel
-                {
-                    Name = string.Format("{0} {1}", x.FirstName, x.LastName),
-                    DateReceived = x.DateReceived,
-                    SelectLink = _urlMapper.MapAction<ParticipantController>(c => c.AssignToRetreatChooseBedCode(postBack.RetreatId, x.Id)),
-                });
-                TempData["searchResults"] = new AddParticipantToRetreatSearchResultsViewModel
-                {
-                    SearchResults = searchResults.ToList(),
-                };
-                return this.RedirectToAction(c => c.AddToRetreat(postBack.RetreatId));
-            }
-
-            var retreat = _retreatRepository.Get(postBack.RetreatDate);
-
-            // TODO: what if we already have a participant with this name in the db?
-            var newParticipant = new Participant
-            {
-                FirstName = postBack.FirstName,
-                LastName = postBack.LastName,
-                DateReceived = postBack.DateReceived,
-                Notes = postBack.Notes,
-                PhysicalStatus = postBack.PhysicalStatus
-            };
-
-            var bed = _bedRepository.GetBy(postBack.BedCode);
-
-            retreat.AddParticipant(newParticipant, bed);
-            _retreatRepository.Save(retreat);
-
-            return this.RedirectToAction<RetreatController>(c => c.Index(postBack.RetreatId));
-        }
-
         public ActionResult AssignToRetreatChooseBedCode(int retreatId, int participantId)
         {
             var bedCodes = _bedRepository.GetAll().Select(x => x.Code).OrderBy(x => x);

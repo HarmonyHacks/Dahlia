@@ -115,9 +115,11 @@
       <Link>Properties\ProjectInfo.cs</Link>
     </Compile>
     <Compile Include="Commands\ControllerCommandInvoker.cs" />
+    <Compile Include="Commands\CreateParticipantCommand.cs" />
     <Compile Include="Commands\EditParticipantCommand.cs" />
     <Compile Include="Commands\IControllerCommand.cs" />
     <Compile Include="Commands\IControllerCommandInvoker.cs" />
+    <Compile Include="Commands\RegisterNewParticipantCommand.cs" />
     <Compile Include="Commands\UnregisterParticipantCommand.cs" />
     <Compile Include="Configuration\AppStart_StructureMap.cs" />
     <Compile Include="Configuration\IoC.cs" />
@@ -165,7 +167,8 @@
     <Compile Include="Services\UrlMapper.cs" />
     <Compile Include="ViewModels\AddParticipantToRetreatChooseBedCodeViewModel.cs" />
     <Compile Include="ViewModels\AddParticipantToRetreatSearchResultsViewModel.cs" />
-    <Compile Include="ViewModels\AddParticipantToRetreatViewModel.cs" />
+    <Compile Include="ViewModels\AddNewParticipantViewModel.cs" />
+    <Compile Include="ViewModels\CreateParticipantViewModel.cs" />
     <Compile Include="ViewModels\DeleteParticipantFromRetreatViewModel.cs" />
     <Compile Include="ViewModels\EditParticipantViewModel.cs" />
     <Compile Include="ViewModels\MigrationsViewModel.cs" />
@@ -249,7 +252,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Participant\AddToRetreat.cshtml" />
+    <Content Include="Views\Retreat\AddNewParticipant.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Retreat\Create.cshtml" />

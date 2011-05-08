@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Dahlia.Repositories;
 using Dahlia.ViewModels;
 
@@ -15,17 +18,27 @@ namespace Dahlia.Commands
 
         public bool Execute(DeleteParticipantFromRetreatViewModel viewModel)
         {
-            var retreat = _retreatRepository.GetById(viewModel.RetreatId);
-
-            if (retreat == null)
+            try
             {
+                var retreat = _retreatRepository.GetById(viewModel.RetreatId);
+
+                if (retreat == null)
+                {
+                    return false;
+                }
+
+                retreat.RemoveParticipant(viewModel.ParticipantId);
+                _retreatRepository.Save(retreat);
+            }
+            catch (Exception e)
+            {
+                Exception = e;
                 return false;
             }
 
-            retreat.RemoveParticipant(viewModel.ParticipantId);
-            _retreatRepository.Save(retreat);
-
             return true;
         }
+
+        public Exception Exception { get; private set; }
     }
 }

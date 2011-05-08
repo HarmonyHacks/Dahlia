@@ -58,7 +58,7 @@ namespace Dahlia.Specifications.Commands
     }
 
     [Subject(typeof(EditParticipantCommand))]
-    public class when_the_edit_avail_command_is_executed_and_fails : EditParticipantCommandContext
+    public class when_the_edit_participant_command_is_executed_and_fails : EditParticipantCommandContext
     {
         Establish context = () =>
             _repository.Stub(x => x.GetById(123)).Return(null);

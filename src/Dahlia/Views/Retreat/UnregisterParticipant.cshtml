@@ -1,0 +1,18 @@
+﻿@model Dahlia.ViewModels.DeleteParticipantFromRetreatViewModel
+
+@{
+    ViewBag.Title = "Unregister Participant";
+    Layout = "~/Views/Shared/_Popup.cshtml";
+}
+
+    <fieldset>
+        <legend>Unregister Participant</legend>
+        <h3>Are you sure you want to unregister @Model.FirstName @Model.LastName from the @Model.RetreatDate.ToShortDateString() retreat?</h3>
+
+        @using (Html.BeginForm()) {
+            <p>
+                <input type="submit" value="Remove" /> &nbsp;
+                <input type="button" value="Cancel" onclick="javascript:window.location='/';" />
+            </p>
+        }
+    </fieldset>

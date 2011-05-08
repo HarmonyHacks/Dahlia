@@ -8,5 +8,7 @@ namespace Dahlia.Commands
     public interface IControllerCommand<in T>
     {
         bool Execute(T input);
+
+        Exception Exception { get; }
     }
 }

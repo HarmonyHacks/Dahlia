@@ -110,6 +110,8 @@ namespace Dahlia.Specifications.Commands
                     return true;
             }
         }
+
+        public Exception Exception { get; private set; }
     }
 
     public enum FakeCommandBehavior

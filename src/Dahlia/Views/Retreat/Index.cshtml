@@ -30,7 +30,7 @@
     {
         <div id="@retreat.Id">
             <h2>@retreat.Description</h2>
-            @(Html.ActionLink<ParticipantController>(c => c.AddToRetreat(retreat.Id), "Add Participant"))
+            @(Html.ActionLink<RetreatController>(c => c.AddNewParticipant(retreat.Id), "Add Participant"))
             @Html.ActionLink("Remove Retreat", "Delete", new { id = retreat.Id})
             <a target="_blank" href="/retreat/generatereportfor?retreat=@retreat.Id">Report</a>
             <br />

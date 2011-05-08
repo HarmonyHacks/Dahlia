@@ -14,13 +14,15 @@ namespace Dahlia.Controllers
     public class RetreatController : Controller
     {
         readonly IRetreatRepository _retreatRepository;
+        readonly IBedRepository _bedRepository;
         readonly IControllerCommandInvoker _commandInvoker;
         readonly IUrlMapper _urlMapper;
         readonly IReportGeneratorService _reportGenerator;
 
-        public RetreatController(IRetreatRepository retreatRepository, IControllerCommandInvoker commandInvoker, IUrlMapper urlMapper, IReportGeneratorService reportGenerator)
+        public RetreatController(IRetreatRepository retreatRepository, IBedRepository bedRepository, IControllerCommandInvoker commandInvoker, IUrlMapper urlMapper, IReportGeneratorService reportGenerator)
         {
             _retreatRepository = retreatRepository;
+            _bedRepository = bedRepository;
             _commandInvoker = commandInvoker;
             _urlMapper = urlMapper;
             _reportGenerator = reportGenerator;
@@ -109,6 +111,37 @@ namespace Dahlia.Controllers
             return this.RedirectToAction(c => c.Index(null));
         }
 
+        public ViewResult AddNewParticipant(int retreatId)
+        {
+            var retreat = _retreatRepository.GetById(retreatId);
+            var beds = _bedRepository.GetAll();
+
+            var viewModel = new AddNewParticipantViewModel
+            {
+                RetreatId = retreatId,
+                RetreatDate = retreat.StartDate,
+                RetreatIsFull = retreat.IsFull,
+                Beds = retreat.GetUnassignedBeds(beds),
+                Participant = new CreateParticipantViewModel
+                {
+                    DateReceived = DateTime.Today
+                },
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult AddNewParticipant(AddNewParticipantViewModel viewModel)
+        {
+            var result = _commandInvoker.Invoke(viewModel,
+                                                typeof(RegisterNewParticipantCommand),
+                                                () => this.RedirectToAction(c => c.Index(viewModel.RetreatId)),
+                                                () => View(viewModel),
+                                                ModelState);
+            return result;
+        }
+        
         public ActionResult UnregisterParticipant(int retreatId, int participantId)
         {
             var retreat = _retreatRepository.GetById(retreatId);
