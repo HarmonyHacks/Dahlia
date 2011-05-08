@@ -1,4 +1,6 @@
 ﻿@using Dahlia;
+@using Dahlia.Controllers;
+@using Microsoft.Web.Mvc;
 
 @model Dahlia.ViewModels.EditParticipantViewModel
 
@@ -32,6 +34,6 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @(Html.ActionLink<RetreatController>(c => c.Index(null), "Back to List"))
 </div>
 
