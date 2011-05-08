@@ -5,39 +5,40 @@ using System.Text;
 using Dahlia.Commands;
 using Dahlia.Models;
 using Dahlia.Repositories;
+using Dahlia.ViewModels;
 using Machine.Specifications;
 using Rhino.Mocks;
 
 namespace Dahlia.Specifications.Commands
 {
-    [Subject(typeof(CreateRetreatCommand))]
-    public class when_the_create_retreat_command_is_executed_and_succeeds : CreateRetreatCommandContext
+    [Subject(typeof(DeleteRetreatCommand))]
+    public class when_the_delete_retreat_command_is_executed_and_succeeds : DeleteRetreatCommandContext
     {
         Establish context = () =>
         {
-            _viewModel = new Retreat
+            _viewModel = new DeleteRetreatViewModel
             {
-                Description = "retreat"
+                Id = 123,
+                Description = "retreat",
+                StartDate = DateTime.Parse("1/1/2011")
             };
         };
 
         Because of = () =>
             _isSuccessful = _command.Execute(_viewModel);
 
-        It should_save_the_participant_to_the_repository = () =>
-            _repository.AssertWasCalled(x => x.Save(Arg<Retreat>.Is.Anything));
-
-        // TODO: we need to get the saved participant and verify that it has the correct attributes
+        It should_delete_the_retreat_from_the_repository = () =>
+            _repository.AssertWasCalled(x => x.DeleteById(123));
 
         It should_indicate_success = () =>
             _isSuccessful.ShouldBeTrue();
     }
 
-    [Subject(typeof(CreateRetreatCommand))]
-    public class when_the_create_retreat_command_is_executed_and_fails : CreateRetreatCommandContext
+    [Subject(typeof(DeleteRetreatCommand))]
+    public class when_the_delete_retreat_command_is_executed_and_fails : DeleteRetreatCommandContext
     {
         Establish context = () =>
-            _repository.Stub(x => x.Save(Arg<Retreat>.Is.Anything)).Throw(new Exception());
+            _repository.Stub(x => x.DeleteById(Arg<int>.Is.Anything)).Throw(new Exception());
 
         Because of = () =>
             _isSuccessful = _command.Execute(_viewModel);
@@ -49,19 +50,19 @@ namespace Dahlia.Specifications.Commands
             _command.Exception.ShouldNotBeNull();
     }
 
-    public class CreateRetreatCommandContext
+    public class DeleteRetreatCommandContext
     {
         public static IRetreatRepository _repository;
-        public static CreateRetreatCommand _command;
+        public static DeleteRetreatCommand _command;
 
-        public static Retreat _viewModel;
+        public static DeleteRetreatViewModel _viewModel;
         public static bool _isSuccessful;
 
         Establish context = () =>
         {
             _repository = MockRepository.GenerateStub<IRetreatRepository>();
-            _command = new CreateRetreatCommand(_repository);
-            _viewModel = new Retreat();
+            _command = new DeleteRetreatCommand(_repository);
+            _viewModel = new DeleteRetreatViewModel();
         };
     }
 }

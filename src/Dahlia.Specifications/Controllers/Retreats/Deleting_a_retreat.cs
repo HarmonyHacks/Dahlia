@@ -32,25 +32,55 @@ namespace Dahlia.Specifications.Controllers.Retreats
         static ViewResult _result;
     }
 
-    [Subject("Deleting A Retreat")]
-    public class when_deleting_a_retreat
+    [Subject("Deleting a retreat")]
+    public class when_the_user_confirms_the_delete : DeleteRetreatContext
     {
         Establish context = () =>
         {
-            _repo = MockRepository.GenerateStub<IRetreatRepository>();
-            _controller = new RetreatController(_repo, null, null, null, null);
+            _viewModel = new DeleteRetreatViewModel { Id = 123 };
+            _invoker.ShouldSucceed = true;
         };
 
         Because of = () =>
-            _actionResult = _controller.Delete(100,null);
+            _actionResult = _controller.Delete(_viewModel);
 
-        It should_delete_the_retreat_from_the_repo = () => _repo.AssertWasCalled(x => x.DeleteById(100));
+        It should_cause_the_retreat_to_be_deleted = () =>
+            _invoker.SuppliedInput.ShouldBeTheSameAs(_viewModel);
 
-        It should_redirect_to_the_retreat_index = () =>
+        It should_redirect_to_the_retreat_index_view = () =>
             _actionResult.AssertActionRedirect().ToAction<RetreatController>(c => c.Index(null));
+    }
 
-        static IRetreatRepository _repo;
-        static RetreatController _controller;
-        static ActionResult _actionResult;
+    [Subject("Deleting a retreat")]
+    public class when_the_user_deletes_an_invalid_retreat : DeleteRetreatContext
+    {
+        Establish context = () =>
+        {
+            _viewModel = new DeleteRetreatViewModel { Id = 123 };
+            _invoker.ShouldSucceed = false;
+        };
+
+        Because of = () =>
+            _actionResult = _controller.Delete(_viewModel);
+
+        It should_redirect_to_the_retreat_index_view = () =>
+            _actionResult.AssertActionRedirect().ToAction<RetreatController>(c => c.Index(null));
+    }
+
+    public class DeleteRetreatContext
+    {
+        public static FakeControllerCommandInvoker _invoker;
+        public static RetreatController _controller;
+        public static ViewResult _viewResult;
+        public static ActionResult _actionResult;
+        public static DeleteRetreatViewModel _viewModel;
+        public static IRetreatRepository _retreatRepository;
+
+        Establish context = () =>
+        {
+            _retreatRepository = MockRepository.GenerateStub<IRetreatRepository>();
+            _invoker = new FakeControllerCommandInvoker();
+            _controller = new RetreatController(_retreatRepository, null, _invoker, null, null);
+        };
     }
 }

@@ -121,6 +121,7 @@
     <Compile Include="Commands\ControllerCommandInvokerSpecs.cs" />
     <Compile Include="Commands\CreateParticipantCommandSpecs.cs" />
     <Compile Include="Commands\CreateRetreatCommandSpecs.cs" />
+    <Compile Include="Commands\DeleteRetreatCommandSpecs.cs" />
     <Compile Include="Commands\EditParticipantCommandSpecs.cs" />
     <Compile Include="Commands\RegisterNewParticipantCommandSpecs.cs" />
     <Compile Include="Commands\UnregisterParticipantCommandSpecs.cs" />

@@ -87,7 +87,7 @@ namespace Dahlia.Specifications.Controllers.Retreats
     }
 
     [Subject("Unregistering a participant")]
-    public class when_the_user_saves_an_invalid_participant : RetreatControllerContext
+    public class when_the_user_deletes_an_invalid_participant : RetreatControllerContext
     {
         Establish context = () =>
         {

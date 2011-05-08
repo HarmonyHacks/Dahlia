@@ -117,6 +117,7 @@
     <Compile Include="Commands\ControllerCommandInvoker.cs" />
     <Compile Include="Commands\CreateParticipantCommand.cs" />
     <Compile Include="Commands\CreateRetreatCommand.cs" />
+    <Compile Include="Commands\DeleteRetreatCommand.cs" />
     <Compile Include="Commands\EditParticipantCommand.cs" />
     <Compile Include="Commands\IControllerCommand.cs" />
     <Compile Include="Commands\IControllerCommandInvoker.cs" />

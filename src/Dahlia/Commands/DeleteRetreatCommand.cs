@@ -4,23 +4,24 @@ using System.Linq;
 using System.Text;
 using Dahlia.Models;
 using Dahlia.Repositories;
+using Dahlia.ViewModels;
 
 namespace Dahlia.Commands
 {
-    public class CreateRetreatCommand : IControllerCommand<Retreat>
+    public class DeleteRetreatCommand : IControllerCommand<DeleteRetreatViewModel>
     {
         readonly IRetreatRepository _retreatRepository;
 
-        public CreateRetreatCommand(IRetreatRepository retreatRepository)
+        public DeleteRetreatCommand(IRetreatRepository retreatRepository)
         {
             _retreatRepository = retreatRepository;
         }
 
-        public bool Execute(Retreat viewModel)
+        public bool Execute(DeleteRetreatViewModel viewModel)
         {
             try
             {
-                _retreatRepository.Save(viewModel);
+                _retreatRepository.DeleteById(viewModel.Id);
             }
             catch (Exception e)
             {

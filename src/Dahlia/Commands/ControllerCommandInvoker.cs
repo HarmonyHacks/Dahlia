@@ -45,6 +45,7 @@ namespace Dahlia.Commands
             }
             else
             {
+                // TODO: if the command fails we should shove information into the modelstate for display
                 return failureResult();
             }
         }

@@ -106,11 +106,14 @@ namespace Dahlia.Controllers
         }
 
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(DeleteRetreatViewModel viewModel)
         {
-            _retreatRepository.DeleteById(id);
-
-            return this.RedirectToAction(c => c.Index(null));
+            var result = _commandInvoker.Invoke(viewModel,
+                                                typeof(DeleteRetreatCommand),
+                                                () => this.RedirectToAction(c => c.Index(null)),
+                                                () => this.RedirectToAction(c => c.Index(null)),
+                                                ModelState);
+            return result;
         }
 
         public ViewResult AddNewParticipant(int retreatId)
