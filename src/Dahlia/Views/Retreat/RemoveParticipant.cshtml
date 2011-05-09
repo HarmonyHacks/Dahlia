@@ -1,12 +1,12 @@
-﻿@model Dahlia.ViewModels.DeleteParticipantFromRetreatViewModel
+﻿@model Dahlia.ViewModels.RemoveParticipantFromRetreatViewModel
 
 @{
-    ViewBag.Title = "DeleteFromRetreat";
+    ViewBag.Title = "Remove Participant";
     Layout = "~/Views/Shared/_Popup.cshtml";
 }
 
     <fieldset>
-        <legend>Delete Retreat</legend>
+        <legend>Remove Participant</legend>
         <h3>Are you sure you want to remove @Model.FirstName @Model.LastName from the @Model.RetreatDate.ToShortDateString() retreat?</h3>
 
         @using (Html.BeginForm()) {

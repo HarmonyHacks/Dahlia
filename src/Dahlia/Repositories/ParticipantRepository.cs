@@ -42,8 +42,14 @@ namespace Dahlia.Repositories
                 firstName = string.Empty;
             
             return _session.Query<Participant>()
-                .Where(x => x.FirstName == firstName)
-                .Where(x => x.LastName == lastName);
+                .Where(x => x.FirstName.StartsWith(firstName))
+                .Where(x => x.LastName.StartsWith(lastName));
+        }
+
+        public void Save(Participant participant)
+        {
+            _session.SaveOrUpdate(participant);
+            _session.Flush();
         }
     }
 }

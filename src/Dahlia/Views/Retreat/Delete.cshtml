@@ -5,8 +5,8 @@
     Layout = "~/Views/Shared/_Popup.cshtml";
 }
     <fieldset>
-        <legend>Delete Retreat</legend>
-        <h3>Are you sure you want to delete the "@Model.Description" retreat on @Model.StartDate.ToShortDateString()?</h3>
+        <legend>Remove Retreat</legend>
+        <h3>Are you sure you want to remove the "@Model.Description" retreat on @Model.StartDate.ToShortDateString()?</h3>
 
         @using (Html.BeginForm()) {
             <p>

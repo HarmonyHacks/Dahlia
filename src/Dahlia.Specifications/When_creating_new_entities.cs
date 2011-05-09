@@ -38,7 +38,6 @@ namespace Dahlia.Specifications
         static ISession _session;
         static Retreat _retreat;
         static Retreat _persistedRetreat;
-        static SQLiteConnection _connection;
     }
 
 
