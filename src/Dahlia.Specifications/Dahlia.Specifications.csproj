@@ -129,6 +129,7 @@
     <Compile Include="..\ProjectInfo.cs">
       <Link>Properties\ProjectInfo.cs</Link>
     </Compile>
+    <Compile Include="Controllers\Participants\Editing_a_participant.cs" />
     <Compile Include="Models\Retreats\Adding_a_participant.cs" />
     <Compile Include="Services\ParticipantSearchServiceTests.cs" />
     <Compile Include="Controllers\Retreats\Deleting_a_retreat.cs" />

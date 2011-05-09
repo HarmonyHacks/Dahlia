@@ -68,6 +68,7 @@ namespace Dahlia.Controllers
                          RegisteredParticipants = x.Registrations.Select(
                              y => new RetreatListParticipantViewModel
                                   {
+                                      Id = y.Participant.Id,
                                       FirstName = y.Participant.FirstName,
                                       LastName = y.Participant.LastName,
                                       BedCode = y.Bed == null ? null :y.Bed.Code,

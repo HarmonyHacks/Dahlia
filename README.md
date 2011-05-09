@@ -2,4 +2,6 @@ Dahlia will be a retreat participant list mangement tool. It will track particip
 
 Currently the org is doing all this work manually in Word docs.
 
-Touched.
+Check the issue list and the [discussion group](http://groups.google.com/group/harmonyhacks) for recent conversations about what's happening and what's needed.
+
+Check the [getting started wiki page](https://github.com/HarmonyHacks/Dahlia/wiki/Getting-Started-With-Development) for instructions on how to start working with the code base.
