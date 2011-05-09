@@ -1,19 +1,19 @@
 ﻿@using Dahlia;
 @using Dahlia.ViewModels;
+@using Dahlia.Controllers;
+@using Microsoft.Web.Mvc;
 
-@model Dahlia.ViewModels.AddNewParticipantViewModel
+@model Dahlia.ViewModels.AddParticipantViewModel
 
 @{
     ViewBag.Title = "Add New Participant To Retreat";
     Layout = "~/Views/Shared/_Popup.cshtml";
-    var searchResultsViewModel = (AddParticipantToRetreatSearchResultsViewModel)TempData["searchResults"];
 }
 
 <h2>Add New Participant to Retreat</h2>
 
-@using (Html.BeginForm("AddNewParticipant", "Retreat")) {
+@using (Html.BeginForm("AddParticipant", "Retreat")) {
     @Html.HiddenFor(x => x.RetreatId)
-    @Html.HiddenFor(x => x.RetreatDate)
     <fieldset>
         <legend>Add Participant</legend>
         <label>First Name: </label>@Html.TextBoxFor(x => x.Participant.FirstName)<br />
@@ -39,11 +39,11 @@
 }
 
 <ul>
-@if (searchResultsViewModel != null)
+@if (Model.SearchResults != null)
 {
-    foreach (var searchResult in searchResultsViewModel.SearchResults)
+    foreach (var searchResult in Model.SearchResults)
     {
-        <li>@searchResult.Name @searchResult.DateReceived <a href="@searchResult.SelectLink">Add to Retreat</a></li>
+        <li>@searchResult.Name @searchResult.DateReceived @(Html.ActionLink<ParticipantController>(c => c.AssignToRetreatChooseBedCode(Model.RetreatId, searchResult.Id), "Add To Retreat"))</li>
     }
 }
 </ul>

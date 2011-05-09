@@ -20,7 +20,7 @@ namespace Dahlia.Specifications.Controllers.Retreats
         {
             _repo = MockRepository.GenerateStub<IRetreatRepository>();
             _repo.Stub(x => x.GetById(100)).Return(new Dahlia.Models.Retreat { Id = 100, StartDate = new DateTime(2011, 1, 1) });
-            _controller = new RetreatController(_repo, null, null, null);
+            _controller = new RetreatController(_repo, null, null, null, null);
         };
 
         Because of = () => _result = (ViewResult)_controller.Create();
@@ -41,7 +41,7 @@ namespace Dahlia.Specifications.Controllers.Retreats
             _repo = MockRepository.GenerateStub<IRetreatRepository>();
             _viewModel = new Retreat();
             _invoker = new FakeControllerCommandInvoker();
-            _controller = new RetreatController(_repo, null, _invoker, null);
+            _controller = new RetreatController(_repo, null, null, _invoker, null);
         };
 
         Because of = () =>

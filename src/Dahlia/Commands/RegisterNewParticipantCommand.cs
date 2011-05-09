@@ -7,7 +7,7 @@ using Dahlia.ViewModels;
 
 namespace Dahlia.Commands
 {
-    public class RegisterNewParticipantCommand : IControllerCommand<AddNewParticipantViewModel>
+    public class RegisterNewParticipantCommand : IControllerCommand<AddParticipantViewModel>
     {
         readonly IRetreatRepository _retreatRepository;
         readonly IBedRepository _bedRepository;
@@ -20,7 +20,7 @@ namespace Dahlia.Commands
             _createParticipantCommand = createParticipantCommand;
         }
 
-        public bool Execute(AddNewParticipantViewModel viewModel)
+        public bool Execute(AddParticipantViewModel viewModel)
         {
             try
             {

@@ -105,10 +105,8 @@ namespace Dahlia.Specifications.Models.Retreats
         It should_add_the_participant_to_the_waitlist = () =>
             _retreat.Registrations.Any(r => r.Participant == _participant && r.Bed == null).ShouldBeTrue();
 
-        static Bed _bed;
         static Participant _participant;
         static Retreat _retreat;
-        static Exception _exception;
     }
 
     [Subject("Adding a participant")]
@@ -128,9 +126,7 @@ namespace Dahlia.Specifications.Models.Retreats
         It should_add_the_participant_to_the_waitlist = () =>
             _retreat.Registrations.Any(r => r.Participant == _participant && r.Bed == null).ShouldBeTrue();
 
-        static Bed _bed;
         static Participant _participant;
         static Retreat _retreat;
-        static Exception _exception;
     }
 }

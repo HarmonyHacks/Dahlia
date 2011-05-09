@@ -14,13 +14,15 @@ namespace Dahlia.Controllers
     public class RetreatController : Controller
     {
         readonly IRetreatRepository _retreatRepository;
+        readonly IParticipantRepository _participantRepository;
         readonly IBedRepository _bedRepository;
         readonly IControllerCommandInvoker _commandInvoker;
         readonly IReportGeneratorService _reportGenerator;
 
-        public RetreatController(IRetreatRepository retreatRepository, IBedRepository bedRepository, IControllerCommandInvoker commandInvoker, IReportGeneratorService reportGenerator)
+        public RetreatController(IRetreatRepository retreatRepository, IParticipantRepository participantRepository, IBedRepository bedRepository, IControllerCommandInvoker commandInvoker, IReportGeneratorService reportGenerator)
         {
             _retreatRepository = retreatRepository;
+            _participantRepository = participantRepository;
             _bedRepository = bedRepository;
             _commandInvoker = commandInvoker;
             _reportGenerator = reportGenerator;
@@ -113,15 +115,21 @@ namespace Dahlia.Controllers
             return result;
         }
 
-        public ViewResult AddNewParticipant(int retreatId)
+        public ViewResult AddParticipant(int retreatId)
+        {
+            var viewModel = MakeAddParticipantViewModel(retreatId);
+
+            return View(viewModel);
+        }
+
+        AddParticipantViewModel MakeAddParticipantViewModel(int retreatId)
         {
             var retreat = _retreatRepository.GetById(retreatId);
             var beds = _bedRepository.GetAll();
 
-            var viewModel = new AddNewParticipantViewModel
+            return new AddParticipantViewModel
             {
                 RetreatId = retreatId,
-                RetreatDate = retreat.StartDate,
                 RetreatIsFull = retreat.IsFull,
                 Beds = retreat.GetUnassignedBeds(beds),
                 Participant = new CreateParticipantViewModel
@@ -129,12 +137,47 @@ namespace Dahlia.Controllers
                     DateReceived = DateTime.Today
                 },
             };
-
-            return View(viewModel);
         }
 
         [HttpPost]
-        public ActionResult AddNewParticipant(AddNewParticipantViewModel viewModel)
+        public ActionResult AddParticipant(AddParticipantViewModel viewModel)
+        {
+            if (viewModel.Cancel != null)
+            {
+                return DoCancel(viewModel);
+            }
+            else if (viewModel.Search != null)
+            {
+                return DoSearch(viewModel);
+            }
+            else
+            {
+                return DoAddNew(viewModel);
+            }
+        }
+
+        ActionResult DoCancel(AddParticipantViewModel viewModel)
+        {
+            return this.RedirectToAction(c => c.Index(viewModel.RetreatId));
+        }
+
+        ActionResult DoSearch(AddParticipantViewModel viewModel)
+        {
+            var queryResults = _participantRepository.WithNameLike(viewModel.Participant.FirstName, viewModel.Participant.LastName);
+            var searchResults = queryResults.Select(x => new ParticipantSearchResultViewModel
+            {
+                Id = x.Id,
+                Name = string.Format("{0} {1}", x.FirstName, x.LastName),
+                DateReceived = x.DateReceived,
+            });
+
+            var newViewModel = MakeAddParticipantViewModel(viewModel.RetreatId);
+            newViewModel.SearchResults = searchResults.ToList();
+
+            return View(newViewModel);
+        }
+
+        ActionResult DoAddNew(AddParticipantViewModel viewModel)
         {
             var result = _commandInvoker.Invoke(viewModel,
                                                 typeof(RegisterNewParticipantCommand),
@@ -143,7 +186,7 @@ namespace Dahlia.Controllers
                                                 ModelState);
             return result;
         }
-        
+
         public ActionResult RemoveParticipant(int retreatId, int participantId)
         {
             var retreat = _retreatRepository.GetById(retreatId);

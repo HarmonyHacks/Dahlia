@@ -4,10 +4,9 @@ using Dahlia.Models;
 
 namespace Dahlia.ViewModels
 {
-    public class AddNewParticipantViewModel
+    public class AddParticipantViewModel
     {
         public int RetreatId { get; set; }
-        public DateTime RetreatDate { get; set; }
         public string BedCode { get; set; }
         public bool RetreatIsFull { get; set; }
         public string Cancel { get; set; }
@@ -16,5 +15,7 @@ namespace Dahlia.ViewModels
         public IEnumerable<Bed> Beds { get; set; }
 
         public CreateParticipantViewModel Participant { get; set; }
+
+        public List<ParticipantSearchResultViewModel> SearchResults;
     }
 }

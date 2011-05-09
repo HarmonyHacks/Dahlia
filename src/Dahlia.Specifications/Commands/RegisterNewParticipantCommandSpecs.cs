@@ -16,7 +16,7 @@ namespace Dahlia.Specifications.Commands
     {
         Establish context = () =>
         {
-            _viewModel = new AddNewParticipantViewModel
+            _viewModel = new AddParticipantViewModel
             {
                 RetreatId = 123,
                 BedCode = "bedcode",
@@ -51,10 +51,8 @@ namespace Dahlia.Specifications.Commands
         It should_register_the_participant_with_the_correct_bed_code = () =>
             _retreat.Registrations.Any(r => r.Participant == _createParticipantCommand.CreatedParticipant && r.Bed == _bed).ShouldBeTrue();
 
-        static Participant _participant;
         static Retreat _retreat;
         static Bed _bed;
-        static IParticipantRepository _participantRepository;
     }
 
 
@@ -79,7 +77,7 @@ namespace Dahlia.Specifications.Commands
         public static CreateParticipantCommand _createParticipantCommand;
         public static RegisterNewParticipantCommand _command;
 
-        public static AddNewParticipantViewModel _viewModel;
+        public static AddParticipantViewModel _viewModel;
         public static bool _isSuccessful;
 
         Establish context = () =>
@@ -89,7 +87,7 @@ namespace Dahlia.Specifications.Commands
             _participantRepository = MockRepository.GenerateStub<IParticipantRepository>();
             _createParticipantCommand = new CreateParticipantCommand(_participantRepository);
             _command = new RegisterNewParticipantCommand(_retreatRepository, _bedRepository, _createParticipantCommand);
-            _viewModel = new AddNewParticipantViewModel();
+            _viewModel = new AddParticipantViewModel();
         };
     }
 }

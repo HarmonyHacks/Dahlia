@@ -168,8 +168,7 @@
     <Compile Include="Services\RequestContextProvider.cs" />
     <Compile Include="Services\UrlMapper.cs" />
     <Compile Include="ViewModels\AddParticipantToRetreatChooseBedCodeViewModel.cs" />
-    <Compile Include="ViewModels\AddParticipantToRetreatSearchResultsViewModel.cs" />
-    <Compile Include="ViewModels\AddNewParticipantViewModel.cs" />
+    <Compile Include="ViewModels\AddParticipantViewModel.cs" />
     <Compile Include="ViewModels\CreateParticipantViewModel.cs" />
     <Compile Include="ViewModels\RemoveParticipantFromRetreatViewModel.cs" />
     <Compile Include="ViewModels\EditParticipantViewModel.cs" />
@@ -254,7 +253,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Retreat\AddNewParticipant.cshtml" />
+    <Content Include="Views\Retreat\AddParticipant.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Retreat\Create.cshtml" />

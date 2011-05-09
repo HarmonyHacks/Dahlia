@@ -68,7 +68,7 @@ namespace Dahlia.Controllers
                             {
                               DateReceived = p.DateReceived,
                               Name = p.FirstName + " " + p.LastName,
-                              SelectLink = new Uri("/Participant/ReassignParticipant?participantId=" + p.Id, UriKind.Relative)
+                              //SelectLink = new Uri("/Participant/ReassignParticipant?participantId=" + p.Id, UriKind.Relative)
                             }).ToList();
 
 

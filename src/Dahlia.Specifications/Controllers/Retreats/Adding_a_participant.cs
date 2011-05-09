@@ -34,27 +34,30 @@ namespace Dahlia.Specifications.Controllers.Retreats
             var bedRepository = MockRepository.GenerateStub<IBedRepository>();
             bedRepository.Stub((x => x.GetAll())).Return(_beds);
 
-            _controller = new RetreatController(_retreatRepository, bedRepository, null, null);
+            _controller = new RetreatController(_retreatRepository, null, bedRepository, null, null);
         };
 
         Because of = () =>
         {
-            _viewResult = _controller.AddNewParticipant(_retreatId);
-            _viewModel = (AddNewParticipantViewModel)_viewResult.ViewData.Model;
+            _viewResult = _controller.AddParticipant(_retreatId);
+            _viewModel = (AddParticipantViewModel)_viewResult.ViewData.Model;
         };
 
         It should_display_the_add_participant_view = () =>
-            _viewResult.AssertViewRendered().ForView("").WithViewData<AddNewParticipantViewModel>();
+            _viewResult.AssertViewRendered().ForView("").WithViewData<AddParticipantViewModel>();
 
-        It should_return_a_view_model_that_contains_the_retreat_id = () => _viewModel.RetreatId.ShouldEqual(_retreatId);
+        It should_return_a_view_model_that_contains_the_retreat_id = () =>
+            _viewModel.RetreatId.ShouldEqual(_retreatId);
 
-        It should_have_a_default_date_equal_to_today_for_the_received_date = () => _viewModel.Participant.DateReceived.ShouldEqual(DateTime.Today);
+        It should_have_a_default_date_equal_to_today_for_the_received_date = () =>
+            _viewModel.Participant.DateReceived.ShouldEqual(DateTime.Today);
 
-        It should_return_a_view_model_that_contains_all_beds = () => _viewModel.Beds.SequenceEqual(_beds).ShouldBeTrue();
+        It should_return_a_view_model_that_contains_all_beds = () =>
+            _viewModel.Beds.SequenceEqual(_beds).ShouldBeTrue();
 
         static int _retreatId;
         static ViewResult _viewResult;
-        static AddNewParticipantViewModel _viewModel;
+        static AddParticipantViewModel _viewModel;
         static RetreatController _controller;
         static IRetreatRepository _retreatRepository;
         static Retreat _retreat;
@@ -89,13 +92,13 @@ namespace Dahlia.Specifications.Controllers.Retreats
             var bedRepository = MockRepository.GenerateStub<IBedRepository>();
             bedRepository.Stub((x => x.GetAll())).Return(beds);
 
-            _controller = new RetreatController(_retreatRepo, bedRepository, null, null);
+            _controller = new RetreatController(_retreatRepo, null, bedRepository, null, null);
         };
 
         Because of = () =>
         {
-            _viewResult = _controller.AddNewParticipant(_retreatId);
-            _viewModel = (AddNewParticipantViewModel)_viewResult.ViewData.Model;
+            _viewResult = _controller.AddParticipant(_retreatId);
+            _viewModel = (AddParticipantViewModel)_viewResult.ViewData.Model;
         };
 
         It should_not_display_assigned_beds = () =>
@@ -104,7 +107,7 @@ namespace Dahlia.Specifications.Controllers.Retreats
         static int _retreatId;
         static DateTime _retreatDate;
         static ViewResult _viewResult;
-        static AddNewParticipantViewModel _viewModel;
+        static AddParticipantViewModel _viewModel;
         static RetreatController _controller;
         static IRetreatRepository _retreatRepo;
     }
@@ -131,13 +134,13 @@ namespace Dahlia.Specifications.Controllers.Retreats
 
             _retreatRepo.Stub(x => x.GetById(_retreatId)).Return(retreat);
 
-            _controller = new RetreatController(_retreatRepo, bedRepository, null, null);
+            _controller = new RetreatController(_retreatRepo, null, bedRepository, null, null);
         };
 
         Because of = () =>
         {
-            _viewResult = _controller.AddNewParticipant(_retreatId);
-            _viewModel = (AddNewParticipantViewModel)_viewResult.ViewData.Model;
+            _viewResult = _controller.AddParticipant(_retreatId);
+            _viewModel = (AddParticipantViewModel)_viewResult.ViewData.Model;
         };
 
         It should_disable_assigning_bed_codes = () =>
@@ -146,7 +149,7 @@ namespace Dahlia.Specifications.Controllers.Retreats
         static int _retreatId;
         static DateTime _retreatDate;
         static ViewResult _viewResult;
-        static AddNewParticipantViewModel _viewModel;
+        static AddParticipantViewModel _viewModel;
         static RetreatController _controller;
         static IRetreatRepository _retreatRepo;
     }
@@ -157,15 +160,15 @@ namespace Dahlia.Specifications.Controllers.Retreats
         Establish context = () =>
         {
             _invoker = new FakeControllerCommandInvoker();
-            _controller = new RetreatController(_retreatRepository, null, _invoker, null);
+            _controller = new RetreatController(_retreatRepository, null, null, _invoker, null);
 
-            _viewModel = new AddNewParticipantViewModel { RetreatId = 123 };
+            _viewModel = new AddParticipantViewModel { RetreatId = 123 };
             _invoker.ShouldSucceed = true;
         };
 
         Because of = () =>
         {
-            _actionResult = _controller.AddNewParticipant(_viewModel);
+            _actionResult = _controller.AddParticipant(_viewModel);
         };
 
         It should_cause_the_participant_to_be_added = () =>
@@ -175,7 +178,86 @@ namespace Dahlia.Specifications.Controllers.Retreats
             _actionResult.AssertActionRedirect().ToAction<RetreatController>(c => c.Index(123));
 
         public static IRetreatRepository _retreatRepository;
-        public static AddNewParticipantViewModel _viewModel;
+        public static AddParticipantViewModel _viewModel;
+        public static FakeControllerCommandInvoker _invoker;
+        public static RetreatController _controller;
+        public static ActionResult _actionResult;
+    }
+
+    [Subject("Adding a participant to a retreat")]
+    public class When_the_user_cancels
+    {
+        Establish context = () =>
+        {
+            _controller = new RetreatController(_retreatRepository, null, null, _invoker, null);
+
+            _viewModel = new AddParticipantViewModel
+            {
+                RetreatId = 123,
+                Cancel = "Cancel"
+            };
+        };
+
+        Because of = () =>
+        {
+            _actionResult = _controller.AddParticipant(_viewModel);
+        };
+
+        It should_redirect_to_the_retreat_index_view = () =>
+            _actionResult.AssertActionRedirect().ToAction<RetreatController>(c => c.Index(123));
+
+        public static IRetreatRepository _retreatRepository;
+        public static AddParticipantViewModel _viewModel;
+        public static FakeControllerCommandInvoker _invoker;
+        public static RetreatController _controller;
+        public static ActionResult _actionResult;
+    }
+
+    [Subject("Adding a participant to a retreat")]
+    public class When_the_user_performs_a_search
+    {
+        Establish context = () =>
+        {
+            var retreat = new Retreat();
+            var retreatRepository = MockRepository.GenerateStub<IRetreatRepository>();
+            retreatRepository.Stub(x => x.GetById(123)).Return(retreat);
+
+            var bedRepository = MockRepository.GenerateStub<IBedRepository>();
+            bedRepository.Stub((x => x.GetAll())).Return(new List<Bed>());
+
+            _participantRepository = MockRepository.GenerateStub<IParticipantRepository>();
+            _participantRepository.Stub(x => x.WithNameLike("first", "last")).Return(new[]
+            {
+                new Participant {FirstName = "first"}
+            });
+            _controller = new RetreatController(retreatRepository, _participantRepository, bedRepository, _invoker, null);
+
+            _viewModel = new AddParticipantViewModel
+            {
+                RetreatId = 123,
+                Search = "Search",
+                Participant = new CreateParticipantViewModel
+                {
+                    FirstName = "first",
+                    LastName = "last"
+                }
+            };
+        };
+
+        Because of = () =>
+        {
+            _actionResult = _controller.AddParticipant(_viewModel);
+        };
+
+        It should_display_the_add_participant_view = () =>
+            _actionResult.AssertViewRendered().ForView("").WithViewData<AddParticipantViewModel>();
+
+        It should_include_the_search_results = () =>
+            _actionResult.AssertViewRendered().ForView("").WithViewData<AddParticipantViewModel>().SearchResults.ShouldNotBeNull();
+
+        public static IRetreatRepository _retreatRepository;
+        public static IParticipantRepository _participantRepository;
+        public static AddParticipantViewModel _viewModel;
         public static FakeControllerCommandInvoker _invoker;
         public static RetreatController _controller;
         public static ActionResult _actionResult;
