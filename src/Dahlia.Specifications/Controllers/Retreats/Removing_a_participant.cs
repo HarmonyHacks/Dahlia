@@ -117,7 +117,7 @@ namespace Dahlia.Specifications.Controllers.Retreats
         {
             _retreatRepository = MockRepository.GenerateStub<IRetreatRepository>();
             _invoker = new FakeControllerCommandInvoker();
-            _controller = new RetreatController(_retreatRepository, null, _invoker, null, null);
+            _controller = new RetreatController(_retreatRepository, null, _invoker, null);
         };
     }
 }

@@ -34,7 +34,7 @@ namespace Dahlia.Specifications.Controllers.Retreats
             var bedRepository = MockRepository.GenerateStub<IBedRepository>();
             bedRepository.Stub((x => x.GetAll())).Return(_beds);
 
-            _controller = new RetreatController(_retreatRepository, bedRepository, null, null, null);
+            _controller = new RetreatController(_retreatRepository, bedRepository, null, null);
         };
 
         Because of = () =>
@@ -89,7 +89,7 @@ namespace Dahlia.Specifications.Controllers.Retreats
             var bedRepository = MockRepository.GenerateStub<IBedRepository>();
             bedRepository.Stub((x => x.GetAll())).Return(beds);
 
-            _controller = new RetreatController(_retreatRepo, bedRepository, null, null, null);
+            _controller = new RetreatController(_retreatRepo, bedRepository, null, null);
         };
 
         Because of = () =>
@@ -131,7 +131,7 @@ namespace Dahlia.Specifications.Controllers.Retreats
 
             _retreatRepo.Stub(x => x.GetById(_retreatId)).Return(retreat);
 
-            _controller = new RetreatController(_retreatRepo, bedRepository, null, null, null);
+            _controller = new RetreatController(_retreatRepo, bedRepository, null, null);
         };
 
         Because of = () =>
@@ -157,7 +157,7 @@ namespace Dahlia.Specifications.Controllers.Retreats
         Establish context = () =>
         {
             _invoker = new FakeControllerCommandInvoker();
-            _controller = new RetreatController(_retreatRepository, null, _invoker, null, null);
+            _controller = new RetreatController(_retreatRepository, null, _invoker, null);
 
             _viewModel = new AddNewParticipantViewModel { RetreatId = 123 };
             _invoker.ShouldSucceed = true;

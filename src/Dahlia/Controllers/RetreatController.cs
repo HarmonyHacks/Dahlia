@@ -16,15 +16,13 @@ namespace Dahlia.Controllers
         readonly IRetreatRepository _retreatRepository;
         readonly IBedRepository _bedRepository;
         readonly IControllerCommandInvoker _commandInvoker;
-        readonly IUrlMapper _urlMapper;
         readonly IReportGeneratorService _reportGenerator;
 
-        public RetreatController(IRetreatRepository retreatRepository, IBedRepository bedRepository, IControllerCommandInvoker commandInvoker, IUrlMapper urlMapper, IReportGeneratorService reportGenerator)
+        public RetreatController(IRetreatRepository retreatRepository, IBedRepository bedRepository, IControllerCommandInvoker commandInvoker, IReportGeneratorService reportGenerator)
         {
             _retreatRepository = retreatRepository;
             _bedRepository = bedRepository;
             _commandInvoker = commandInvoker;
-            _urlMapper = urlMapper;
             _reportGenerator = reportGenerator;
         }
 
@@ -56,7 +54,6 @@ namespace Dahlia.Controllers
 
             return new RetreatListViewModel
                    {
-                       CreateLink = _urlMapper.MapAction<RetreatController>(c => c.Create()),
                        Retreats = retreats
                    };
         }
