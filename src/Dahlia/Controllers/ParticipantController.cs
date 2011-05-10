@@ -176,7 +176,56 @@ namespace Dahlia.Controllers
             ParticipantNote = participant.Notes,
             AvailableRetreats = _retreatRepository.GetList().Where(retreat=>!retreat.IsFull).ToArray(),
           };
+
           return View(viewModel);
+        }
+
+        public ActionResult Edit(int id)
+        {
+            var participant = _participantRepository.GetById(id);
+
+            if (participant == null)
+            {
+                return this.RedirectToAction<RetreatController>(c => c.Index(null));
+            }
+
+            var participantViewModel = new EditParticipantViewModel
+            {
+                Id = participant.Id,
+                FirstName = participant.FirstName,
+                LastName = participant.LastName,
+                DateReceived = participant.DateReceived,
+                Notes = participant.Notes,
+                PhysicalStatus = participant.PhysicalStatus
+            };
+
+            return View(participantViewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(EditParticipantViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+
+            var participant = _participantRepository.GetById(viewModel.Id);
+
+            if (participant == null)
+            {
+                return View(viewModel);
+            }
+
+            participant.FirstName = viewModel.FirstName;
+            participant.LastName = viewModel.LastName;
+            participant.DateReceived = viewModel.DateReceived;
+            participant.Notes = viewModel.Notes;
+            participant.PhysicalStatus = viewModel.PhysicalStatus;
+
+            _participantRepository.Save(participant);
+
+            return this.RedirectToAction<RetreatController>(c => c.Index(null));
         }
     }
 }

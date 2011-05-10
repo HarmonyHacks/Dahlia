@@ -30,7 +30,7 @@
         }
         <br />
         <label>Notes:</label>@Html.TextAreaFor(x => x.Notes)<br />
-        <label>Physical Status:</label>@Html.DropDownListFor(x => x.PhysicalStatus)<br />
+        <label>Physical Status:</label>@Html.DropDownListForEnumeration(x => x.PhysicalStatus)<br />
     </fieldset>
     
     <input name="Save" type="submit" value="Add Participant" />

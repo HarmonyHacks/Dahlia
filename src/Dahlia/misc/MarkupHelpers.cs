@@ -10,12 +10,12 @@ namespace Dahlia
 {
     public static class MarkupHelpers
     {
-        public static MvcHtmlString DropDownListFor(
-            this HtmlHelper<AddParticipantToRetreatViewModel> htmlHelper,
-            Expression<Func<AddParticipantToRetreatViewModel, PhysicalStatus>> expression)
+        public static MvcHtmlString DropDownListForEnumeration<THelper, TEnum>(
+            this HtmlHelper<THelper> htmlHelper,
+            Expression<Func<THelper, TEnum>> expression)
         {
-            var stuff =Enum.GetValues(typeof(PhysicalStatus))
-                .Cast<PhysicalStatus>()
+            var stuff = Enum.GetValues(typeof(TEnum))
+                .Cast<TEnum>()
                 .Select(x => new SelectListItem { Text = x.ToString(), Value = x.ToString() });
             return htmlHelper.DropDownListFor(expression, stuff);
         }

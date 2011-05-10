@@ -45,5 +45,11 @@ namespace Dahlia.Repositories
                 .Where(x => x.FirstName == firstName)
                 .Where(x => x.LastName == lastName);
         }
+
+        public void Save(Participant participant)
+        {
+            _session.SaveOrUpdate(participant);
+            _session.Flush();
+        }
     }
 }

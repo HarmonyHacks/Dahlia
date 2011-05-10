@@ -28,7 +28,7 @@ namespace Dahlia.Specifications.Controllers.Migrations
 
         Because of = () =>
         {
-            _firstUpResult = (ContentResult)_controller.Down(2);
+            _firstUpResult = (ContentResult)_controller.Down(3);
         };
 
         It should_not_migrate = () =>

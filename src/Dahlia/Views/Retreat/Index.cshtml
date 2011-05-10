@@ -1,4 +1,7 @@
-﻿@model Dahlia.ViewModels.RetreatListViewModel
+﻿@using Dahlia.Controllers;
+@using Microsoft.Web.Mvc;
+
+@model Dahlia.ViewModels.RetreatListViewModel
 
 @{
     ViewBag.Title = "Retreats";
@@ -28,7 +31,7 @@
         <div id="@retreat.Id">
             <h2>@retreat.Description</h2>
             <a href='@retreat.AddParticipantLink'>Add Participant</a>
-            @Html.ActionLink("Delete Retreat", "Delete", new { id = retreat.Id})
+            @Html.ActionLink("Remove Retreat", "Delete", new { id = retreat.Id})
             <a target="_blank" href="/retreat/generatereportfor?retreat=@retreat.Id">Report</a>
             <br />
             
@@ -37,7 +40,7 @@
                 @foreach (var participant in retreat.RegisteredParticipants.Where(p => !String.IsNullOrWhiteSpace(p.BedCode)))
                 {
                     <li>
-                        <div><b>Name:</b> @participant.FirstName @participant.LastName <a href="@participant.DeleteLink">Delete</a></div>
+                        <div><b>Name:</b> @participant.FirstName @participant.LastName @(Html.ActionLink<ParticipantController>(c => c.Edit(participant.Id), "Edit")) <a href="@participant.DeleteLink">Remove</a></div>
                         <div><b>Date Recieved:</b> @participant.DateReceived.ToShortDateString()</div>
                         <div><b>Bed Code:</b> @participant.BedCode</div>
                         <div><b>Physical Status:</b> @participant.PhysicalStatus </div>
