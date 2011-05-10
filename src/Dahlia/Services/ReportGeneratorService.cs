@@ -186,7 +186,7 @@ namespace Dahlia.Services
                 seed = retreat.Registrations.OrderBy(x=>x.Bed == null ? "waitlist" : x.Bed.Code).Aggregate(seed, (memo, r) =>
                 {
                     var name = r.Participant.FirstName + " " + r.Participant.LastName;
-                    var notes = r.Participant.Notes;
+                    var notes = r.Participant.Notes == null ? string.Empty : r.Participant.Notes;
                     var bedCode = r.Bed == null ? "waitlist" : r.Bed.Code;
                     var color = bedCode.StartsWith("waitlist") ? "gray" :
                         bedCode.StartsWith("CS") ? "rose" :
