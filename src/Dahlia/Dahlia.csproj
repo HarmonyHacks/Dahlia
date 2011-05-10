@@ -171,10 +171,6 @@
     <Compile Include="ViewModels\RetreatListViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\Dahlia.mdf" />
-    <Content Include="App_Data\Dahlia_log.ldf">
-      <DependentUpon>Dahlia.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\images\dahlia.jpg" />
     <Content Include="Content\images\harmony-hill-logo.png" />
     <Content Include="Content\images\HHillImageRotatorPic2.jpg" />
@@ -273,6 +269,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Participant\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
