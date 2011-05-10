@@ -100,6 +100,10 @@ namespace Dahlia.Services
                         font-weight:bolder;
                         font-size:larger;
                     }
+                    .highlight_gray
+                    {
+                        background-color:#ddd;
+                    }
                     .highlight_blue
                     {
                         background-color:#66f;
@@ -179,12 +183,13 @@ namespace Dahlia.Services
 
                 seed += string.Format(_reportHtmlRetreatInfo, retreat.StartDate.ToLongDateString(), retreat.Description);
 
-                seed = retreat.Registrations.Aggregate(seed, (memo, r) =>
+                seed = retreat.Registrations.OrderBy(x=>x.Bed == null ? "waitlist" : x.Bed.Code).Aggregate(seed, (memo, r) =>
                 {
                     var name = r.Participant.FirstName + " " + r.Participant.LastName;
                     var notes = r.Participant.Notes;
-                    var bedCode = r.Bed.Code;
-                    var color = bedCode.StartsWith("CS") ? "rose" :
+                    var bedCode = r.Bed == null ? "waitlist" : r.Bed.Code;
+                    var color = bedCode.StartsWith("waitlist") ? "gray" :
+                        bedCode.StartsWith("CS") ? "rose" :
                         bedCode.StartsWith("L") ? "blue" :
                         bedCode.StartsWith("GH") ? "orange" :
                         "green";
