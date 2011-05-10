@@ -180,10 +180,6 @@
     <Compile Include="ViewModels\RetreatListViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\Dahlia.mdf" />
-    <Content Include="App_Data\Dahlia_log.ldf">
-      <DependentUpon>Dahlia.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\images\dahlia.jpg" />
     <Content Include="Content\images\harmony-hill-logo.png" />
     <Content Include="Content\images\HHillImageRotatorPic2.jpg" />
