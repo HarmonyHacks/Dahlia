@@ -181,6 +181,7 @@
     <Compile Include="ViewModels\RetreatListViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\button.css" />
     <Content Include="Content\images\dahlia.jpg" />
     <Content Include="Content\images\harmony-hill-logo.png" />
     <Content Include="Content\images\HHillImageRotatorPic2.jpg" />
@@ -222,6 +223,7 @@
     <Content Include="Scripts\backbone-localstorage.js" />
     <Content Include="Scripts\backbone.js" />
     <Content Include="Scripts\dahlia.js" />
+    <Content Include="Scripts\jquery.colorbox-min.js" />
     <Content Include="Scripts\underscore.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

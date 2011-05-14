@@ -10,7 +10,76 @@ using Dahlia.Models;
 
 namespace Dahlia.Specifications.Services
 {
-    public class when_generating_a_reporting_for_a_Retreat_with_a_participant_who_is_waitlisted : ReportGeneratorTests
+    public class when_generating_a_report_for_a_Retreat_where_one_of_the_Participants_has_null_values_for_their_name : ReportGeneratorTests
+    {
+        Establish context = () =>
+        {
+            var retreat = new Retreat();
+            var participant = new Participant
+            {
+                DateReceived = DateTime.Now,
+                FirstName = null,
+                LastName = null,
+                PhysicalStatus = PhysicalStatus.Unlimited,
+                Notes = "blah",
+                Id = 0
+            };
+            var bed = new Bed
+            {
+                 Code = "GH1-1",
+                 Id = 0,
+                 IsUpstairs = false
+            };
+            retreat.AddParticipant(participant, bed);
+            retreatRepo.Expect(rr => rr.GetById(0)).IgnoreArguments().Return(retreat);
+            
+            error = Catch.Exception(() =>
+                reportResult = reportGenerator.GenerateRetreatReportExcelHtmlFor(0)
+            );
+        };
+
+        It should_not_cause_an_error = () =>
+            error.ShouldBeNull();
+
+        It should_return_the_generated_report = () =>
+            reportResult.ShouldNotBeNull();
+    }
+    public class when_generating_a_report_for_a_Retreat_where_one_of_the_Participants_has_an_empty_Notes_field : ReportGeneratorTests
+    {
+        Establish context = () =>
+        {
+            var retreat = new Retreat();
+            var participant = new Participant
+            {
+                DateReceived = DateTime.Now,
+                FirstName = "Johnny",
+                LastName = "Tentpeg",
+                PhysicalStatus = PhysicalStatus.Unlimited,
+                Notes = null,
+                Id = 0
+            };
+            var bed = new Bed
+            {
+                 Code = "GH1-1",
+                 Id = 0,
+                 IsUpstairs = false
+            };
+            retreat.AddParticipant(participant, bed);
+            retreatRepo.Expect(rr => rr.GetById(0)).IgnoreArguments().Return(retreat);
+            
+            error = Catch.Exception(() =>
+                reportResult = reportGenerator.GenerateRetreatReportExcelHtmlFor(0)
+            );
+        };
+
+        It should_not_cause_an_error = () =>
+            error.ShouldBeNull();
+
+        It should_return_the_generated_report = () =>
+            reportResult.ShouldNotBeNull();
+    }
+
+    public class when_generating_a_report_for_a_Retreat_with_a_participant_who_is_waitlisted : ReportGeneratorTests
     {
         Establish context = () =>
         {
