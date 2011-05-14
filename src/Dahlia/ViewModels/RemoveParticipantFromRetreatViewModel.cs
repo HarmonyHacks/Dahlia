@@ -3,7 +3,7 @@ using Dahlia.Services;
 
 namespace Dahlia.ViewModels
 {
-    public class DeleteParticipantFromRetreatViewModel
+    public class RemoveParticipantFromRetreatViewModel
     {
         public int RetreatId { get; set; }
 
