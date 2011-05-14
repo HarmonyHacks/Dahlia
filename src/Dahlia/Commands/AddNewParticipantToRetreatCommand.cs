@@ -7,13 +7,13 @@ using Dahlia.ViewModels;
 
 namespace Dahlia.Commands
 {
-    public class RegisterNewParticipantCommand : IControllerCommand<AddParticipantViewModel>
+    public class AddNewParticipantToRetreatCommand : IControllerCommand<AddParticipantViewModel>
     {
         readonly IRetreatRepository _retreatRepository;
         readonly IBedRepository _bedRepository;
         readonly CreateParticipantCommand _createParticipantCommand;
 
-        public RegisterNewParticipantCommand(IRetreatRepository retreatRepository, IBedRepository bedRepository, CreateParticipantCommand createParticipantCommand)
+        public AddNewParticipantToRetreatCommand(IRetreatRepository retreatRepository, IBedRepository bedRepository, CreateParticipantCommand createParticipantCommand)
         {
             _retreatRepository = retreatRepository;
             _bedRepository = bedRepository;
@@ -24,6 +24,8 @@ namespace Dahlia.Commands
         {
             try
             {
+                // It seemed clever to compose multiple commands here but I'm not
+                // sure that's actually a good idea. Feel free to refactor.
                 if (!_createParticipantCommand.Execute(viewModel.Participant))
                 {
                     return false;

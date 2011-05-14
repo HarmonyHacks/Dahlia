@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using Dahlia.Commands;
+using Machine.Specifications;
 
 namespace Dahlia.Specifications
 {
@@ -15,6 +16,8 @@ namespace Dahlia.Specifications
 
         public ActionResult Invoke<TInput>(TInput input, Type commandType, Func<ActionResult> successResult, Func<ActionResult> failureResult, ModelStateDictionary modelState)
         {
+            typeof(IControllerCommand<TInput>).IsAssignableFrom(commandType).ShouldBeTrue();
+
             SuppliedInput = input;
             SuppliedCommandType = commandType;
 

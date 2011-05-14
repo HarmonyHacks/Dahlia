@@ -1,19 +1,19 @@
-﻿@model Dahlia.ViewModels.AssignParticipantToRetreatChooseBedCodeViewModel
+﻿@model Dahlia.ViewModels.AddParticipantChooseBedCodeViewModel
 
 @{
-    ViewBag.Title = "AddToRetreatChooseBedCode";
+    ViewBag.Title = "Choose Bed Code";
     Layout = "~/Views/Shared/_Popup.cshtml";
 }
 
 <h2>Please choose a bed code</h2>
 
-@using (Html.BeginForm("AssignToRetreatChooseBedCode", "Participant"))
+@using (Html.BeginForm("AddParticipantChooseBedCode", "Retreat"))
 {
     @Html.HiddenFor(m => m.RetreatId);
     @Html.HiddenFor(m => m.ParticipantId);
     @Html.DropDownListFor(m => m.BedCode, Model.BedCodeList.Select(x => new SelectListItem { Text = x, Value = x }));
     
-    <input type="submit" value="Assign to Retreat" name="assign" />
+    <input type="submit" value="Add Participant" name="assign" />
     <input type="submit" value="Cancel" name="cancel" />
 }
 

@@ -180,11 +180,46 @@ namespace Dahlia.Controllers
         ActionResult DoAddNew(AddParticipantViewModel viewModel)
         {
             var result = _commandInvoker.Invoke(viewModel,
-                                                typeof(RegisterNewParticipantCommand),
+                                                typeof(AddNewParticipantToRetreatCommand),
                                                 () => this.RedirectToAction(c => c.Index(viewModel.RetreatId)),
                                                 () => View(viewModel),
                                                 ModelState);
             return result;
+        }
+
+        public ViewResult AddParticipantChooseBedCode(int retreatId, int participantId)
+        {
+            var retreat = _retreatRepository.GetById(retreatId);
+
+            var beds = retreat.GetUnassignedBeds(_bedRepository.GetAll());
+            var bedCodes = beds.Select(x => x.Code);
+            
+            var model = new AddParticipantChooseBedCodeViewModel
+            {
+                RetreatId = retreatId,
+                ParticipantId = participantId,
+                BedCodeList = new[] { "(none)" }.Concat(bedCodes).ToArray(),
+                BedCode = "(none)",
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult AddParticipantChooseBedCode(AddParticipantChooseBedCodeViewModel viewModel)
+        {
+            if (viewModel.Cancel != null)
+            {
+                return this.RedirectToAction(c => c.AddParticipant(viewModel.RetreatId));
+            }
+            else
+            {
+                var result = _commandInvoker.Invoke(viewModel,
+                                                    typeof(AddExistingParticipantToRetreatCommand),
+                                                    () => this.RedirectToAction(c => c.Index(viewModel.RetreatId)),
+                                                    () => this.RedirectToAction(c => c.Index(viewModel.RetreatId)),
+                                                    ModelState);
+                return result;
+            }
         }
 
         public ActionResult RemoveParticipant(int retreatId, int participantId)

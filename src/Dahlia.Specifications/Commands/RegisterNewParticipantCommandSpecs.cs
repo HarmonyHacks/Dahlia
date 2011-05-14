@@ -11,7 +11,7 @@ using Rhino.Mocks;
 
 namespace Dahlia.Specifications.Commands
 {
-    [Subject(typeof(RegisterNewParticipantCommand))]
+    [Subject(typeof(AddNewParticipantToRetreatCommand))]
     public class when_the_register_new_participant_command_is_executed_and_succeeds : RegisterNewParticipantCommandContext
     {
         Establish context = () =>
@@ -75,7 +75,7 @@ namespace Dahlia.Specifications.Commands
         public static IBedRepository _bedRepository;
         public static IParticipantRepository _participantRepository;
         public static CreateParticipantCommand _createParticipantCommand;
-        public static RegisterNewParticipantCommand _command;
+        public static AddNewParticipantToRetreatCommand _command;
 
         public static AddParticipantViewModel _viewModel;
         public static bool _isSuccessful;
@@ -86,7 +86,7 @@ namespace Dahlia.Specifications.Commands
             _bedRepository = MockRepository.GenerateStub<IBedRepository>();
             _participantRepository = MockRepository.GenerateStub<IParticipantRepository>();
             _createParticipantCommand = new CreateParticipantCommand(_participantRepository);
-            _command = new RegisterNewParticipantCommand(_retreatRepository, _bedRepository, _createParticipantCommand);
+            _command = new AddNewParticipantToRetreatCommand(_retreatRepository, _bedRepository, _createParticipantCommand);
             _viewModel = new AddParticipantViewModel();
         };
     }

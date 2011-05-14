@@ -28,39 +28,6 @@ namespace Dahlia.Controllers
             _commandInvoker = commandInvoker;
         }
 
-        public ActionResult AssignToRetreatChooseBedCode(int retreatId, int participantId)
-        {
-            var bedCodes = _bedRepository.GetAll().Select(x => x.Code).OrderBy(x => x);
-            var model = new AssignParticipantToRetreatChooseBedCodeViewModel
-            {
-                RetreatId = retreatId,
-                ParticipantId = participantId,
-                BedCodeList = new[] {"(none)"}.Concat(bedCodes).ToArray(),
-                BedCode = "(none)",
-            };
-            return View(model);
-        }
-
-        [HttpPost]
-        public ActionResult AssignToRetreatChooseBedCode(AssignParticipantToRetreatChooseBedCodeViewModel postBack)
-        {
-            var retreat = _retreatRepository.GetById(postBack.RetreatId);
-            var participant = _participantRepository.GetById(postBack.ParticipantId);
-            Bed bed = null;
-            if (!string.IsNullOrEmpty(postBack.BedCode))
-                bed = _bedRepository.GetBy(postBack.BedCode);
-
-            // TODO: this 
-            retreat.AddParticipant(participant, bed);
-            _retreatRepository.Save(retreat);
-
-            // TODO: do we need to remove the participant from any retreat they were previously
-            // registered for?  What if they were registered for multiple retreats?  Do we
-            // support that?
-
-            return this.RedirectToAction<RetreatController>(c => c.Index(retreat.Id)); 
-        }
-
         public ActionResult ReassignSearchResults(string searchString)
         {
             var participantResults = _participantRepository.WithLastName(searchString);

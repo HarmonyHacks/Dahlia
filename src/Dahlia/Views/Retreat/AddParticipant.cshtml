@@ -43,7 +43,7 @@
 {
     foreach (var searchResult in Model.SearchResults)
     {
-        <li>@searchResult.Name @searchResult.DateReceived @(Html.ActionLink<ParticipantController>(c => c.AssignToRetreatChooseBedCode(Model.RetreatId, searchResult.Id), "Add To Retreat"))</li>
+        <li>@searchResult.Name @searchResult.DateReceived @(Html.ActionLink<RetreatController>(c => c.AddParticipantChooseBedCode(Model.RetreatId, searchResult.Id), "Add participant"))</li>
     }
 }
 </ul>

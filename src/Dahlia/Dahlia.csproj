@@ -114,6 +114,7 @@
     <Compile Include="..\ProjectInfo.cs">
       <Link>Properties\ProjectInfo.cs</Link>
     </Compile>
+    <Compile Include="Commands\AddExistingParticipantToRetreatCommand.cs" />
     <Compile Include="Commands\ControllerCommandInvoker.cs" />
     <Compile Include="Commands\CreateParticipantCommand.cs" />
     <Compile Include="Commands\CreateRetreatCommand.cs" />
@@ -121,7 +122,7 @@
     <Compile Include="Commands\EditParticipantCommand.cs" />
     <Compile Include="Commands\IControllerCommand.cs" />
     <Compile Include="Commands\IControllerCommandInvoker.cs" />
-    <Compile Include="Commands\RegisterNewParticipantCommand.cs" />
+    <Compile Include="Commands\AddNewParticipantToRetreatCommand.cs" />
     <Compile Include="Commands\RemoveParticipantFromRetreatCommand.cs" />
     <Compile Include="Configuration\AppStart_StructureMap.cs" />
     <Compile Include="Configuration\IoC.cs" />
@@ -271,7 +272,7 @@
     <Content Include="Views\Participant\ReassignParticipant.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Participant\AssignToRetreatChooseBedCode.cshtml" />
+    <Content Include="Views\Retreat\AddParticipantChooseBedCode.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Migrate\Index.cshtml" />
