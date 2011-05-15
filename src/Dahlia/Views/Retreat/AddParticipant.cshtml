@@ -1,0 +1,55 @@
+﻿@using Dahlia;
+@using Dahlia.ViewModels;
+@using Dahlia.Controllers;
+@using Microsoft.Web.Mvc;
+
+@model Dahlia.ViewModels.AddParticipantViewModel
+
+@{
+    ViewBag.Title = "Add New Participant To Retreat";
+    Layout = "~/Views/Shared/_Popup.cshtml";
+}
+
+<h2>Add New Participant to Retreat</h2>
+
+@using (Html.BeginForm("AddParticipant", "Retreat")) {
+    @Html.HiddenFor(x => x.RetreatId)
+    <fieldset>
+        <legend>Add Participant</legend>
+        <label>First Name: </label>@Html.TextBoxFor(x => x.Participant.FirstName)<br />
+        <label>Last Name: </label>@Html.TextBoxFor(x => x.Participant.LastName)<br />
+        <label>Date Received: </label>@Html.TextBoxFor(x => x.Participant.DateReceived, new { @class = "datepicker" })<br />
+        <label>Bed Code: </label>
+        @if (!Model.RetreatIsFull)
+        {
+            @Html.DropDownList("BedCode", new[] { new SelectListItem() }.Union(Model.Beds.Select(x => new SelectListItem { Text = x.Code })))
+        }
+        else
+        {
+            <span class='ui-warning'>All beds full</span>
+        }
+        <br />
+        <label>Notes:</label>@Html.TextAreaFor(x => x.Participant.Notes)<br />
+        <label>Physical Status:</label>@Html.DropDownListForEnumeration(x => x.Participant.PhysicalStatus)<br />
+    </fieldset>
+    
+    <input name="Save" type="submit" value="Add Participant" />
+    <input name="Cancel" type="submit" value="Cancel" />
+    <input name="Search" type="submit" value="Search Participants" />
+}
+
+<ul>
+@if (Model.SearchResults != null)
+{
+    foreach (var searchResult in Model.SearchResults)
+    {
+        <li>@searchResult.Name @searchResult.DateReceived @(Html.ActionLink<RetreatController>(c => c.AddParticipantChooseBedCode(Model.RetreatId, searchResult.Id), "Add participant"))</li>
+    }
+}
+</ul>
+
+<script>
+    $(function () {
+        $(".datepicker").datepicker();
+    });
+</script>

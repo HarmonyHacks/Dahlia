@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Dahlia.Commands;
 using Dahlia.Models;
 using Dahlia.Repositories;
 using Dahlia.Services;
@@ -13,13 +14,17 @@ namespace Dahlia.Controllers
     public class RetreatController : Controller
     {
         readonly IRetreatRepository _retreatRepository;
-        readonly IUrlMapper _urlMapper;
+        readonly IParticipantRepository _participantRepository;
+        readonly IBedRepository _bedRepository;
+        readonly IControllerCommandInvoker _commandInvoker;
         readonly IReportGeneratorService _reportGenerator;
 
-        public RetreatController(IRetreatRepository retreatRepository, IUrlMapper urlMapper, IReportGeneratorService reportGenerator)
+        public RetreatController(IRetreatRepository retreatRepository, IParticipantRepository participantRepository, IBedRepository bedRepository, IControllerCommandInvoker commandInvoker, IReportGeneratorService reportGenerator)
         {
             _retreatRepository = retreatRepository;
-            _urlMapper = urlMapper;
+            _participantRepository = participantRepository;
+            _bedRepository = bedRepository;
+            _commandInvoker = commandInvoker;
             _reportGenerator = reportGenerator;
         }
 
@@ -51,7 +56,6 @@ namespace Dahlia.Controllers
 
             return new RetreatListViewModel
                    {
-                       CreateLink = _urlMapper.MapAction<RetreatController>(c => c.Create()),
                        Retreats = retreats
                    };
         }
@@ -64,7 +68,6 @@ namespace Dahlia.Controllers
                          Id = x.Id,
                          Description = x.Description,
                          Date = x.StartDate,
-                         AddParticipantLink = AddParticipantLinkForRetreat(x),
                          RegisteredParticipants = x.Registrations.Select(
                              y => new RetreatListParticipantViewModel
                                   {
@@ -75,27 +78,8 @@ namespace Dahlia.Controllers
                                       DateReceived = y.Participant.DateReceived,
                                       PhysicalStatus = y.Participant.PhysicalStatus,
                                       Notes = y.Participant.Notes,
-                                      DeleteLink = BuildDeleteLink(x, y.Participant)
                                   })
                      });
-        }
-
-        Uri BuildDeleteLink(Retreat retreat, Participant participant)
-        {
-            // TODO: should have a delete view model here instead?
-            return _urlMapper.MapAction<ParticipantController>(
-                x => x.DeleteFromRetreat(
-                    retreat.Id, 
-                    retreat.StartDate,
-                    participant.Id,
-                    participant.FirstName,
-                    participant.LastName));
-        }
-
-        Uri AddParticipantLinkForRetreat(Retreat retreat)
-        {
-            return _urlMapper.MapAction<ParticipantController>(
-                x => x.AddToRetreat(retreat.Id));
         }
 
         public ActionResult Create()
@@ -104,12 +88,14 @@ namespace Dahlia.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(Retreat retreatModel)
+        public ActionResult Create(Retreat viewModel)
         {
-            if (!ModelState.IsValid)
-                return View();
-            _retreatRepository.Add(retreatModel);
-            return this.RedirectToAction(c => c.Index(retreatModel.Id));
+            var result = _commandInvoker.Invoke(viewModel,
+                                                typeof(CreateRetreatCommand),
+                                                () => this.RedirectToAction(c => c.Index(viewModel.Id)),
+                                                () => this.RedirectToAction(c => c.Index(viewModel.Id)),
+                                                ModelState);
+            return result;
         }
 
         public ActionResult Delete(int id)
@@ -119,11 +105,160 @@ namespace Dahlia.Controllers
         }
 
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(DeleteRetreatViewModel viewModel)
         {
-            _retreatRepository.DeleteById(id);
+            var result = _commandInvoker.Invoke(viewModel,
+                                                typeof(DeleteRetreatCommand),
+                                                () => this.RedirectToAction(c => c.Index(null)),
+                                                () => this.RedirectToAction(c => c.Index(null)),
+                                                ModelState);
+            return result;
+        }
 
-            return this.RedirectToAction(c => c.Index(null));
+        public ViewResult AddParticipant(int retreatId)
+        {
+            var viewModel = MakeAddParticipantViewModel(retreatId);
+
+            return View(viewModel);
+        }
+
+        AddParticipantViewModel MakeAddParticipantViewModel(int retreatId)
+        {
+            var retreat = _retreatRepository.GetById(retreatId);
+            var beds = _bedRepository.GetAll();
+
+            return new AddParticipantViewModel
+            {
+                RetreatId = retreatId,
+                RetreatIsFull = retreat.IsFull,
+                Beds = retreat.GetUnassignedBeds(beds),
+                Participant = new CreateParticipantViewModel
+                {
+                    DateReceived = DateTime.Today
+                },
+            };
+        }
+
+        [HttpPost]
+        public ActionResult AddParticipant(AddParticipantViewModel viewModel)
+        {
+            if (viewModel.Cancel != null)
+            {
+                return DoCancel(viewModel);
+            }
+            else if (viewModel.Search != null)
+            {
+                return DoSearch(viewModel);
+            }
+            else
+            {
+                return DoAddNew(viewModel);
+            }
+        }
+
+        ActionResult DoCancel(AddParticipantViewModel viewModel)
+        {
+            return this.RedirectToAction(c => c.Index(viewModel.RetreatId));
+        }
+
+        ActionResult DoSearch(AddParticipantViewModel viewModel)
+        {
+            var queryResults = _participantRepository.WithNameLike(viewModel.Participant.FirstName, viewModel.Participant.LastName);
+            var searchResults = queryResults.Select(x => new ParticipantSearchResultViewModel
+            {
+                Id = x.Id,
+                Name = string.Format("{0} {1}", x.FirstName, x.LastName),
+                DateReceived = x.DateReceived,
+            });
+
+            var newViewModel = MakeAddParticipantViewModel(viewModel.RetreatId);
+            newViewModel.SearchResults = searchResults.ToList();
+
+            return View(newViewModel);
+        }
+
+        ActionResult DoAddNew(AddParticipantViewModel viewModel)
+        {
+            var result = _commandInvoker.Invoke(viewModel,
+                                                typeof(AddNewParticipantToRetreatCommand),
+                                                () => this.RedirectToAction(c => c.Index(viewModel.RetreatId)),
+                                                () => View(viewModel),
+                                                ModelState);
+            return result;
+        }
+
+        public ViewResult AddParticipantChooseBedCode(int retreatId, int participantId)
+        {
+            var retreat = _retreatRepository.GetById(retreatId);
+
+            var beds = retreat.GetUnassignedBeds(_bedRepository.GetAll());
+            var bedCodes = beds.Select(x => x.Code);
+            
+            var model = new AddParticipantChooseBedCodeViewModel
+            {
+                RetreatId = retreatId,
+                ParticipantId = participantId,
+                BedCodeList = new[] { "(none)" }.Concat(bedCodes).ToArray(),
+                BedCode = "(none)",
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult AddParticipantChooseBedCode(AddParticipantChooseBedCodeViewModel viewModel)
+        {
+            if (viewModel.Cancel != null)
+            {
+                return this.RedirectToAction(c => c.AddParticipant(viewModel.RetreatId));
+            }
+            else
+            {
+                var result = _commandInvoker.Invoke(viewModel,
+                                                    typeof(AddExistingParticipantToRetreatCommand),
+                                                    () => this.RedirectToAction(c => c.Index(viewModel.RetreatId)),
+                                                    () => this.RedirectToAction(c => c.Index(viewModel.RetreatId)),
+                                                    ModelState);
+                return result;
+            }
+        }
+
+        public ActionResult RemoveParticipant(int retreatId, int participantId)
+        {
+            var retreat = _retreatRepository.GetById(retreatId);
+            if (retreat == null)
+            {
+                return this.RedirectToAction(c => c.Index(retreatId));
+            }
+
+            var participant = (from registration in retreat.Registrations
+                               where registration.Participant.Id == participantId
+                               select registration.Participant).SingleOrDefault();
+            if (participant == null)
+            {
+                return this.RedirectToAction(c => c.Index(retreatId));
+            }
+
+            var viewModel = new RemoveParticipantFromRetreatViewModel
+            {
+                RetreatId = retreatId,
+                ParticipantId = participantId,
+                RetreatDate = retreat.StartDate,
+                FirstName = participant.FirstName,
+                LastName = participant.LastName,
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult RemoveParticipant(RemoveParticipantFromRetreatViewModel viewModel)
+        {
+            var result = _commandInvoker.Invoke(viewModel,
+                                                typeof(RemoveParticipantFromRetreatCommand),
+                                                () => this.RedirectToAction(c => c.Index(viewModel.RetreatId)),
+                                                () => this.RedirectToAction(c => c.Index(viewModel.RetreatId)),
+                                                ModelState);
+            return result;
         }
     }
 }
