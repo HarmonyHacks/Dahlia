@@ -8,3 +8,4 @@ include .\Build\test_build.ps1
 include .\Build\deploy_build.ps1
 task default -depends compile, test, right_click_deploy
 task build -depends compile, test
+task just_deploy_it -depends compile, right_click_deploy
