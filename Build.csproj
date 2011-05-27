@@ -2,4 +2,7 @@
   <Target Name="Build">
     <Exec Command="powershell -ExecutionPolicy Bypass -File .\lib\psake\psake.ps1 build.ps1" />
   </Target>
+  <Target Name="Just_Deploy">
+    <Exec Command="powershell -ExecutionPolicy Bypass -File .\lib\psake\psake.ps1 build.ps1 just_deploy_it" />
+  </Target>
 </Project>
