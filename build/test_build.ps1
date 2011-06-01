@@ -6,7 +6,7 @@ properties {
 					  #Note: We profile test assemblies to identify dead test code. 
 	$profile_assemblies = "Ris.CharlesRiver.*"
 	
-	$mspec = "$tool_dir\mspec\mspec.exe"
+	$mspec = "$tool_dir\Machine.Specifications.0.4.12.0\tools\mspec-x86-clr4.exe"
 	$mspec_options = "--teamcity"
 	$nunit = "$tool_dir\NUnit.2.5.7.10213\Tools\nunit-console-x86.exe"
 	$nunitReport = "$testrpt_dir\nunitTestReport.xml"
@@ -30,14 +30,6 @@ task test_teamcity {
   if (Test-Path $testrpt_dir) { Remove-Item -Recurse -Force $testrpt_dir }
   New-Item $testrpt_dir -ItemType directory | Out-Null
 
-  # mspec
-  $spec_assemblies = $specs | ForEach-Object { "$build_output_dir\$_" }
-
-  & $mspec $mspec_options $spec_assemblies  
-
-    if($lastExitCode -ne 0) {
-		throw "Tests Failed."
-	}
 
   # nunit
   $test_assemblies = $tests | ForEach-Object { "$build_output_dir\$_" }
@@ -48,6 +40,14 @@ task test_teamcity {
 		throw "Tests Failed."
 	}
 	
+  # mspec
+  $spec_assemblies = $specs | ForEach-Object { "$build_output_dir\$_" }
+
+  & $mspec $mspec_options $spec_assemblies  
+
+    if($lastExitCode -ne 0) {
+		throw "Tests Failed."
+	}
 	
     Write-Host "##teamcity[importData type='nunit' path='$nunitReport']"
 

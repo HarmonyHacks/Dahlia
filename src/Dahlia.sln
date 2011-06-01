@@ -7,6 +7,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dahlia.Tests", "Dahlia.Test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dahlia.Specifications", "Dahlia.Specifications\Dahlia.Specifications.csproj", "{19A0ED27-A9A7-47B8-B226-85E0CDA5D303}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{07E61D0A-8980-49AC-BEAB-7E6FC83CEAF7}"
+	ProjectSection(SolutionItems) = preProject
+		..\build.ps1 = ..\build.ps1
+		..\build\deploy_build.ps1 = ..\build\deploy_build.ps1
+		..\build\master_build.ps1 = ..\build\master_build.ps1
+		..\build\test_build.ps1 = ..\build\test_build.ps1
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
