@@ -35,7 +35,7 @@ namespace Dahlia.Controllers
                             {
                               DateReceived = p.DateReceived,
                               Name = p.FirstName + " " + p.LastName,
-                              //SelectLink = new Uri("/Participant/ReassignParticipant?participantId=" + p.Id, UriKind.Relative)
+                              SelectLink = new Uri("/Participant/ReassignParticipant?participantId=" + p.Id, UriKind.Relative)
                             }).ToList();
 
 
@@ -87,6 +87,8 @@ namespace Dahlia.Controllers
                 PhysicalStatus = participant.PhysicalStatus
             };
 
+            participantViewModel.CurrentRegistrations = GetCurrentRegistrations(participant.Id);
+
             return View(participantViewModel);
         }
 
@@ -96,8 +98,31 @@ namespace Dahlia.Controllers
             var result = _commandInvoker.Invoke(viewModel,
                                                 typeof (EditParticipantCommand),
                                                 () => this.RedirectToAction<RetreatController>(c => c.Index(null)),
-                                                () => View(viewModel), ModelState);
+                                                () => RedirectToAction("Edit",new {id = viewModel.Id}), ModelState);
             return result;
+        }
+
+        List<CurrentRegistrationViewModel> GetCurrentRegistrations(int participantId)
+        {
+            var results = new List<CurrentRegistrationViewModel>();
+            var retreats = _retreatRepository.GetForParticipant(participantId);
+            var beds = _bedRepository.GetAll();
+
+            foreach (var retreat in retreats)
+            {
+                var registration = retreat.Registrations
+                    .Where(x => x.Participant.Id == participantId)
+                    .Select(y => new CurrentRegistrationViewModel
+                        {
+                            BedCode = y.Bed.Code,
+                            Id = y.Id,
+                            RetreatName = y.Retreat.Description,
+                            AvailableBedCodes = new []{y.Bed.Code}.Concat(y.Retreat.GetUnassignedBeds(beds).Select(x => x.Code)).ToArray(),
+                        }).Single();
+                results.Add(registration);
+            }
+
+            return results;
         }
     }
 }

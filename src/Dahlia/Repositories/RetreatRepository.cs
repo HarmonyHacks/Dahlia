@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Dahlia.Models;
+using Dahlia.ViewModels;
 using NHibernate;
 using NHibernate.Linq;
 
@@ -15,6 +16,7 @@ namespace Dahlia.Repositories
         Retreat GetById(int id);
         void Save(Retreat retreat);
         void DeleteById(int retreatId);
+        IEnumerable<Retreat> GetForParticipant(int id);
     }
 
     public class RetreatRepository : IRetreatRepository
@@ -60,6 +62,12 @@ namespace Dahlia.Repositories
            var retreat = GetById(retreatId);
             _session.Delete(retreat);
             _session.Flush();
+        }
+
+        public IEnumerable<Retreat> GetForParticipant(int id)
+        {
+            return _session.Query<Retreat>()
+                .Where(x => x.Registrations.Any(y => y.Participant.Id == id));
         }
     }
 }

@@ -27,6 +27,17 @@
         <label>Notes:</label>@Html.TextAreaFor(x => x.Notes)<br />
         <label>Physical Status:</label>@Html.DropDownListForEnumeration(x => x.PhysicalStatus)<br />
 
+        <hr />
+        <ul>
+            @for (var i = 0; i < Model.CurrentRegistrations.Count(); i++)
+            {
+                var registration = Model.CurrentRegistrations[i];
+                <li>@Html.HiddenFor(x => x.CurrentRegistrations[i].RetreatName) @registration.RetreatName : @Html.DropDownListFor(b => b.CurrentRegistrations[i].BedCode,
+                                    new[] { new SelectListItem { Text = "(remove)", Value = "remove" } }.Union(registration.AvailableBedCodes
+                                            .Select(x => new SelectListItem { Text = x, Value = x, Selected = x == registration.BedCode })))</li>
+            }
+        </ul>
+        <hr />
         <p>
             <input type="submit" value="Save" />
         </p>
