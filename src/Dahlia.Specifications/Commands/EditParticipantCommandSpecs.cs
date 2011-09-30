@@ -27,14 +27,14 @@ namespace Dahlia.Specifications.Commands
             };
 
             _participant = new Participant();
-            _repository.Stub(x => x.GetById(123)).Return(_participant);
+            _participantRepository.Stub(x => x.GetById(123)).Return(_participant);
         };
 
         Because of = () =>
             _isSuccessful = _command.Execute(_viewModel);
 
         It should_save_the_participant_to_the_repository = () =>
-            _repository.AssertWasCalled(x => x.Save(_participant));
+            _participantRepository.AssertWasCalled(x => x.Save(_participant));
 
         It should_save_the_participant_first_name = () =>
             _viewModel.FirstName.ShouldEqual(_participant.FirstName);
@@ -61,7 +61,7 @@ namespace Dahlia.Specifications.Commands
     public class when_the_edit_participant_command_is_executed_and_fails : EditParticipantCommandContext
     {
         Establish context = () =>
-            _repository.Stub(x => x.GetById(123)).Return(null);
+            _participantRepository.Stub(x => x.GetById(123)).Return(null);
 
         Because of = () =>
             _isSuccessful = _command.Execute(_viewModel);
@@ -72,7 +72,9 @@ namespace Dahlia.Specifications.Commands
 
     public class EditParticipantCommandContext
     {
-        public static IParticipantRepository _repository;
+        public static IParticipantRepository _participantRepository;
+        public static IRetreatRepository _retreatRepository;
+        public static IBedRepository _bedRepository;
         public static EditParticipantCommand _command;
 
         public static EditParticipantViewModel _viewModel;
@@ -80,8 +82,8 @@ namespace Dahlia.Specifications.Commands
 
         Establish context = () =>
         {
-            _repository = MockRepository.GenerateStub<IParticipantRepository>();
-            _command = new EditParticipantCommand(_repository);
+            _participantRepository = MockRepository.GenerateStub<IParticipantRepository>();
+            _command = new EditParticipantCommand(_participantRepository, _retreatRepository,_bedRepository );
             _viewModel = new EditParticipantViewModel();
         };
     }
