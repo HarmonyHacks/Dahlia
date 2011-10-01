@@ -185,6 +185,10 @@
     <Compile Include="ViewModels\RetreatListViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Dahlia.mdf" />
+    <Content Include="App_Data\Dahlia_log.ldf">
+      <DependentUpon>Dahlia.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\button.css" />
     <Content Include="Content\images\dahlia.jpg" />
     <Content Include="Content\images\harmony-hill-logo.png" />
@@ -283,9 +287,7 @@
   <ItemGroup>
     <Content Include="Views\Participant\Edit.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Views\Web.config" />
   </ItemGroup>
