@@ -23,6 +23,7 @@ namespace Dahlia.ViewModels
     public class CurrentRegistrationViewModel
     {
         public int Id { get; set; }
+        public int RetreatId { get; set; }
         public string RetreatName { get; set; }
         public string BedCode { get; set; }
         public string[] AvailableBedCodes { get; set;} 

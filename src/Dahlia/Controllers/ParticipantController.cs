@@ -114,15 +114,25 @@ namespace Dahlia.Controllers
                     .Where(x => x.Participant.Id == participantId)
                     .Select(y => new CurrentRegistrationViewModel
                         {
-                            BedCode = y.Bed.Code,
+                            BedCode = y.Bed == null ? "" : y.Bed.Code,
                             Id = y.Id,
+                            RetreatId = y.Id,
                             RetreatName = y.Retreat.Description,
-                            AvailableBedCodes = new []{y.Bed.Code}.Concat(y.Retreat.GetUnassignedBeds(beds).Select(x => x.Code)).ToArray(),
+                            AvailableBedCodes = GetAvailableBedCodes(y.Bed, retreat, beds),
                         }).Single();
                 results.Add(registration);
             }
 
             return results;
+        }
+
+        string[] GetAvailableBedCodes(Bed bed, Retreat retreat, IEnumerable<Bed> beds)
+        {
+            var bedcodes = retreat.GetUnassignedBeds(beds).Select(x => x.Code).ToArray();
+
+            if (bed != null) bedcodes = new[] {bed.Code}.Concat(bedcodes).ToArray();
+
+            return bedcodes;
         }
     }
 }

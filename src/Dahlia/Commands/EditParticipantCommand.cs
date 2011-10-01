@@ -52,11 +52,11 @@ namespace Dahlia.Commands
             foreach (var registration in viewModel.CurrentRegistrations)
             {
                var currentRegistration = registration;
-               var retreat = retreats.Single(x => x.Description == currentRegistration.RetreatName);
-               if (currentRegistration.BedCode != "remove")
-               {
-                   retreat.Registrations.Single(x => x.Participant.Id == participant.Id).Bed = beds.Single(b => b.Code == currentRegistration.BedCode);
-               }
+               var retreat = retreats.Single(x => x.Id == currentRegistration.RetreatId);
+               retreat.Registrations.Single(x => x.Participant.Id == participant.Id).Bed = 
+                                                               beds.Select(b => b.Code).Contains(currentRegistration.BedCode) 
+                                                               ? beds.Single(b => b.Code == currentRegistration.BedCode) 
+                                                               : null;
 
                _retreatRepository.Save(retreat);
             }
