@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using log4net;
 using StructureMap;
 
 namespace Dahlia.Commands
@@ -10,10 +11,12 @@ namespace Dahlia.Commands
     public class ControllerCommandInvoker : IControllerCommandInvoker
     {
         readonly IContainer _container;
+        readonly ILog _logger;
 
         public ControllerCommandInvoker(IContainer container)
         {
             _container = container;
+            _logger = _container.GetInstance<ILog>();
         }
 
         public ActionResult Invoke<TInput>(TInput input, Type commandType, Func<ActionResult> successResult, Func<ActionResult> failureResult, ModelStateDictionary modelState)
@@ -57,9 +60,9 @@ namespace Dahlia.Commands
                 return command.Execute(input);
             }
             // TODO: smaller exception filter
-            catch (Exception)
+            catch (Exception ex)
             {
-                // TODO: put the exception message into the model state?
+                _logger.Error(ex.Message);
                 return false;
             }
         }
