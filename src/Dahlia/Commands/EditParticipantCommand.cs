@@ -11,7 +11,7 @@ namespace Dahlia.Commands
         readonly IParticipantRepository _participantRepository;
         readonly IRetreatRepository _retreatRepository;
         readonly IBedRepository _bedRepository;
-        ILog Log { get; set; }
+        public Exception Exception { get; private set; }
 
         public EditParticipantCommand(IParticipantRepository participantRepository, IRetreatRepository retreatRepository, IBedRepository bedRepository)
         {
@@ -38,7 +38,6 @@ namespace Dahlia.Commands
             }
             catch (Exception e)
             {
-                Log.Error(e.Message);
                 Exception = e;
                 return false;
             }
@@ -64,6 +63,6 @@ namespace Dahlia.Commands
             }
         }
 
-        public Exception Exception { get; private set; }
+
     }
 }
