@@ -29,6 +29,7 @@ namespace Dahlia.Commands
             }
             else
             {
+                _logger.ErrorFormat("failed to execute your {0} command : ", commandType);
                 return failureResult();
             }
         }

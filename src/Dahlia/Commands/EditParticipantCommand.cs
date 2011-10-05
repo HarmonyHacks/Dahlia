@@ -3,7 +3,7 @@ using System.Linq;
 using Dahlia.Models;
 using Dahlia.Repositories;
 using Dahlia.ViewModels;
-
+using log4net;
 namespace Dahlia.Commands
 {
     public class EditParticipantCommand : IControllerCommand<EditParticipantViewModel>
@@ -11,6 +11,7 @@ namespace Dahlia.Commands
         readonly IParticipantRepository _participantRepository;
         readonly IRetreatRepository _retreatRepository;
         readonly IBedRepository _bedRepository;
+        ILog Log { get; set; }
 
         public EditParticipantCommand(IParticipantRepository participantRepository, IRetreatRepository retreatRepository, IBedRepository bedRepository)
         {
@@ -37,6 +38,7 @@ namespace Dahlia.Commands
             }
             catch (Exception e)
             {
+                Log.Error(e.Message);
                 Exception = e;
                 return false;
             }
