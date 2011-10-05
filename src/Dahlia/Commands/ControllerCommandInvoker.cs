@@ -49,7 +49,7 @@ namespace Dahlia.Commands
             }
             else
             {
-                // TODO: if the command fails we should shove information into the modelstate for display
+                _logger.ErrorFormat("Something bad happened... this is what I know\r\n message: {0} \r\n stacktrace: {1}", command.Exception.Message, command.Exception.StackTrace);
                 return failureResult();
             }
         }
@@ -58,13 +58,11 @@ namespace Dahlia.Commands
         {
             try
             {
-                _logger.InfoFormat("trying to execute your {0} command", typeof(TInput));
                 return command.Execute(input);
             }
             // TODO: smaller exception filter
             catch (Exception ex)
             {
-                _logger.Error(ex.Message);
                 return false;
             }
         }
