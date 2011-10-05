@@ -287,7 +287,9 @@
   <ItemGroup>
     <Content Include="Views\Participant\Edit.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="log4net.config" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />
   </ItemGroup>

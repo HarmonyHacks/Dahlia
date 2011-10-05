@@ -57,6 +57,7 @@ namespace Dahlia.Commands
         {
             try
             {
+                _logger.InfoFormat("trying to execute your {0} command", typeof(TInput));
                 return command.Execute(input);
             }
             // TODO: smaller exception filter

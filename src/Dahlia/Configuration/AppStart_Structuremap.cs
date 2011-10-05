@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Web;
+﻿using System.IO;
 using System.Web.Mvc;
 using Dahlia.Configuration;
 
@@ -15,7 +10,6 @@ namespace Dahlia.Configuration
     {
         public static void Start()
         {
-            log4net.Config.XmlConfigurator.ConfigureAndWatch(new FileInfo(HttpContext.Current.Server.MapPath("~/log4net.config")));
             var container = IoC.Initialize();
             DependencyResolver.SetResolver(new SmDependencyResolver(container));
         }
