@@ -49,7 +49,7 @@ namespace Dahlia.Commands
             }
             else
             {
-                _logger.ErrorFormat("Something bad happened... this is what I know\r\n message: {0} \r\n stacktrace: {1}", command.Exception.Message, command.Exception.StackTrace);
+                _logger.ErrorFormat("Something bad happened... this is what I know\r\n message: {0} \r\n stacktrace: {1} \r\n Source: {2}", command.Exception.Message, command.Exception.StackTrace, command.Exception.Source);
                 return failureResult();
             }
         }

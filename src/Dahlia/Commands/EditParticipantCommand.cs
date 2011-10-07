@@ -3,7 +3,7 @@ using System.Linq;
 using Dahlia.Models;
 using Dahlia.Repositories;
 using Dahlia.ViewModels;
-using log4net;
+
 namespace Dahlia.Commands
 {
     public class EditParticipantCommand : IControllerCommand<EditParticipantViewModel>
