@@ -116,7 +116,7 @@ namespace Dahlia.Controllers
                         {
                             BedCode = y.Bed == null ? "" : y.Bed.Code,
                             Id = y.Id,
-                            RetreatId = y.Id,
+                            RetreatId = y.Retreat.Id,
                             RetreatName = y.Retreat.Description,
                             AvailableBedCodes = GetAvailableBedCodes(y.Bed, retreat, beds),
                         }).Single();
