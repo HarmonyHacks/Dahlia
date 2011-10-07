@@ -50,6 +50,7 @@ namespace Dahlia.Commands
 
         void UpdateBedCodes(Participant participant, EditParticipantViewModel viewModel)
         {
+            Log.InfoFormat("requesting retreats for participant with id {0}", participant.Id);
             var retreats = _retreatRepository.GetForParticipant(participant.Id).ToList();
             var beds = _bedRepository.GetAll();
 
