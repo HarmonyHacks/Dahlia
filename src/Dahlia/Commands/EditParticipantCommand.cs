@@ -3,6 +3,7 @@ using System.Linq;
 using Dahlia.Models;
 using Dahlia.Repositories;
 using Dahlia.ViewModels;
+using log4net;
 
 namespace Dahlia.Commands
 {
@@ -12,6 +13,8 @@ namespace Dahlia.Commands
         readonly IRetreatRepository _retreatRepository;
         readonly IBedRepository _bedRepository;
         public Exception Exception { get; private set; }
+        public ILog Log { get; set; }
+
 
         public EditParticipantCommand(IParticipantRepository participantRepository, IRetreatRepository retreatRepository, IBedRepository bedRepository)
         {
@@ -52,12 +55,16 @@ namespace Dahlia.Commands
 
             foreach (var registration in viewModel.CurrentRegistrations)
             {
-               var currentRegistration = registration;
-               var retreat = retreats.Single(x => x.Id == currentRegistration.RetreatId);
-               retreat.Registrations.Single(x => x.Participant.Id == participant.Id).Bed = 
-                                                               beds.Select(b => b.Code).Contains(currentRegistration.BedCode) 
-                                                               ? beds.Single(b => b.Code == currentRegistration.BedCode) 
-                                                               : null;
+                var currentRegistration = registration;
+                Log.InfoFormat("current Retreat: {0}", currentRegistration.RetreatId);
+                var retreat = retreats.Single(x => x.Id == currentRegistration.RetreatId);
+                Log.InfoFormat("the current selected retreat has {0} registrations", retreat.Registrations.Count());
+                var updateRegistration = retreat.Registrations.Single(x => x.Participant.Id == participant.Id);
+                Log.InfoFormat("the current registrations dedcode is {0}", currentRegistration.BedCode);
+                Log.InfoFormat("the beds collection has {0} beds ", beds.Count());
+                updateRegistration.Bed = beds.Select(b => b.Code).Contains(currentRegistration.BedCode)
+                                ? beds.Single(b => b.Code == currentRegistration.BedCode)
+                                : null;
 
                _retreatRepository.Save(retreat);
             }
