@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Dahlia.Models
 {
@@ -83,6 +82,14 @@ namespace Dahlia.Models
                 _registrations.Remove(registration);
                 registration.Retreat = null;
             }
+        }
+
+        public virtual void AddRegistrations(IList<Registration> theRegistrations)
+        {
+            foreach (var registration in theRegistrations)
+            {
+                _registrations.Add(registration);
+            }    
         }
     }
 }

@@ -38,7 +38,6 @@ namespace Dahlia.Controllers
                               SelectLink = new Uri("/Participant/ReassignParticipant?participantId=" + p.Id, UriKind.Relative)
                             }).ToList();
 
-
             return View(viewModel);
         }
 
