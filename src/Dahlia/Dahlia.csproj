@@ -167,6 +167,7 @@
     <Compile Include="Repositories\IVersionRepository.cs" />
     <Compile Include="Repositories\ParticipantRepository.cs" />
     <Compile Include="Repositories\RetreatRepository.cs" />
+    <Compile Include="Services\Builders\CurrentRegistrationBuilder.cs" />
     <Compile Include="Services\ExpressionExtensions.cs" />
     <Compile Include="Services\IMigrationService.cs" />
     <Compile Include="Services\ReportGeneratorService.cs" />

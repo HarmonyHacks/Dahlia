@@ -6,6 +6,7 @@ using Dahlia.Commands;
 using Dahlia.Models;
 using Dahlia.Repositories;
 using Dahlia.Services;
+using Dahlia.Services.Builders;
 using Dahlia.ViewModels;
 using MvcContrib;
 
@@ -18,14 +19,16 @@ namespace Dahlia.Controllers
         readonly IBedRepository _bedRepository;
         readonly IUrlMapper _urlMapper;
         readonly IControllerCommandInvoker _commandInvoker;
+        CurrentRegistrationBuilder _currentRegistrationBuilder;
 
-        public ParticipantController(IRetreatRepository retreatRepository, IParticipantRepository participantRepository, IBedRepository bedRepository, IUrlMapper urlMapper, IControllerCommandInvoker commandInvoker)
+        public ParticipantController(IRetreatRepository retreatRepository, IParticipantRepository participantRepository, IBedRepository bedRepository, IUrlMapper urlMapper, IControllerCommandInvoker commandInvoker, CurrentRegistrationBuilder currentRegistrationBuilder)
         {
             _retreatRepository = retreatRepository;
             _participantRepository = participantRepository;
             _bedRepository = bedRepository;
             _urlMapper = urlMapper;
             _commandInvoker = commandInvoker;
+            _currentRegistrationBuilder = currentRegistrationBuilder;
         }
 
         public ActionResult ReassignSearchResults(string searchString)
@@ -97,41 +100,14 @@ namespace Dahlia.Controllers
             var result = _commandInvoker.Invoke(viewModel,
                                                 typeof (EditParticipantCommand),
                                                 () => this.RedirectToAction<RetreatController>(c => c.Index(null)),
-                                                () => RedirectToAction("Edit",new {id = viewModel.Id}), ModelState);
+                                                () => RedirectToAction("Edit", new {id = viewModel.Id}), ModelState);
             return result;
         }
 
         List<CurrentRegistrationViewModel> GetCurrentRegistrations(int participantId)
         {
-            var results = new List<CurrentRegistrationViewModel>();
             var retreats = _retreatRepository.GetForParticipant(participantId);
-            var beds = _bedRepository.GetAll();
-
-            foreach (var retreat in retreats)
-            {
-                var registration = retreat.Registrations
-                    .Where(x => x.Participant.Id == participantId)
-                    .Select(y => new CurrentRegistrationViewModel
-                        {
-                            BedCode = y.Bed == null ? "" : y.Bed.Code,
-                            Id = y.Id,
-                            RetreatId = y.Retreat.Id,
-                            RetreatName = y.Retreat.Description,
-                            AvailableBedCodes = GetAvailableBedCodes(y.Bed, retreat, beds),
-                        }).Single();
-                results.Add(registration);
-            }
-
-            return results;
-        }
-
-        string[] GetAvailableBedCodes(Bed bed, Retreat retreat, IEnumerable<Bed> beds)
-        {
-            var bedcodes = retreat.GetUnassignedBeds(beds).Select(x => x.Code).ToArray();
-
-            if (bed != null) bedcodes = new[] {bed.Code}.Concat(bedcodes).ToArray();
-
-            return bedcodes;
+            return  _currentRegistrationBuilder.BuildRegistrationsFor(participantId, retreats);
         }
     }
 }

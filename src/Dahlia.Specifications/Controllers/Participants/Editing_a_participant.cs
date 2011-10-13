@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using Dahlia.Controllers;
 using Dahlia.Models;
 using Dahlia.Repositories;
+using Dahlia.Services.Builders;
 using Dahlia.ViewModels;
 using Machine.Specifications;
 using MvcContrib.TestHelper;
@@ -143,7 +144,7 @@ namespace Dahlia.Specifications.Controllers.Participants
 
         public static IEnumerable<Retreat> the_retreats = new List<Retreat>();
         public static IEnumerable<Bed> the_beds = new List<Bed>();
-        
+        public static CurrentRegistrationBuilder _currentRegistrationBuilder;
         Establish context = () =>
         {
             _participantRepository = MockRepository.GenerateStub<IParticipantRepository>();
@@ -151,7 +152,9 @@ namespace Dahlia.Specifications.Controllers.Participants
             _bedRepository = MockRepository.GenerateStub<IBedRepository>();
             _invoker = new FakeControllerCommandInvoker();
 
-            _controller = new ParticipantController(_retreatRepository, _participantRepository, _bedRepository, null, _invoker);
-        };        
+            _currentRegistrationBuilder = new CurrentRegistrationBuilder(_bedRepository);
+
+            _controller = new ParticipantController(_retreatRepository, _participantRepository, _bedRepository, null, _invoker,_currentRegistrationBuilder);
+        };
     }
 }
