@@ -9,15 +9,18 @@ namespace Dahlia.Services.Builders
 {
     public class CurrentRegistrationBuilder
     {
+        readonly IRetreatRepository _retreatRepository;
         readonly IBedRepository  _bedRepository;
 
-        public CurrentRegistrationBuilder(IBedRepository bedRepository)
+        public CurrentRegistrationBuilder(IRetreatRepository retreatRepository, IBedRepository bedRepository)
         {
+            _retreatRepository = retreatRepository;
             _bedRepository = bedRepository;
         }
 
-        public List<CurrentRegistrationViewModel> BuildRegistrationsFor(int participantId, IEnumerable<Retreat> retreats)
+        public List<CurrentRegistrationViewModel> BuildRegistrationsFor(int participantId)
         {
+            var retreats = _retreatRepository.GetForParticipant(participantId);
             var beds = _bedRepository.GetAll();
             return retreats.Select(
                 retreat => retreat.Registrations

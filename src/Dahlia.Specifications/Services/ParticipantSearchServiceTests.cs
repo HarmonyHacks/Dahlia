@@ -58,7 +58,7 @@ namespace Dahlia.Specifications.Services
             Results = new Participant[] { new Participant(), };
             participantRepository.Stub(x => x.WithLastName(lastnameISearchedFor)).Return(Results);
 
-            controller = new ParticipantController(null, participantRepository, null, null, null, null);
+            controller = new ParticipantController(null, participantRepository, null, null);
 
             ExpectedResults = Results.Select(x => new ParticipantSearchResultViewModel());
         };

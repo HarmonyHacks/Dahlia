@@ -16,17 +16,13 @@ namespace Dahlia.Controllers
     {
         readonly IRetreatRepository _retreatRepository;
         readonly IParticipantRepository _participantRepository;
-        readonly IBedRepository _bedRepository;
-        readonly IUrlMapper _urlMapper;
         readonly IControllerCommandInvoker _commandInvoker;
         CurrentRegistrationBuilder _currentRegistrationBuilder;
 
-        public ParticipantController(IRetreatRepository retreatRepository, IParticipantRepository participantRepository, IBedRepository bedRepository, IUrlMapper urlMapper, IControllerCommandInvoker commandInvoker, CurrentRegistrationBuilder currentRegistrationBuilder)
+        public ParticipantController(IRetreatRepository retreatRepository, IParticipantRepository participantRepository, IControllerCommandInvoker commandInvoker, CurrentRegistrationBuilder currentRegistrationBuilder)
         {
             _retreatRepository = retreatRepository;
             _participantRepository = participantRepository;
-            _bedRepository = bedRepository;
-            _urlMapper = urlMapper;
             _commandInvoker = commandInvoker;
             _currentRegistrationBuilder = currentRegistrationBuilder;
         }
@@ -89,7 +85,7 @@ namespace Dahlia.Controllers
                 PhysicalStatus = participant.PhysicalStatus
             };
 
-            participantViewModel.CurrentRegistrations = GetCurrentRegistrations(participant.Id);
+            participantViewModel.CurrentRegistrations = _currentRegistrationBuilder.BuildRegistrationsFor(participant.Id);
 
             return View(participantViewModel);
         }
@@ -103,11 +99,6 @@ namespace Dahlia.Controllers
                                                 () => RedirectToAction("Edit", new {id = viewModel.Id}), ModelState);
             return result;
         }
-
-        List<CurrentRegistrationViewModel> GetCurrentRegistrations(int participantId)
-        {
-            var retreats = _retreatRepository.GetForParticipant(participantId);
-            return  _currentRegistrationBuilder.BuildRegistrationsFor(participantId, retreats);
-        }
+       
     }
 }

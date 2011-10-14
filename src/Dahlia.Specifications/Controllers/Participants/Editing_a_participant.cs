@@ -152,9 +152,9 @@ namespace Dahlia.Specifications.Controllers.Participants
             _bedRepository = MockRepository.GenerateStub<IBedRepository>();
             _invoker = new FakeControllerCommandInvoker();
 
-            _currentRegistrationBuilder = new CurrentRegistrationBuilder(_bedRepository);
+            _currentRegistrationBuilder = new CurrentRegistrationBuilder(_retreatRepository, _bedRepository);
 
-            _controller = new ParticipantController(_retreatRepository, _participantRepository, _bedRepository, null, _invoker,_currentRegistrationBuilder);
+            _controller = new ParticipantController(_retreatRepository, null, _invoker,_currentRegistrationBuilder);
         };
     }
 }
