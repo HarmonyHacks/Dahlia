@@ -96,7 +96,8 @@ namespace Dahlia.Controllers
             var result = _commandInvoker.Invoke(viewModel,
                                                 typeof (EditParticipantCommand),
                                                 () => this.RedirectToAction<RetreatController>(c => c.Index(null)),
-                                                () => RedirectToAction("Edit", new {id = viewModel.Id}), ModelState);
+                                                () => RedirectToAction("Edit", new {id = viewModel.Id}),
+                                                ModelState);
             return result;
         }
        

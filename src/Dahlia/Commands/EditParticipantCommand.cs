@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Castle.Core.Logging;
 using Dahlia.Models;
 using Dahlia.Repositories;
 using Dahlia.ViewModels;
@@ -50,19 +51,14 @@ namespace Dahlia.Commands
 
         void UpdateBedCodes(Participant participant, EditParticipantViewModel viewModel)
         {
-            Log.InfoFormat("requesting retreats for participant with id {0}", participant.Id);
             var retreats = _retreatRepository.GetForParticipant(participant.Id).ToList();
             var beds = _bedRepository.GetAll();
 
             foreach (var registration in viewModel.CurrentRegistrations)
             {
                 var currentRegistration = registration;
-                Log.InfoFormat("current Retreat: {0}", currentRegistration.RetreatId);
                 var retreat = retreats.Single(x => x.Id == currentRegistration.RetreatId);
-                Log.InfoFormat("the current selected retreat has {0} registrations", retreat.Registrations.Count());
                 var updateRegistration = retreat.Registrations.Single(x => x.Participant.Id == participant.Id);
-                Log.InfoFormat("the current registrations dedcode is {0}", currentRegistration.BedCode);
-                Log.InfoFormat("the beds collection has {0} beds ", beds.Count());
                 updateRegistration.Bed = beds.Select(b => b.Code).Contains(currentRegistration.BedCode)
                                 ? beds.Single(b => b.Code == currentRegistration.BedCode)
                                 : null;

@@ -127,7 +127,7 @@ namespace Dahlia.Specifications.Controllers.Participants
         };
 
         It should_display_the_edit_view_again = () =>
-            _actionResult.AssertViewRendered().ForView("").WithViewData<EditParticipantViewModel>().ShouldBeTheSameAs(_viewModel);
+            _actionResult.AssertActionRedirect().ToAction("Edit");
     }
 
     public class ParticipantControllerContext
@@ -154,7 +154,7 @@ namespace Dahlia.Specifications.Controllers.Participants
 
             _currentRegistrationBuilder = new CurrentRegistrationBuilder(_retreatRepository, _bedRepository);
 
-            _controller = new ParticipantController(_retreatRepository, null, _invoker,_currentRegistrationBuilder);
+            _controller = new ParticipantController(_retreatRepository, _participantRepository, _invoker,_currentRegistrationBuilder);
         };
     }
 }

@@ -22,6 +22,9 @@ namespace Dahlia.Services.Builders
         {
             var retreats = _retreatRepository.GetForParticipant(participantId);
             var beds = _bedRepository.GetAll();
+            
+            if(retreats == null ) return new List<CurrentRegistrationViewModel>();
+
             return retreats.Select(
                 retreat => retreat.Registrations
                     .Where(x => x.Participant.Id == participantId)

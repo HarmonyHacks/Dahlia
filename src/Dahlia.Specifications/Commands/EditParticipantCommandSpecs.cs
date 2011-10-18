@@ -28,6 +28,9 @@ namespace Dahlia.Specifications.Commands
 
             _participant = new Participant();
             _participantRepository.Stub(x => x.GetById(123)).Return(_participant);
+
+            _retreatRepository.Stub(x => x.GetForParticipant(_participant.Id)).Return(new[] {new Retreat()});
+
         };
 
         Because of = () =>
@@ -61,7 +64,10 @@ namespace Dahlia.Specifications.Commands
     public class when_the_edit_participant_command_is_executed_and_fails : EditParticipantCommandContext
     {
         Establish context = () =>
-            _participantRepository.Stub(x => x.GetById(123)).Return(null);
+            {
+                _participantRepository.Stub(x => x.GetById(123)).Return(null);
+                _retreatRepository.Stub(x => x.GetForParticipant(Arg<int>.Is.Anything)).Return(new[] {new Retreat()});
+            };
 
         Because of = () =>
             _isSuccessful = _command.Execute(_viewModel);
@@ -83,6 +89,11 @@ namespace Dahlia.Specifications.Commands
         Establish context = () =>
         {
             _participantRepository = MockRepository.GenerateStub<IParticipantRepository>();
+            _bedRepository = MockRepository.GenerateStub<IBedRepository>();
+            _retreatRepository = MockRepository.GenerateStub<IRetreatRepository>();
+            _bedRepository.Stub(x => x.GetAll()).Return(new[] {new Bed()});
+            
+
             _command = new EditParticipantCommand(_participantRepository, _retreatRepository,_bedRepository );
             _viewModel = new EditParticipantViewModel();
         };
