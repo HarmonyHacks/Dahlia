@@ -63,4 +63,5 @@ tmp/*
 public/system/*
 
 # vim .swp files
+*~
 *swp
