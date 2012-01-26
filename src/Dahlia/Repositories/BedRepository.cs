@@ -23,13 +23,14 @@ namespace Dahlia.Repositories
 
         public IEnumerable<Bed> GetAll()
         {
-            return _session.Query<Bed>();
+            return _session.Query<Bed>().OrderBy(b => b.Code);
         }
 
         public Bed GetBy(string code)
         {
             return _session.Query<Bed>()
                 .Where(x => x.Code == code)
+                .OrderBy(b => b.Code)
                 .FirstOrDefault();
         }
     }
