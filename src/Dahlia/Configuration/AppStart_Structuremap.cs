@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.IO;
 using System.Web.Mvc;
 using Dahlia.Configuration;
-using WebActivator;
 
-[assembly: PreApplicationStartMethod(typeof (AppStart_StructureMap), "Start")]
+[assembly: WebActivator.PreApplicationStartMethod(typeof (AppStart_StructureMap), "Start")]
 
 namespace Dahlia.Configuration
 {

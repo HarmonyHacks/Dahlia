@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Web.Mvc;
 using Dahlia.Controllers;
 using Dahlia.Models;
 using Dahlia.Repositories;
+using Dahlia.Services.Builders;
 using Dahlia.ViewModels;
 using Machine.Specifications;
 using MvcContrib.TestHelper;
@@ -29,7 +29,18 @@ namespace Dahlia.Specifications.Controllers.Participants
             };
             _viewModel = new EditParticipantViewModel();
             _participantRepository.Stub(x => x.GetById(123)).Return(_participant);
-        };
+
+            the_beds = new List<Bed>() { new Bed { Code = "abc", Id = 1 } };
+            var _retreat = new Retreat { Id = 99, Description = "random desc" };
+            var the_registrations = new List<Registration> { new Registration { Bed = the_beds.First(), Participant = _participant, Retreat = _retreat } };
+
+            _retreat.AddRegistrations(the_registrations);
+            the_retreats = new List<Retreat> { _retreat };
+
+            _retreatRepository.Stub(x => x.GetForParticipant(Arg<int>.Is.Anything)).Return(the_retreats);
+            _bedRepository.Stub(x => x.GetAll()).Return(the_beds);
+            
+       };
 
         Because of = () =>
         {
@@ -57,6 +68,10 @@ namespace Dahlia.Specifications.Controllers.Participants
 
         It should_create_a_view_model_containing_the_participant_physical_status = () =>
             _viewModel.PhysicalStatus.ShouldEqual(_participant.PhysicalStatus);
+
+        It should_create_a_view_model_containing_the_registrations_for_the_participant = () =>
+            _viewModel.CurrentRegistrations.ShouldNotBeEmpty();
+        
     }
 
     [Subject("Editing a participant")]
@@ -112,7 +127,7 @@ namespace Dahlia.Specifications.Controllers.Participants
         };
 
         It should_display_the_edit_view_again = () =>
-            _actionResult.AssertViewRendered().ForView("").WithViewData<EditParticipantViewModel>().ShouldBeTheSameAs(_viewModel);
+            _actionResult.AssertActionRedirect().ToAction("Edit");
     }
 
     public class ParticipantControllerContext
@@ -124,12 +139,22 @@ namespace Dahlia.Specifications.Controllers.Participants
         public static ActionResult _actionResult;
         public static EditParticipantViewModel _viewModel;
         public static Participant _participant;
+        public static IRetreatRepository _retreatRepository;
+        public static IBedRepository _bedRepository;
 
+        public static IEnumerable<Retreat> the_retreats = new List<Retreat>();
+        public static IEnumerable<Bed> the_beds = new List<Bed>();
+        public static CurrentRegistrationBuilder _currentRegistrationBuilder;
         Establish context = () =>
         {
             _participantRepository = MockRepository.GenerateStub<IParticipantRepository>();
+            _retreatRepository = MockRepository.GenerateStub<IRetreatRepository>();
+            _bedRepository = MockRepository.GenerateStub<IBedRepository>();
             _invoker = new FakeControllerCommandInvoker();
-            _controller = new ParticipantController(null, _participantRepository, null, null, _invoker);
+
+            _currentRegistrationBuilder = new CurrentRegistrationBuilder(_retreatRepository, _bedRepository);
+
+            _controller = new ParticipantController(_retreatRepository, _participantRepository, _invoker,_currentRegistrationBuilder);
         };
     }
 }

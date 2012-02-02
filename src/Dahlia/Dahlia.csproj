@@ -167,6 +167,7 @@
     <Compile Include="Repositories\IVersionRepository.cs" />
     <Compile Include="Repositories\ParticipantRepository.cs" />
     <Compile Include="Repositories\RetreatRepository.cs" />
+    <Compile Include="Services\Builders\CurrentRegistrationBuilder.cs" />
     <Compile Include="Services\ExpressionExtensions.cs" />
     <Compile Include="Services\IMigrationService.cs" />
     <Compile Include="Services\ReportGeneratorService.cs" />
@@ -284,10 +285,13 @@
     <Content Include="Views\Participant\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Content Include="log4net.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

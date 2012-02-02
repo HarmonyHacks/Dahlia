@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -35,6 +36,7 @@ namespace Dahlia
 
         protected void Application_Start()
         {
+            log4net.Config.XmlConfigurator.ConfigureAndWatch(new FileInfo(Server.MapPath("~/log4net.config")));
             NHibernateProfiler.Initialize();
             AreaRegistration.RegisterAllAreas();
 

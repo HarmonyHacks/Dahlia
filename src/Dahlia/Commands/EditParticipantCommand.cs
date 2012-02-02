@@ -1,19 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using Castle.Core.Logging;
+using Dahlia.Models;
 using Dahlia.Repositories;
 using Dahlia.ViewModels;
+using log4net;
 
 namespace Dahlia.Commands
 {
     public class EditParticipantCommand : IControllerCommand<EditParticipantViewModel>
     {
         readonly IParticipantRepository _participantRepository;
+        readonly IRetreatRepository _retreatRepository;
+        readonly IBedRepository _bedRepository;
+        public Exception Exception { get; private set; }
+        public ILog Log { get; set; }
 
-        public EditParticipantCommand(IParticipantRepository participantRepository)
+
+        public EditParticipantCommand(IParticipantRepository participantRepository, IRetreatRepository retreatRepository, IBedRepository bedRepository)
         {
             _participantRepository = participantRepository;
+            _retreatRepository = retreatRepository;
+            _bedRepository = bedRepository;
         }
 
         public bool Execute(EditParticipantViewModel viewModel)
@@ -27,6 +35,8 @@ namespace Dahlia.Commands
                 participant.DateReceived = viewModel.DateReceived;
                 participant.Notes = viewModel.Notes;
                 participant.PhysicalStatus = viewModel.PhysicalStatus;
+                
+                UpdateBedCodes(participant, viewModel);
 
                 _participantRepository.Save(participant);
             }
@@ -39,6 +49,24 @@ namespace Dahlia.Commands
             return true;
         }
 
-        public Exception Exception { get; private set; }
+        void UpdateBedCodes(Participant participant, EditParticipantViewModel viewModel)
+        {
+            var retreats = _retreatRepository.GetForParticipant(participant.Id).ToList();
+            var beds = _bedRepository.GetAll();
+
+            foreach (var registration in viewModel.CurrentRegistrations)
+            {
+                var currentRegistration = registration;
+                var retreat = retreats.Single(x => x.Id == currentRegistration.RetreatId);
+                var updateRegistration = retreat.Registrations.Single(x => x.Participant.Id == participant.Id);
+                updateRegistration.Bed = beds.Select(b => b.Code).Contains(currentRegistration.BedCode)
+                                ? beds.Single(b => b.Code == currentRegistration.BedCode)
+                                : null;
+
+               _retreatRepository.Save(retreat);
+            }
+        }
+
+
     }
 }

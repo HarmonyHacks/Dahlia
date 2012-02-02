@@ -6,6 +6,7 @@ using Dahlia.Commands;
 using Dahlia.Models;
 using Dahlia.Repositories;
 using Dahlia.Services;
+using Dahlia.Services.Builders;
 using Dahlia.ViewModels;
 using MvcContrib;
 
@@ -15,17 +16,15 @@ namespace Dahlia.Controllers
     {
         readonly IRetreatRepository _retreatRepository;
         readonly IParticipantRepository _participantRepository;
-        readonly IBedRepository _bedRepository;
-        readonly IUrlMapper _urlMapper;
         readonly IControllerCommandInvoker _commandInvoker;
+        CurrentRegistrationBuilder _currentRegistrationBuilder;
 
-        public ParticipantController(IRetreatRepository retreatRepository, IParticipantRepository participantRepository, IBedRepository bedRepository, IUrlMapper urlMapper, IControllerCommandInvoker commandInvoker)
+        public ParticipantController(IRetreatRepository retreatRepository, IParticipantRepository participantRepository, IControllerCommandInvoker commandInvoker, CurrentRegistrationBuilder currentRegistrationBuilder)
         {
             _retreatRepository = retreatRepository;
             _participantRepository = participantRepository;
-            _bedRepository = bedRepository;
-            _urlMapper = urlMapper;
             _commandInvoker = commandInvoker;
+            _currentRegistrationBuilder = currentRegistrationBuilder;
         }
 
         public ActionResult ReassignSearchResults(string searchString)
@@ -35,9 +34,8 @@ namespace Dahlia.Controllers
                             {
                               DateReceived = p.DateReceived,
                               Name = p.FirstName + " " + p.LastName,
-                              //SelectLink = new Uri("/Participant/ReassignParticipant?participantId=" + p.Id, UriKind.Relative)
+                              SelectLink = new Uri("/Participant/ReassignParticipant?participantId=" + p.Id, UriKind.Relative)
                             }).ToList();
-
 
             return View(viewModel);
         }
@@ -87,6 +85,8 @@ namespace Dahlia.Controllers
                 PhysicalStatus = participant.PhysicalStatus
             };
 
+            participantViewModel.CurrentRegistrations = _currentRegistrationBuilder.BuildRegistrationsFor(participant.Id);
+
             return View(participantViewModel);
         }
 
@@ -96,8 +96,10 @@ namespace Dahlia.Controllers
             var result = _commandInvoker.Invoke(viewModel,
                                                 typeof (EditParticipantCommand),
                                                 () => this.RedirectToAction<RetreatController>(c => c.Index(null)),
-                                                () => View(viewModel), ModelState);
+                                                () => RedirectToAction("Edit", new {id = viewModel.Id}),
+                                                ModelState);
             return result;
         }
+       
     }
 }
